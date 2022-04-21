@@ -1,7 +1,7 @@
 /**
  * Modify ExtrudeGeometry such that z varies with x and y
  */
-class RampGeometry extends THREE.BufferGeometry {
+class RampGeometry extends BufferGeometry {
   constructor(shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
     super();
 
@@ -26,13 +26,13 @@ class RampGeometry extends THREE.BufferGeometry {
     var holes = shape.extractPoints().holes;
 
     // Ensuse all paths are in the correct direction for the normals
-    const reverse = ! THREE.ShapeUtils.isClockWise( points );
+    const reverse = ! ShapeUtils.isClockWise( points );
     if ( reverse ) {
       points = points.reverse();
       // Check that any holes are correct direction.
       for (let h = 0; h < holes.length; h++) {
         const hole = holes[h];
-        if (THREE.ShapeUtils.isClockWise(hole)) {
+        if (ShapeUtils.isClockWise(hole)) {
           holes[h] = hole.reverse();
         }
       }
@@ -97,7 +97,7 @@ class RampGeometry extends THREE.BufferGeometry {
       }
     }
     // Add top of roof
-    const faces = THREE.ShapeUtils.triangulateShape(points, holes);
+    const faces = ShapeUtils.triangulateShape(points, holes);
     for (let i = 0; i < faces.length; i++) {
       const face = faces[i];
       for (let j = 0; j < 3; j++) {
@@ -107,7 +107,7 @@ class RampGeometry extends THREE.BufferGeometry {
         positions.push(x, y, z);
       }
     }
-    this.setAttribute('position', new THREE.BufferAttribute(new Float32Array(positions), 3));
+    this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     // ToDo - add points correctly so only one face needs to be rendered.
     this.computeVertexNormals();
 
