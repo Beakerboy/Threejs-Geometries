@@ -148,8 +148,8 @@
 
 					}
 
-					const folder = gui.addFolder( 'THREE.RampGeometry' );
-					folder.add( data, 'angle', 1, 360 ).step( 1 ).onChange( generateGeometry );
+					const folder = gui.addFolder( 'THREE.RampGeometry Depth' );
+					folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 
@@ -170,9 +170,9 @@
 
 					}
 
-					const folder = gui.addFolder( 'THREE.RampGeometry_angle' );
-					folder.add( data, 'pitch', 1, 90 ).step( 1 ).onChange( generateGeometry );
-					folder.add( data, 'angle', 1, 360 ).step( 1 ).onChange( generateGeometry );
+					const folder = gui.addFolder( 'THREE.RampGeometry Angle' );
+					folder.add( data, 'pitch', 0, twoPi / 4 ).step( twoPi / 360 ).onChange( generateGeometry );
+					folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
 					generateGeometry();
 
 				},
