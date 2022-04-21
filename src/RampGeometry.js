@@ -10,7 +10,7 @@ import {
  * Modify ExtrudeGeometry such that z varies with x and y
  */
 class RampGeometry extends BufferGeometry {
-  constructor(shape = new Shape( [ new THREE.Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
+  constructor(shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
     super();
 
     this.type = 'RampGeometry';
