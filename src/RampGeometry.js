@@ -6,7 +6,6 @@ import {
 	BufferAttribute
 } from 'three';
 
-
 /**
  * Modify ExtrudeGeometry such that z varies with x and y
  */
