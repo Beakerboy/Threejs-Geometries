@@ -29,12 +29,11 @@
 		<script type="importmap">
 			{
 				"imports": {
-					"three": "https://unpkg.com/three/build/three.module.js"
+					"three": "https://unpkg.com/three/build/three.module.js",
+					"beakerboy": "src/RampGeometry.js"
 				}
 			}
 		</script>
-		<script src="src/RampGeometry.js">
-                </script>
 
 		<a id='newWindow' href='./geometry-browser.html' target='_blank'>Open in New Window</a>
 
@@ -77,6 +76,7 @@
 				WireframeGeometry,
 				WebGLRenderer
 			} from 'three';
+			import{RampGeometry} from 'beakerboy';
 
 			import { GUI } from 'https://unpkg.com/three/examples/jsm/libs/lil-gui.module.min.js';
 			import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
