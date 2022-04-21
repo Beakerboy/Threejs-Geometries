@@ -76,6 +76,7 @@
 				WebGLRenderer
 			} from 'three';
 			import {RampGeometry} from './src/RampGeometry.js';
+			import {PyramidGeometry} from './src/PyramidGeometry.js';
 
 			import { GUI } from 'https://unpkg.com/three/examples/jsm/libs/lil-gui.module.min.js';
 			import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
@@ -131,7 +132,23 @@
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const guis = {
+				PyramidGeometry: function ( mesh ) {
+					
+					const data = {
+						depth: 22.5,
+						centerx: 0,
+						centery: 0,
+						center: [0 ,0],
+					};
+					function generateGeometry() {
+						data.center = [centerx, centery];
+						const geometry = new RampGeometry( heartShape, data);
+						geometry.center();
 
+						updateGroupGeometry( mesh, geometry );
+
+					}
+				}
 				RampGeometry_depth: function ( mesh ) {
 
 					const data = {
@@ -141,7 +158,7 @@
 
 					function generateGeometry() {
 
-						const geometry = new RampGeometry( heartShape, data);
+						const geometry = new PyramidGeometry( heartShape, data);
 						geometry.center();
 
 						updateGroupGeometry( mesh, geometry );
@@ -149,7 +166,8 @@
 					}
 
 					const folder = gui.addFolder( 'THREE.RampGeometry Depth' );
-					folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
+					folder.add( data, 'centerx', 0, 5 ).step( .1 ).onChange( generateGeometry );
+					folder.add( data, 'centery', 0, 5 ).step( .1 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 
