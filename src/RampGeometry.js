@@ -1,3 +1,12 @@
+import {
+	BufferGeometry,
+	Vector2,
+	Shape,
+	ShapeUtils,
+	BufferAttribute
+} from 'three';
+
+
 /**
  * Modify ExtrudeGeometry such that z varies with x and y
  */
