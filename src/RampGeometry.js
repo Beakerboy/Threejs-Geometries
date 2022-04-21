@@ -113,3 +113,4 @@ class RampGeometry extends BufferGeometry {
 
   }
 }
+export { RampGeometry };
