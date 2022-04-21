@@ -132,7 +132,7 @@
 
 			const guis = {
 
-				RampGeometry: function ( mesh ) {
+				RampGeometry_depth: function ( mesh ) {
 
 					const data = {
 						angle: 22.5,
@@ -150,9 +150,30 @@
 					}
 
 					const folder = gui.addFolder( 'THREE.ShapeGeometry' );
-					folder.add( data, 'angle', 1, 90 ).step( 1 ).onChange( generateGeometry );
 					folder.add( data, 'direction', 1, 360 ).step( 1 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
+					generateGeometry();
+
+				},
+				RampGeometry_angle: function ( mesh ) {
+
+					const data = {
+						angle: 22.5,
+						direction: 0
+					};
+
+					function generateGeometry() {
+
+						const geometry = new ShapeGeometry( heartShape, data);
+						geometry.center();
+
+						updateGroupGeometry( mesh, geometry );
+
+					}
+
+					const folder = gui.addFolder( 'THREE.ShapeGeometry' );
+					folder.add( data, 'angle', 1, 90 ).step( 1 ).onChange( generateGeometry );
+					folder.add( data, 'direction', 1, 360 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 
 				},
