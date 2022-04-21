@@ -135,9 +135,8 @@
 				RampGeometry_depth: function ( mesh ) {
 
 					const data = {
-						angle: 22.5,
 						depth: 5,
-						direction: 0
+						angle: 0
 					};
 
 					function generateGeometry() {
@@ -150,7 +149,7 @@
 					}
 
 					const folder = gui.addFolder( 'THREE.RampGeometry' );
-					folder.add( data, 'direction', 1, 360 ).step( 1 ).onChange( generateGeometry );
+					folder.add( data, 'angle', 1, 360 ).step( 1 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 
@@ -158,7 +157,7 @@
 				RampGeometry_angle: function ( mesh ) {
 
 					const data = {
-						angle: 22.5,
+						pitch: 22.5,
 						direction: 0
 					};
 
@@ -172,8 +171,8 @@
 					}
 
 					const folder = gui.addFolder( 'THREE.RampGeometry_angle' );
-					folder.add( data, 'angle', 1, 90 ).step( 1 ).onChange( generateGeometry );
-					folder.add( data, 'direction', 1, 360 ).step( 1 ).onChange( generateGeometry );
+					folder.add( data, 'pitch', 1, 90 ).step( 1 ).onChange( generateGeometry );
+					folder.add( data, 'angle', 1, 360 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 
 				},
