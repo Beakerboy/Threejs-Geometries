@@ -133,8 +133,6 @@
 
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
-					var centerx = 0;
-					var centery = 0;
 					const data = {
 						depth: 22.5,
 						centerx: 0,
@@ -142,7 +140,7 @@
 						center: [0 ,0],
 					};
 					function generateGeometry() {
-						data.center = [centerx, centery];
+						data.center = [data.centerx, data.centery];
 						const geometry = new RampGeometry( heartShape, data);
 						geometry.center();
 
