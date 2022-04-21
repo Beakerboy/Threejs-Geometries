@@ -38,3 +38,4 @@ class PyramidGeometry extends BufferGeometry {
     this.computeVertexNormals();
   }
 }
+export { PyramidGeometry };
