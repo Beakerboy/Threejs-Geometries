@@ -23,8 +23,8 @@ class WedgeGeometry extends BufferGeometry {
     // The max depth of the geometry
     var depth = options.depth;
 
-    // If depth is not specified, the angle of the ramp.
-    const pitch = options.pitch;
+    // a point on which the peak will pass through
+    const center
 
     // The direction that the downward slope faces,
     const angle = options.angle;
