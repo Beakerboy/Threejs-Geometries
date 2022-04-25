@@ -55,7 +55,40 @@ class WedgeGeometry extends BufferGeometry {
       newY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
       newPoints.push([newX, newY]);
     }
+
     // iterate along newPoints to find where it crosses the x-axis.
+    var nextPoint;
+    var crossingPoint;
+    var activeShape = false;
+    var openingPoint;
+    const newShapes = [];
+    for (let i = 0; i < newPoints.length - 1; i++) {
+      point = newPoints[i];
+      nextPoint = newPoints[i + 1];
+      var m;
+      var root;
+      if (point[1] === 0) {
+        crossingPoint = point;
+      } else if (point[1] > 0 !== nextPoint[1] > 0) {
+        // if the edge crosses the x axis between this and
+        // the next vertex.
+        m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
+        root = point[0] - point[1] / m;
+        crossingPoint = [root, 0];
+      }
+      // add point to existing shape
+      // and close existing shape
+      if (activeShape) {
+        activeShape.push(crossingPoint);
+        activeShape.push(openingPoint);
+        newShapes.push(activeShape);
+        activeShape = false;
+      }
+      // add point to new shape
+      activeShape.push(crossingPoint);
+      openingPoint = crossingPoint;
+    }
+   
     // Divide that distance in half and find all outer and inner lines which cross
     // a line perpendicular to the given angle.
     // Create new shapes that are divided by the line, triangularize.
