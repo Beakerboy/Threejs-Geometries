@@ -45,7 +45,17 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
-    // Find the longest edge in the given angle.
+    const newPoints = [];
+    var point;
+    var newX;
+    var newY;
+    for (let i = 0; i < points.length; i++) {
+      point = points[i];
+      newX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
+      newY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
+      newPoints.push([newX, newY]);
+    }
+    // iterate along newPoints to find where it crosses the x-axis.
     // Divide that distance in half and find all outer and inner lines which cross
     // a line perpendicular to the given angle.
     // Create new shapes that are divided by the line, triangularize.
