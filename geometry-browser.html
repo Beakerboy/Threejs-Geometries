@@ -77,6 +77,7 @@
 			} from 'three';
 			import {RampGeometry} from './src/RampGeometry.js';
 			import {PyramidGeometry} from './src/PyramidGeometry.js';
+                        import {WedgeGeometry} from './src/WedgeGeometry.js';
 
 			import { GUI } from 'https://unpkg.com/three/examples/jsm/libs/lil-gui.module.min.js';
 			import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
@@ -197,6 +198,18 @@
 					generateGeometry();
 
 				},
+                                WedgeGeometry: function (mesh) {
+                                  const data = {
+                                    angle: 0,
+                                  };
+                                  function generateGeometry() {
+                                    updateGroupGeometry(mesh, new WedgeGeometry(heartshape, data));
+                                  }
+                                  const folder = gui.addFolder( 'THREE.RampGeometry Angle' );
+			          folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
+				  folder.add( data, 'pitch', 0, twoPi / 4 ).step( twoPi / 360 ).onChange( generateGeometry );
+				  generateGeometry();
+                                };
 				TorusGeometry: function ( mesh ) {
 
 					const data = {
