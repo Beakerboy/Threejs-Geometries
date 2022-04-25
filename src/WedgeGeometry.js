@@ -2,6 +2,7 @@ import {
 	BufferGeometry,
 	Vector2,
 	Shape,
+        ShapeGeometry,
 	ShapeUtils,
 	BufferAttribute
 } from 'three';
@@ -88,7 +89,7 @@ class WedgeGeometry extends BufferGeometry {
       activeShape.push(crossingPoint);
       openingPoint = crossingPoint;
     }
-   
+    return new ShapeGeometry(newShapes);
     // Divide that distance in half and find all outer and inner lines which cross
     // a line perpendicular to the given angle.
     // Create new shapes that are divided by the line, triangularize.
