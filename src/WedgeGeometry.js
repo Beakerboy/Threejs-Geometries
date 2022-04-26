@@ -89,7 +89,27 @@ class WedgeGeometry extends BufferGeometry {
       activeShape.push(crossingPoint);
       openingPoint = crossingPoint;
     }
-    return new ShapeGeometry(newShapes);
+    for (let k = 0; k < newShapes.length; k++) {
+      const holes = [];
+      points = newShapes[k];
+      // Add top of roof
+      const faces = ShapeUtils.triangulateShape(points, holes);
+      for (let i = 0; i < faces.length; i++) {
+        const face = faces[i];
+        for (let j = 0; j < 3; j++) {
+          const x = vertices[2 * face[j]];
+          const y = vertices[2 * face[j] + 1];
+          const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
+          positions.push(x, y, z);
+        }
+      }
+    }
+    const shapeGeo = new ShapeGeometry(newShapes);
+    this.position = shapeGeo.position;
+    //this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
+    // ToDo - add points correctly so only one face needs to be rendered.
+    this.computeVertexNormals();
+
     // Divide that distance in half and find all outer and inner lines which cross
     // a line perpendicular to the given angle.
     // Create new shapes that are divided by the line, triangularize.
