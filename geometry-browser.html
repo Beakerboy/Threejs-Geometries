@@ -201,15 +201,19 @@
                                 WedgeGeometry: function (mesh) {
                                   const data = {
                                     angle: 0,
+			            center: [0,0],
+				    depth: 5;
                                   };
                                   function generateGeometry() {
+				    data.center = [data.centerx, data.centery];
                                     updateGroupGeometry(mesh, new WedgeGeometry(heartshape, data));
                                   }
                                   const folder = gui.addFolder( 'THREE.RampGeometry Angle' );
-			          folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
-				  folder.add( data, 'pitch', 0, twoPi / 4 ).step( twoPi / 360 ).onChange( generateGeometry );
-				  generateGeometry();
-                                };
+				  folder.add( data, 'angle', 0, twoPi ).step( twoPi / 360 ).onChange( generateGeometry );
+			          folder.add( data, 'centerx', -10, 10 ).step( .1 ).onChange( generateGeometry );
+				  folder.add( data, 'centery', -10, 10 ).step( .1 ).onChange( generateGeometry );
+				  folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
+                                },
 				TorusGeometry: function ( mesh ) {
 
 					const data = {
