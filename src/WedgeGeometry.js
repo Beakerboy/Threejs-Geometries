@@ -63,36 +63,43 @@ class WedgeGeometry extends BufferGeometry {
     var activeShape = false;
     var openingPoint;
     const newShapes = [];
+    const firstShape = [];
     for (let i = 0; i < newPoints.length - 1; i++) {
       point = newPoints[i];
       nextPoint = newPoints[i + 1];
-      var m;
-      var root;
       if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
         if (point[1] === 0) {
           crossingPoint = point;
         } else {
+          var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
+          var root = point[0] - point[1] / m;
           // If the edge crosses the x axis between this and the next vertex.
-          m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
-          root = point[0] - point[1] / m;
           crossingPoint = [root, 0];
         }
         if (activeShape) {
           activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
           activeShape.lineTo(openingPoint[0], openingPoint[1]);
           newShapes.push(activeShape);
+        } else {
+          firstShape.push(crossingPoint);
         }
         activeShape = new Shape();
         // add point to new shape
         activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
         openingPoint = crossingPoint;
-      } else if (activeShape) {
+      }
+      if (activeShape) {
         activeShape.lineTo(point[0], point[1]);
       } else {
         // place the opening points in an array to fininsh the final piece.
+        firstShape.push(point);
       } 
     }
-    // ToDo: add any opening points to the final shape.
+    // add any opening points to the final shape.
+    for (let i = 0; i < firstShape.length; i++) {
+      point = firstShape[i];
+      activeShape.lineTo(point[0], point[1]);
+    }
     newShapes.push(activeShape);
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
