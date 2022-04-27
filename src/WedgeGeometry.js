@@ -1,7 +1,7 @@
 import {
-	BufferGeometry,
-	Vector2,
-	Shape,
+  BufferGeometry,
+  Vector2,
+  Shape,
   ShapeGeometry,
   ShapeUtils,
   BufferAttribute
@@ -20,7 +20,7 @@ class WedgeGeometry extends BufferGeometry {
       shape: shape,
       options: options,
     };
-
+  
     // The max depth of the geometry
     var depth = options.depth;
 
@@ -68,31 +68,31 @@ class WedgeGeometry extends BufferGeometry {
       nextPoint = newPoints[i + 1];
       var m;
       var root;
-      if (point[1] === 0) {
-        crossingPoint = point;
-      } else if (point[1] > 0 !== nextPoint[1] > 0) {
-        // If the edge crosses the x axis between this and the next vertex.
+      if (point[1] === 0 || point[1] > 0 !== nextPoint[1] > 0) {
+        if (point[1] === 0) {
+          crossingPoint = point;
+        } else {
+          // If the edge crosses the x axis between this and the next vertex.
         m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
         root = point[0] - point[1] / m;
         crossingPoint = [root, 0];
+        }
+        if (activeShape) {
+          activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
+          activeShape.lineTo(openingPoint[0], openingPoint[1]);
+          newShapes.push(activeShape);
+        }
+        activeShape = new Shape();
+        // add point to new shape
+        activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
+        openingPoint = crossingPoint;
       } else if (activeShape) {
         activeShape.lineTo(point[0], point[1]);
       } else {
         // place the opening points in an array to fininsh the final piece.
-      }
-      // add point to existing shape
-      // and close existing shape
-      if (activeShape) {
-        activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
-        activeShape.lineTo(openingPoint[0], openingPoint[1]);
-        newShapes.push(activeShape);
-      }
-	    activeShape = new Shape();
-      // add point to new shape
-      activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
-      openingPoint = crossingPoint;
+      } 
     }
-    // ToDo: reiterate
+    // ToDo: add any opening points to the final shape.
     for (let k = 0; k < newShapes.length; k++) {
       const holes = [];
       points = newShapes[k];
