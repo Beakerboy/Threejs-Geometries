@@ -68,14 +68,14 @@ class WedgeGeometry extends BufferGeometry {
       nextPoint = newPoints[i + 1];
       var m;
       var root;
-      if (point[1] === 0 || point[1] > 0 !== nextPoint[1] > 0) {
+      if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
         if (point[1] === 0) {
           crossingPoint = point;
         } else {
           // If the edge crosses the x axis between this and the next vertex.
-        m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
-        root = point[0] - point[1] / m;
-        crossingPoint = [root, 0];
+          m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
+          root = point[0] - point[1] / m;
+          crossingPoint = [root, 0];
         }
         if (activeShape) {
           activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
@@ -93,6 +93,7 @@ class WedgeGeometry extends BufferGeometry {
       } 
     }
     // ToDo: add any opening points to the final shape.
+    newShapes.push(activeShape);
     for (let k = 0; k < newShapes.length; k++) {
       const holes = [];
       points = newShapes[k];
