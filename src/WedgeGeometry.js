@@ -96,6 +96,10 @@ class WedgeGeometry extends BufferGeometry {
       } 
     }
     // add any opening points to the final shape.
+    if (!activeShape) {
+        activeShape = new Shape();
+        activeShape.moveTo(0, 0);
+    }
     for (let i = 0; i < firstShape.length; i++) {
       point = firstShape[i];
       activeShape.lineTo(point[0], point[1]);
