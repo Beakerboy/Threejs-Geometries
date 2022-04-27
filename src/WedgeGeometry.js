@@ -94,6 +94,7 @@ class WedgeGeometry extends BufferGeometry {
     }
     // ToDo: add any opening points to the final shape.
     newShapes.push(activeShape);
+    const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
       const holes = [];
       points = newShapes[k];
