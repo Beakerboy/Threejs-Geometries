@@ -71,8 +71,7 @@ class WedgeGeometry extends BufferGeometry {
       if (point[1] === 0) {
         crossingPoint = point;
       } else if (point[1] > 0 !== nextPoint[1] > 0) {
-        // if the edge crosses the x axis between this and
-        // the next vertex.
+        // If the edge crosses the x axis between this and the next vertex.
         m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
         root = point[0] - point[1] / m;
         crossingPoint = [root, 0];
@@ -83,8 +82,8 @@ class WedgeGeometry extends BufferGeometry {
         activeShape.push(crossingPoint);
         activeShape.push(openingPoint);
         newShapes.push(activeShape);
-        activeShape = false;
       }
+	    activeShape = [];
       // add point to new shape
       activeShape.push(crossingPoint);
       openingPoint = crossingPoint;
