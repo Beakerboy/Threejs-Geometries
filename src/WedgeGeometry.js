@@ -2,9 +2,9 @@ import {
 	BufferGeometry,
 	Vector2,
 	Shape,
-        ShapeGeometry,
-	ShapeUtils,
-	BufferAttribute
+  ShapeGeometry,
+  ShapeUtils,
+  BufferAttribute
 } from 'three';
 
 /**
@@ -75,19 +75,24 @@ class WedgeGeometry extends BufferGeometry {
         m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
         root = point[0] - point[1] / m;
         crossingPoint = [root, 0];
+      } else if (activeShape) {
+        activeShape.lineTo(point[0], point[1]);
+      } else {
+        // place the opening points in an array to fininsh the final piece.
       }
       // add point to existing shape
       // and close existing shape
       if (activeShape) {
-        activeShape.push(crossingPoint);
-        activeShape.push(openingPoint);
+        activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
+        activeShape.lineTo(openingPoint[0], openingPoint[1]);
         newShapes.push(activeShape);
       }
-	    activeShape = [];
+	    activeShape = new Shape();
       // add point to new shape
-      activeShape.push(crossingPoint);
+      activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
       openingPoint = crossingPoint;
     }
+    // ToDo: reiterate
     for (let k = 0; k < newShapes.length; k++) {
       const holes = [];
       points = newShapes[k];
