@@ -134,6 +134,7 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
+    console.log(positions);
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     this.computeVertexNormals();
   }
