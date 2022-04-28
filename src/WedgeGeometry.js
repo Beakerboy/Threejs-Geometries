@@ -47,6 +47,8 @@ class WedgeGeometry extends BufferGeometry {
       }
     }
     const newPoints = [];
+    const vertices = [];
+    var shapeNum = -1;
     var point;
     var newX;
     var newY;
@@ -67,6 +69,7 @@ class WedgeGeometry extends BufferGeometry {
     for (let i = 0; i < newPoints.length - 1; i++) {
       point = newPoints[i];
       nextPoint = newPoints[i + 1];
+      // If there is a crossi.g event
       if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
         if (point[1] === 0) {
           crossingPoint = point;
@@ -86,51 +89,53 @@ class WedgeGeometry extends BufferGeometry {
         activeShape = new Shape();
         // add point to new shape
         activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
+        shapeNum++;
+        vertices[shapeNum] = [];
+        vertices[shapeNum].push(crossingPoint[0], crossingPoint[1]);
+        
         openingPoint = crossingPoint;
       }
       if (activeShape) {
         activeShape.lineTo(point[0], point[1]);
+        vertices[shapeNum].push(point[0], point[1]);
       } else {
         // place the opening points in an array to fininsh the final piece.
         firstShape.push(point);
       } 
     }
     // add any opening points to the final shape.
-    if (!activeShape) {
-        activeShape = new Shape();
-        activeShape.moveTo(0, 0);
-    }
     for (let i = 0; i < firstShape.length; i++) {
       point = firstShape[i];
-      activeShape.lineTo(point[0], point[1]);
+      if (!activeShape) {
+        activeShape = new Shape();
+        activeShape.moveTo(point[0], point[1]);
+        shapeNum++;
+        vertices[shapeNum] = [];
+        vertices[shapeNum].push(point[0], point[1]);
+      } else {
+        activeShape.lineTo(point[0], point[1]);
+        vertices[shapeNum].push(point[0], point[1]);
+      }
     }
     newShapes.push(activeShape);
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
-      const holes = [];
       points = newShapes[k];
       // Add top of roof
       const faces = ShapeUtils.triangulateShape(points, holes);
       for (let i = 0; i < faces.length; i++) {
         const face = faces[i];
         for (let j = 0; j < 3; j++) {
-          const x = vertices[2 * face[j]];
-          const y = vertices[2 * face[j] + 1];
+          const x = vertices[k][2 * face[j]];
+          const y = vertices[k][2 * face[j] + 1];
           const z = 0;
           //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
           positions.push(x, y, z);
         }
       }
     }
-   // const shapeGeo = new ShapeGeometry(newShapes);
-   // this.setAttribute('position', shapeGeo.getAttribute('position'));
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
-    // ToDo - add points correctly so only one face needs to be rendered.
     this.computeVertexNormals();
-
-    // Divide that distance in half and find all outer and inner lines which cross
-    // a line perpendicular to the given angle.
-    // Create new shapes that are divided by the line, triangularize.
   }
 }
 export { WedgeGeometry };
