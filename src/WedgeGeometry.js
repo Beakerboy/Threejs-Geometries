@@ -119,6 +119,7 @@ class WedgeGeometry extends BufferGeometry {
     }
     newShapes.push(activeShape);
     const positions = [];
+    console.log('NumShapes: ' + newShapes.length);
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k];
       // Add top of roof
