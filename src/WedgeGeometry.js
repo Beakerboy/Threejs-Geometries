@@ -161,7 +161,7 @@ class WedgeGeometry extends BufferGeometry {
    *                   the addition of new vertices for the crossing points.
    */
   splitShape(points) {
-    // A list of all the values where the shape crosses the x axis.
+    // An associative array of all the values where the shape crosses the x axis, keys by segment number.
     const crossings = [];
 
     // A list of any times the intersection is a tangent.
@@ -169,13 +169,16 @@ class WedgeGeometry extends BufferGeometry {
  
     // The new outline with the addition of any crossing points.
     const newOutline = Shape();
+
     // Remove duplicated beginning and end point?
-   
+    if (points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length][1]) {
+      points.pop();
+    }
     // Walk the shape and find all crossings.
     var point = [];
     var nextPoint = [];
     var prevPoint = points[points.length - 1];
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length - 1; i++) {
       point = points[i];
       if (i === 0) {
         newOutline.moveTo();
@@ -194,15 +197,57 @@ class WedgeGeometry extends BufferGeometry {
           var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
           var crossing = point[0] - point[1] / m;
         }
-        crossings.push(crossing);
+        crossings[i] = crossing;
         if (!pointOnLine) {
           newOutline.lineTo(crossing, 0);
         }
       }
-      if (crossings.length === 0) {
+      if (Object.keys(crossings).length === 0) {
         return [points];
       }
+
+      // Sort crossings and save the crossing number.
+      var sortedCrossings = [];
+      for (const key in crossings) {
+        sortedCrossings.push(crossings[key]);
+      }
+      sortedCrossings.sort();
+      for (let i = 0; i < crossings.length; i++) {
+        const value = crossings[i];
+        crossings[i] = {
+          value: value,
+          number: sortedCrossings.indexOf(value),
+        };
+      }
+
+      // Walk the shape and assemble pieces from matched crossings.
       const shapes = [];
+      const pendingCrossbacks = [];
+      const activeShapes = [];
+      var currentShape = new Shape();
+      for (let i = 0; i < points.length; i++) {
+        point = points[i];
+        if (i === 0) {
+          currentShape.moveTo(point[0], point[1]);
+        } else {
+          currentShape.lineTo(point[0], point[1]);
+        }
+        if (i in crossings) {
+          crossing = crossings[i];
+          if (crossing.value !== point[0]) {
+            currentShape.lineTo(crossing.value, 0);
+          }
+          // Check pendingCrossbacks
+          activeShapes.push(currentShape);
+          currentShape = new Shape();
+          if (crossing.number % 2 === 0) {
+            pendingCrossbacks.push(crossing.number - 1);
+          } else {
+            pendingCrossbacks.push(crossing.number + 1);
+          }
+          currentShape.moveTo(crossing.value, 0);
+        }
+      }
     }
   }
 
