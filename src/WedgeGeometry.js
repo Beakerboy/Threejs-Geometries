@@ -238,16 +238,16 @@ class WedgeGeometry extends BufferGeometry {
           if (crossing.value !== point[0]) {
             currentShape.lineTo(crossing.value, 0);
           }
-          // Check pendingCrossbacks
-          activeShapes.push(currentShape);
-          pendingCrossbacks.push(activeCrossback);
-          currentShape = new Shape();
-          if (crossing.number % 2 === 0) {
-            activeCrossback = crossing.number - 1;
+          // If we can finalize the current shape.
+          if (crossing.number === activeCrossing) {
+            shapes.push(activeShape);
           } else {
-            activeCrossback = crossing.number + 1;
+            activeShapes.push(currentShape);
+            pendingCrossbacks.push(activeCrossback);
+            currentShape = new Shape();
+            activeCrossback = crossing.number - 2 * (crossing.number % 2);
+            currentShape.moveTo(crossing.value, 0);
           }
-          currentShape.moveTo(crossing.value, 0);
         }
       }
     }
