@@ -148,6 +148,9 @@ class WedgeGeometry extends BufferGeometry {
     this.computeVertexNormals();
   }
 
+  /**
+   *
+   */
   move(point) {
     const angle = this.parameters.options.angle;
     const center = this.parameters.options.center;
@@ -156,6 +159,9 @@ class WedgeGeometry extends BufferGeometry {
     return [pointX, pointY];
   }
 
+  /**
+   *
+   */
   unMove(point) {
     const angle = this.parameters.options.angle;
     const center = this.parameters.options.center;
