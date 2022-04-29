@@ -154,6 +154,7 @@ class WedgeGeometry extends BufferGeometry {
 
   /**
    * Split a shape using the x-axis as the line. Shape is clockwise.
+   * Not tested on self-intersecting shapes.
    *
    * @param {[[number, number]]} points - an array of x, y pairs.
    * @return {[Shape]} an array of shapes. Element 0 is the original shape with
