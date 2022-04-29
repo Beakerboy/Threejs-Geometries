@@ -33,7 +33,11 @@ class WedgeGeometry extends BufferGeometry {
     // Get the outer shape and holes.
     var points = shape.extractPoints().shape;
     var holes = shape.extractPoints().holes;
+
+    // The outer shape is the original shape plus any crossing points.
     const outerShape = new Shape();
+
+    // A straight array of vertices for the outer shape
     const outerVertices = [];
 
     // Ensuse all paths are in the correct direction for the normals
@@ -48,23 +52,23 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
+    // The original shape's point, but roated and centered.
     const newPoints = [];
+
+    // An array of arrays. Each array contaions the vertices of the coresponding shape. 
     const vertices = [];
     var shapeNum = -1;
+
     var point;
-    var newX;
-    var newY;
     for (let i = 0; i < points.length; i++) {
       point = points[i];
-      newX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
-      newY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
-      newPoints.push([newX, newY]);
+      newPoints.push(...this.move(point));
     }
 
     // iterate along newPoints to find where it crosses the x-axis.
     var nextPoint;
     var crossingPoint;
-    var activeShape = false;
+    var activeShape = new Shape();
     var openingPoint;
     const newShapes = [];
     const firstShape = [];
@@ -75,7 +79,7 @@ class WedgeGeometry extends BufferGeometry {
       } else {
         outerShape.lineTo(point[0], point[1]);
       }
-      outerVertices.push(...this.unMove(point));
+      outerVertices.push(points[i]);
       nextPoint = newPoints[i + 1];
       // If there is a crossing event
       if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
