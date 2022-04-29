@@ -224,6 +224,7 @@ class WedgeGeometry extends BufferGeometry {
       const shapes = [];
       const pendingCrossbacks = [];
       const activeShapes = [];
+      var activeCrossing = -1;
       var currentShape = new Shape();
       for (let i = 0; i < points.length; i++) {
         point = points[i];
@@ -239,11 +240,12 @@ class WedgeGeometry extends BufferGeometry {
           }
           // Check pendingCrossbacks
           activeShapes.push(currentShape);
+          pendingCrossbacks.push(activeCrossback);
           currentShape = new Shape();
           if (crossing.number % 2 === 0) {
-            pendingCrossbacks.push(crossing.number - 1);
+            activeCrossback = crossing.number - 1;
           } else {
-            pendingCrossbacks.push(crossing.number + 1);
+            activeCrossback = crossing.number + 1;
           }
           currentShape.moveTo(crossing.value, 0);
         }
