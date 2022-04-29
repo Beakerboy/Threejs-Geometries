@@ -153,6 +153,59 @@ class WedgeGeometry extends BufferGeometry {
   }
 
   /**
+   * Split a shape using the x-axis as the line. Shape is clockwise.
+   *
+   * @param {[[number, number]]} points - an array of x, y pairs.
+   * @return {[Shape]} an array of shapes. Element 0 is the original shape with
+   *                   the addition of new vertices for the crossing points.
+   */
+  splitShape(points) {
+    // A list of all the values where the shape crosses the x axis.
+    const crossings = [];
+
+    // A list of any times the intersection is a tangent.
+    const tangents = [];
+ 
+    // The new outline with the addition of any crossing points.
+    const newOutline = Shape();
+    // Remove duplicated beginning and end point?
+   
+    // Walk the shape and find all crossings.
+    var point = [];
+    var nextPoint = [];
+    var prevPoint = points[points.length - 1];
+    for (let i = 0; i < points.length; i++) {
+      point = points[i];
+      if (i === 0) {
+        newOutline.moveTo();
+      } else {
+        newOutline.lineTo();
+      }
+      nextPoint = points[i + 1];
+      const pointOnLine = point[1] === 0;
+      const sameSides = prevPoint[1] > 0 === nextPoint[1] > 0;
+      const switchesSides = point[1] > 0 !== nextPoint[1] > 0;
+      if (pointOnLine && !sameSides || switchesSides) {
+        const crossing;
+        if (pointOnLine) {
+          crossing = point[0];
+        } else {
+          var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
+          var crossing = point[0] - point[1] / m;
+        }
+        crossings.push(crossing);
+        if (!pointOnLine) {
+          newOutline.lineTo(crossing, 0);
+        }
+      }
+      if (crossings.length === 0) {
+        return [points];
+      }
+      const shapes = [];
+    }
+  }
+
+  /**
    *
    */
   move(point) {
