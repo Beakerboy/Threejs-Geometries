@@ -69,8 +69,11 @@ class WedgeGeometry extends BufferGeometry {
     const firstShape = [];
     for (let i = 0; i < newPoints.length - 1; i++) {
       point = newPoints[i];
+      if (i === 0) {
+        outerShape.moveTo(point[0], point[1]);
+      }
       nextPoint = newPoints[i + 1];
-      // If there is a crossi.g event
+      // If there is a crossing event
       if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
         if (point[1] === 0) {
           crossingPoint = point;
@@ -79,6 +82,7 @@ class WedgeGeometry extends BufferGeometry {
           var root = point[0] - point[1] / m;
           // If the edge crosses the x axis between this and the next vertex.
           crossingPoint = [root, 0];
+          outerShape.lineTo(root, 0);
         }
         if (activeShape) {
           activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
