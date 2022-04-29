@@ -34,6 +34,7 @@ class WedgeGeometry extends BufferGeometry {
     var points = shape.extractPoints().shape;
     var holes = shape.extractPoints().holes;
     const outerShape = new Shape();
+    const outerVertices = [];
 
     // Ensuse all paths are in the correct direction for the normals
     const reverse = ! ShapeUtils.isClockWise( points );
@@ -74,6 +75,7 @@ class WedgeGeometry extends BufferGeometry {
       } else {
         outerShape.lineTo(point[0], point[1]);
       }
+      outerVertices.push(...this.unMove(point));
       nextPoint = newPoints[i + 1];
       // If there is a crossing event
       if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
@@ -85,6 +87,7 @@ class WedgeGeometry extends BufferGeometry {
           // If the edge crosses the x axis between this and the next vertex.
           crossingPoint = [root, 0];
           outerShape.lineTo(root, 0);
+          outerVertices.push(...this.unMove([root, 0]));
         }
         if (activeShape) {
           activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
@@ -143,6 +146,13 @@ class WedgeGeometry extends BufferGeometry {
     }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     this.computeVertexNormals();
+  }
+
+  unMove(point) {
+    const angle = this.parameters.options.angle;
+    const pointX = point[0] * Math.cos(angle) + point[1] * Math.sin(angle) + center[0];
+    const pointX = -1 * point[0] * Math.sin(angle) + point[1] * Math.cos(angle) + center[1];
+    return [pointX, pointY];
   }
 }
 export { WedgeGeometry };
