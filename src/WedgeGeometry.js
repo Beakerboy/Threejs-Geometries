@@ -71,6 +71,8 @@ class WedgeGeometry extends BufferGeometry {
       point = newPoints[i];
       if (i === 0) {
         outerShape.moveTo(point[0], point[1]);
+      } else {
+        outerShape.lineTo(point[0], point[1]);
       }
       nextPoint = newPoints[i + 1];
       // If there is a crossing event
