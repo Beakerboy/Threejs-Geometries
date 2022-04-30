@@ -1,0 +1,76 @@
+{
+  "parserOptions": {
+    "ecmaVersion": 2022,
+    "sourceType": "module"
+  },
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "globals": {
+    "Building": true,
+    "BuildingPart": true,
+    "BuildingShapeUtils": true,
+    "MultiBuildingPart": true,
+    "PyramidGeometry": true,
+    "RampGeometry": true,
+    "Shape": true,
+    "THREE": true,
+    "Vector2": true,
+    "apis": true,
+    "scene": true
+  },
+  "rules": {
+    "brace-style": [
+      "error"
+    ],
+    "camelcase": [
+      "error"
+    ],
+    "comma-dangle": [
+      "error",
+      "always-multiline"
+    ],
+    "comma-spacing": [
+      "error"
+    ],
+    "comma-style": [
+      "error"
+    ],
+    "eqeqeq": [
+      "error"
+    ],
+    "indent": [
+      "error",
+      2
+    ],
+    "keyword-spacing": [
+      "error"
+    ],
+    "linebreak-style": [
+      "error",
+      "unix"
+    ],
+    "no-console": [
+      0
+    ],
+    "no-trailing-spaces": [
+      "error"
+    ],
+    "no-undef": [
+      "error"
+    ],
+    "quotes": [
+      "error",
+      "single"
+    ],
+    "semi": [
+      "error",
+      "always"
+    ],
+    "space-before-function-paren": [
+      "error",
+      "never"
+    ]
+  }
+}
