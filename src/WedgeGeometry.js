@@ -66,7 +66,7 @@ class WedgeGeometry extends BufferGeometry {
     }
 
     const newShapes = this.splitShape(newPoints);
- 
+
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k];
@@ -101,7 +101,7 @@ class WedgeGeometry extends BufferGeometry {
 
     // A list of any times the intersection is a tangent.
     const tangents = [];
- 
+
     // The new outline with the addition of any crossing points.
     const newOutline = Shape();
 
