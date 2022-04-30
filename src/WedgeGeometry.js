@@ -4,7 +4,7 @@ import {
   Shape,
   ShapeGeometry,
   ShapeUtils,
-  BufferAttribute
+  BufferAttribute,
 } from 'three';
 
 /**
