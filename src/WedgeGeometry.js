@@ -20,7 +20,7 @@ class WedgeGeometry extends BufferGeometry {
       shape: shape,
       options: options,
     };
-  
+
     // The max depth of the geometry
     var depth = options.depth;
 
@@ -55,7 +55,7 @@ class WedgeGeometry extends BufferGeometry {
     // The original shape's point, but roated and centered.
     const newPoints = [];
 
-    // An array of arrays. Each array contaions the vertices of the coresponding shape. 
+    // An array of arrays. Each array contaions the vertices of the coresponding shape.
     const vertices = [];
     var shapeNum = -1;
 
@@ -66,7 +66,7 @@ class WedgeGeometry extends BufferGeometry {
     }
 
     const newShapes = this.splitShape(newPoints);
-   
+
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k];
@@ -101,7 +101,7 @@ class WedgeGeometry extends BufferGeometry {
 
     // A list of any times the intersection is a tangent.
     const tangents = [];
- 
+
     // The new outline with the addition of any crossing points.
     const newOutline = Shape();
 
@@ -158,8 +158,10 @@ class WedgeGeometry extends BufferGeometry {
 
     // Walk the shape and assemble pieces from matched crossings.
     const shapes = [];
+    // A list of crossing numbers that will close each shape in activeShapes.
     const pendingCrossbacks = [];
     const activeShapes = [];
+    // The crossing number that will close the current shape.
     var activeCrossing = -1;
     var currentShape = new Shape();
     for (let i = 0; i < points.length; i++) {
@@ -176,16 +178,17 @@ class WedgeGeometry extends BufferGeometry {
         }
         // If we can finalize the current shape.
         if (crossing.number === activeCrossing) {
-          shapes.push(activeShape);
+          shapes.push(currentShape);
         } else {
           activeShapes.push(currentShape);
-          pendingCrossbacks.push(activeCrossback);
+          pendingCrossbacks.push(activeCrossing);
           currentShape = new Shape();
-          activeCrossback = crossing.number - 2 * (crossing.number % 2);
+          activeCrossing = crossing.number - 2 * (crossing.number % 2);
           currentShape.moveTo(crossing.value, 0);
         }
       }
     }
+    return shapes;
   }
 
   /**
