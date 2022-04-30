@@ -20,7 +20,7 @@ class WedgeGeometry extends BufferGeometry {
       shape: shape,
       options: options,
     };
-  
+
     // The max depth of the geometry
     var depth = options.depth;
 
@@ -55,7 +55,7 @@ class WedgeGeometry extends BufferGeometry {
     // The original shape's point, but roated and centered.
     const newPoints = [];
 
-    // An array of arrays. Each array contaions the vertices of the coresponding shape. 
+    // An array of arrays. Each array contaions the vertices of the coresponding shape.
     const vertices = [];
     var shapeNum = -1;
 
@@ -66,7 +66,7 @@ class WedgeGeometry extends BufferGeometry {
     }
 
     const newShapes = this.splitShape(newPoints);
-   
+ 
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k];
