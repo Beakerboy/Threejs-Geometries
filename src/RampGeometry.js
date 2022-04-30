@@ -1,9 +1,9 @@
 import {
-	BufferGeometry,
-	Vector2,
-	Shape,
-	ShapeUtils,
-	BufferAttribute
+  BufferGeometry,
+  Vector2,
+  Shape,
+  ShapeUtils,
+  BufferAttribute,
 } from 'three';
 
 /**
