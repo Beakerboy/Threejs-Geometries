@@ -65,73 +65,8 @@ class WedgeGeometry extends BufferGeometry {
       newPoints.push(...this.move(point));
     }
 
-    // iterate along newPoints to find where it crosses the x-axis.
-    var nextPoint;
-    var crossingPoint;
-    var activeShape = new Shape();
-    var openingPoint;
-    const newShapes = [];
-    const firstShape = [];
-    for (let i = 0; i < newPoints.length - 1; i++) {
-      point = newPoints[i];
-      if (i === 0) {
-        outerShape.moveTo(point[0], point[1]);
-      } else {
-        outerShape.lineTo(point[0], point[1]);
-      }
-      outerVertices.push(points[i]);
-      nextPoint = newPoints[i + 1];
-      // If there is a crossing event
-      if (point[1] === 0 || (point[1] > 0 !== nextPoint[1] > 0)) {
-        if (point[1] === 0) {
-          crossingPoint = point;
-        } else {
-          var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
-          var root = point[0] - point[1] / m;
-          // If the edge crosses the x axis between this and the next vertex.
-          crossingPoint = [root, 0];
-          outerShape.lineTo(root, 0);
-          outerVertices.push(...this.unMove([root, 0]));
-        }
-        if (activeShape) {
-          activeShape.lineTo(crossingPoint[0], crossingPoint[1]);
-          activeShape.lineTo(openingPoint[0], openingPoint[1]);
-          newShapes.push(activeShape);
-        } else {
-          firstShape.push(crossingPoint);
-        }
-        activeShape = new Shape();
-        // add point to new shape
-        activeShape.moveTo(crossingPoint[0], crossingPoint[1]);
-        shapeNum++;
-        vertices[shapeNum] = [];
-        vertices[shapeNum].push(crossingPoint[0], crossingPoint[1]);
-        
-        openingPoint = crossingPoint;
-      }
-      if (activeShape) {
-        activeShape.lineTo(point[0], point[1]);
-        vertices[shapeNum].push(point[0], point[1]);
-      } else {
-        // place the opening points in an array to fininsh the final piece.
-        firstShape.push(point);
-      } 
-    }
-    // add any opening points to the final shape.
-    for (let i = 0; i < firstShape.length; i++) {
-      point = firstShape[i];
-      if (!activeShape) {
-        activeShape = new Shape();
-        activeShape.moveTo(point[0], point[1]);
-        shapeNum++;
-        vertices[shapeNum] = [];
-        vertices[shapeNum].push(point[0], point[1]);
-      } else {
-        activeShape.lineTo(point[0], point[1]);
-        vertices[shapeNum].push(point[0], point[1]);
-      }
-    }
-    newShapes.push(activeShape);
+    const newShapes = this.splitShape(newPoints);
+   
     const positions = [];
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k];
