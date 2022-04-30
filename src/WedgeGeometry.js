@@ -158,8 +158,10 @@ class WedgeGeometry extends BufferGeometry {
 
     // Walk the shape and assemble pieces from matched crossings.
     const shapes = [];
+    // A list of crossing numbers that will close each shape in activeShapes.
     const pendingCrossbacks = [];
     const activeShapes = [];
+    // The crossing number that will close the current shape.
     var activeCrossing = -1;
     var currentShape = new Shape();
     for (let i = 0; i < points.length; i++) {
@@ -179,7 +181,7 @@ class WedgeGeometry extends BufferGeometry {
           shapes.push(currentShape);
         } else {
           activeShapes.push(currentShape);
-          pendingCrossbacks.push(currentCrossback);
+          pendingCrossbacks.push(activeCrossing);
           currentShape = new Shape();
           activeCrossing = crossing.number - 2 * (crossing.number % 2);
           currentShape.moveTo(crossing.value, 0);
