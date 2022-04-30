@@ -202,52 +202,52 @@ class WedgeGeometry extends BufferGeometry {
           newOutline.lineTo(crossing, 0);
         }
       }
-      if (Object.keys(crossings).length === 0) {
-        return [points];
-      }
+    }
+    if (Object.keys(crossings).length === 0) {
+      return [points];
+    }
 
-      // Sort crossings and save the crossing number.
-      var sortedCrossings = [];
-      for (const key in crossings) {
-        sortedCrossings.push(crossings[key]);
-      }
-      sortedCrossings.sort();
-      for (let i = 0; i < crossings.length; i++) {
-        const value = crossings[i];
-        crossings[i] = {
-          value: value,
-          number: sortedCrossings.indexOf(value),
-        };
-      }
+    // Sort crossings and save the crossing number.
+    var sortedCrossings = [];
+    for (const key in crossings) {
+      sortedCrossings.push(crossings[key]);
+    }
+    sortedCrossings.sort();
+    for (let i = 0; i < crossings.length; i++) {
+      const value = crossings[i];
+      crossings[i] = {
+        value: value,
+        number: sortedCrossings.indexOf(value),
+      };
+    }
 
-      // Walk the shape and assemble pieces from matched crossings.
-      const shapes = [];
-      const pendingCrossbacks = [];
-      const activeShapes = [];
-      var activeCrossing = -1;
-      var currentShape = new Shape();
-      for (let i = 0; i < points.length; i++) {
-        point = points[i];
-        if (i === 0) {
-          currentShape.moveTo(point[0], point[1]);
-        } else {
-          currentShape.lineTo(point[0], point[1]);
+    // Walk the shape and assemble pieces from matched crossings.
+    const shapes = [];
+    const pendingCrossbacks = [];
+    const activeShapes = [];
+    var activeCrossing = -1;
+    var currentShape = new Shape();
+    for (let i = 0; i < points.length; i++) {
+      point = points[i];
+      if (i === 0) {
+        currentShape.moveTo(point[0], point[1]);
+      } else {
+        currentShape.lineTo(point[0], point[1]);
+      }
+      if (i in crossings) {
+        crossing = crossings[i];
+        if (crossing.value !== point[0]) {
+          currentShape.lineTo(crossing.value, 0);
         }
-        if (i in crossings) {
-          crossing = crossings[i];
-          if (crossing.value !== point[0]) {
-            currentShape.lineTo(crossing.value, 0);
-          }
-          // If we can finalize the current shape.
-          if (crossing.number === activeCrossing) {
-            shapes.push(activeShape);
-          } else {
-            activeShapes.push(currentShape);
-            pendingCrossbacks.push(activeCrossback);
-            currentShape = new Shape();
-            activeCrossback = crossing.number - 2 * (crossing.number % 2);
-            currentShape.moveTo(crossing.value, 0);
-          }
+        // If we can finalize the current shape.
+        if (crossing.number === activeCrossing) {
+          shapes.push(activeShape);
+        } else {
+          activeShapes.push(currentShape);
+          pendingCrossbacks.push(activeCrossback);
+          currentShape = new Shape();
+          activeCrossback = crossing.number - 2 * (crossing.number % 2);
+          currentShape.moveTo(crossing.value, 0);
         }
       }
     }
