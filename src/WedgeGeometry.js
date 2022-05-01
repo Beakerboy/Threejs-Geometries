@@ -103,7 +103,7 @@ class WedgeGeometry extends BufferGeometry {
     const tangents = [];
 
     // The new outline with the addition of any crossing points.
-    const newOutline = Shape();
+    const newOutline = new Shape();
 
     // Remove duplicated beginning and end point?
     if (points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length][1]) {
