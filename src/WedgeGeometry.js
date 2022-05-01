@@ -117,15 +117,15 @@ class WedgeGeometry extends BufferGeometry {
     for (let i = 0; i < points.length - 1; i++) {
       point = points[i];
       if (i === 0) {
-        newOutline.moveTo();
+        newOutline.moveTo(point[0], point[1]);
       } else {
-        newOutline.lineTo();
+        newOutline.lineTo(point[0], point[1]);
       }
       nextPoint = points[i + 1];
-      const pointOnLine = point[1] === 0;
-      const sameSides = prevPoint[1] > 0 === nextPoint[1] > 0;
-      const switchesSides = point[1] > 0 !== nextPoint[1] > 0;
-      if (pointOnLine && !sameSides || switchesSides) {
+      const pointOnLine = (point[1] === 0);
+      const sameSides = ((prevPoint[1] > 0) === (nextPoint[1] > 0));
+      const switchesSides = ((point[1] > 0) !== (nextPoint[1] > 0));
+      if ((pointOnLine && !sameSides) || switchesSides) {
         var crossing;
         if (pointOnLine) {
           crossing = point[0];
