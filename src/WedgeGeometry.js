@@ -212,8 +212,8 @@ class WedgeGeometry extends BufferGeometry {
   move(point) {
     const angle = this.parameters.options.angle;
     const center = this.parameters.options.center;
-    const pointX = (point[0] - center[0]) * Math.cos(angle) - (point[1] - center[1]) * Math.sin(angle);
-    const pointY = (point[0] - center[0]) * Math.sin(angle) + (point[1] - center[1]) * Math.cos(angle);
+    const pointX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
+    const pointY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
     return [pointX, pointY];
   }
 
