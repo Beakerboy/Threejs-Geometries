@@ -149,7 +149,7 @@ class WedgeGeometry extends BufferGeometry {
           shape.lineTo(point[0], point[1]);
         }
       }
-        return [shape];
+      return [shape];
     }
 
     // Sort crossings and save the crossing number.
