@@ -68,6 +68,7 @@ class WedgeGeometry extends BufferGeometry {
     const newShapes = this.splitShape(newPoints);
 
     const positions = [];
+    console.log('number of shapes: ' + newShapes.length);
     for (let k = 0; k < newShapes.length; k++) {
       points = newShapes[k].extractPoints().shape;
       // Add top of roof
@@ -75,8 +76,8 @@ class WedgeGeometry extends BufferGeometry {
       for (let i = 0; i < faces.length; i++) {
         const face = faces[i];
         for (let j = 0; j < 3; j++) {
-          const x = points[face[j].x];
-          const y = points[face[j].y];
+          const x = points[face[j]].x;
+          const y = points[face[j]].y;
           const z = 0;
           //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
           positions.push(x, y, z);
