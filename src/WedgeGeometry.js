@@ -62,7 +62,7 @@ class WedgeGeometry extends BufferGeometry {
     var point;
     for (let i = 0; i < points.length; i++) {
       point = points[i];
-      newPoints.push(...this.move(point));
+      newPoints.push(this.move(point));
     }
 
     const newShapes = this.splitShape(newPoints);
