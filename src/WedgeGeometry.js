@@ -147,6 +147,7 @@ class WedgeGeometry extends BufferGeometry {
           shape.moveTo(point[0], point[1]);
         } else {
           shape.lineTo(point[0], point[1]);
+        }
       }
         return [shape];
     }
