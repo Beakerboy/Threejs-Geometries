@@ -139,6 +139,7 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
+    console.log('crossings: ' + Object.keys(crossings).length);
     if (Object.keys(crossings).length === 0) {
       // convert points to a shape
       const shape = new Shape();
