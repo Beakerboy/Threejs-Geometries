@@ -109,9 +109,9 @@ class WedgeGeometry extends BufferGeometry {
     const newOutline = new Shape();
 
     // Remove duplicated beginning and end point?
-    if (points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length - 1][1]) {
-      points.pop();
-    }
+    //if (points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length - 1][1]) {
+    //  points.pop();
+    //}
     // Walk the shape and find all crossings.
     var point = [];
     var nextPoint = [];
@@ -169,7 +169,7 @@ class WedgeGeometry extends BufferGeometry {
     // The crossing number that will close the current shape.
     var activeCrossing = -1;
     var currentShape = new Shape();
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length - 1; i++) {
       point = points[i];
       if (i === 0) {
         currentShape.moveTo(point[0], point[1]);
