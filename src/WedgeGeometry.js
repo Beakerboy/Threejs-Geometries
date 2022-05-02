@@ -60,11 +60,21 @@ class WedgeGeometry extends BufferGeometry {
     var shapeNum = -1;
 
     var point;
+    var minY;
+    var maxY;
     for (let i = 0; i < points.length; i++) {
       point = points[i];
-      newPoints.push(this.move(point));
+      const moved = this.move(point);
+      if (i === 0) {
+        minY = moved[1];
+        maxY = moved[1];
+      } else {
+        minY = Math.min(minY, moved[1]);
+        maxY = Math.max(maxY, moved[1]);
+      }
+      newPoints.push(moved);
     }
-
+    
     const newShapes = this.splitShape(newPoints);
 
     const positions = [];
@@ -73,13 +83,18 @@ class WedgeGeometry extends BufferGeometry {
       points = newShapes[k].extractPoints().shape;
       // Add top of roof
       const faces = ShapeUtils.triangulateShape(points, holes);
-      for (let i = 0; i < faces.length; i++) {
+      for (let i = 1; i < faces.length; i++) {
         const face = faces[i];
         for (let j = 0; j < 3; j++) {
           const unmoved = this.unMove([points[face[j]].x, points[face[j]].y]);
           const x = unmoved[0];
           const y = unmoved[1];
-          const z = k;
+          var z;
+          if (points[face[j]].y >= 0) {
+            z = depth - depth / maxY * points[face[j]].y;
+          } else {
+            z = depth - depth / minY * points[face[j]].y;
+          }
           //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
           positions.push(x, y, z);
         }
