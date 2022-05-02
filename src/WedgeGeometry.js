@@ -116,7 +116,7 @@ class WedgeGeometry extends BufferGeometry {
     var point = [];
     var nextPoint = [];
     var prevPoint = points[points.length - 1];
-    for (let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length - 1; i++) {
       point = points[i];
       if (i === 0) {
         newOutline.moveTo(point[0], point[1]);
@@ -142,6 +142,7 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
+    newOutline.lineTo(nextPoint[0], nextPoint[1]);
     console.log('crossings: ' + Object.keys(crossings).length);
     if (Object.keys(crossings).length === 0) {
       return [newOutline];
@@ -169,7 +170,7 @@ class WedgeGeometry extends BufferGeometry {
     // The crossing number that will close the current shape.
     var activeCrossing = -1;
     var currentShape = new Shape();
-    for (let i = 0; i < points.length - 1; i++) {
+    for (let i = 0; i < points.length; i++) {
       point = points[i];
       if (i === 0) {
         currentShape.moveTo(point[0], point[1]);
