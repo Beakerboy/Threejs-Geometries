@@ -76,7 +76,7 @@ class WedgeGeometry extends BufferGeometry {
       for (let i = 0; i < faces.length; i++) {
         const face = faces[i];
         for (let j = 0; j < 3; j++) {
-          const unmoved = this.unmove([points[face[j]].x, points[face[j]].y]);
+          const unmoved = this.unMove([points[face[j]].x, points[face[j]].y]);
           const x = unmoved[0];
           const y = unmoved[1];
           const z = k;
