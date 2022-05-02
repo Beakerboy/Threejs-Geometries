@@ -98,7 +98,6 @@ class WedgeGeometry extends BufferGeometry {
    *                   the addition of new vertices for the crossing points.
    */
   splitShape(points) {
-    console.log(points);
     // An associative array of all the values where the shape crosses the x axis, keys by segment number.
     const crossings = [];
 
@@ -128,7 +127,6 @@ class WedgeGeometry extends BufferGeometry {
       const sameSides = ((prevPoint[1] > 0) === (nextPoint[1] > 0));
       const switchesSides = ((point[1] > 0) !== (nextPoint[1] > 0));
       if ((pointOnLine && !sameSides) || switchesSides) {
-        console.log('crossing');
         var crossing;
         if (pointOnLine) {
           crossing = point[0];
@@ -143,7 +141,6 @@ class WedgeGeometry extends BufferGeometry {
       }
     }
     newOutline.lineTo(nextPoint[0], nextPoint[1]);
-    console.log('crossings: ' + Object.keys(crossings).length);
     if (Object.keys(crossings).length === 0) {
       return [newOutline];
     }
@@ -161,7 +158,7 @@ class WedgeGeometry extends BufferGeometry {
         number: sortedCrossings.indexOf(value),
       };
     }
-
+    console.log(crossings);
     // Walk the shape and assemble pieces from matched crossings.
     const shapes = [];
     // A list of crossing numbers that will close each shape in activeShapes.
