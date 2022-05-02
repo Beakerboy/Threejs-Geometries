@@ -74,7 +74,7 @@ class WedgeGeometry extends BufferGeometry {
       }
       newPoints.push(moved);
     }
-    
+
     const newShapes = this.splitShape(newPoints);
 
     const positions = [];
