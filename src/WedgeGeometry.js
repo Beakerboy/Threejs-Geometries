@@ -78,7 +78,7 @@ class WedgeGeometry extends BufferGeometry {
         for (let j = 0; j < 3; j++) {
           const x = points[face[j]].x;
           const y = points[face[j]].y;
-          const z = 0;
+          const z = k;
           //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
           positions.push(x, y, z);
         }
