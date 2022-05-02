@@ -79,11 +79,11 @@ class WedgeGeometry extends BufferGeometry {
 
     const positions = [];
     console.log('number of shapes: ' + newShapes.length);
-    for (let k = 0; k < newShapes.length; k++) {
+    for (let k = 1; k < newShapes.length; k++) {
       points = newShapes[k].extractPoints().shape;
       // Add top of roof
       const faces = ShapeUtils.triangulateShape(points, holes);
-      for (let i = 1; i < faces.length; i++) {
+      for (let i = 0; i < faces.length; i++) {
         const face = faces[i];
         for (let j = 0; j < 3; j++) {
           const unmoved = this.unMove([points[face[j]].x, points[face[j]].y]);
@@ -100,6 +100,7 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
+    // Todo make wal1s by iterating the outline.
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     this.computeVertexNormals();
   }
