@@ -55,10 +55,6 @@ class WedgeGeometry extends BufferGeometry {
     // The original shape's point, but roated and centered.
     const newPoints = [];
 
-    // An array of arrays. Each array contaions the vertices of the coresponding shape.
-    const vertices = [];
-    var shapeNum = -1;
-
     var point;
     var minY;
     var maxY;
