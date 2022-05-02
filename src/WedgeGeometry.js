@@ -116,7 +116,7 @@ class WedgeGeometry extends BufferGeometry {
     var point = [];
     var nextPoint = [];
     var prevPoint = points[points.length - 1];
-    for (let i = 0; i < points.length - 1; i++) {
+    for (let i = 0; i < points.length; i++) {
       point = points[i];
       if (i === 0) {
         newOutline.moveTo(point[0], point[1]);
