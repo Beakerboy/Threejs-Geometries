@@ -151,7 +151,9 @@ class WedgeGeometry extends BufferGeometry {
       sortedCrossings.push(crossings[key]);
     }
     // Sort numerically.
-    sortedCrossings.sort(function(a, b){return a-b});
+    sortedCrossings.sort(function(a, b){
+      return a-b;
+    });
     for (var key in crossings) {
       const value = crossings[key];
       crossings[key] = {
