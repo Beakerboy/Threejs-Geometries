@@ -74,7 +74,10 @@ class WedgeGeometry extends BufferGeometry {
     const newShapes = this.splitShape(newPoints);
 
     const positions = [];
-    for (let k = 1; k < newShapes.length; k++) {
+    // If the line does not intersect, display the outline.
+    // otherwise just the parts.
+    const startK = newShapes.length > 1 ? 1 : 0;
+    for (let k = startK; k < newShapes.length; k++) {
       points = newShapes[k].extractPoints().shape;
       // Add top of roof
       const faces = ShapeUtils.triangulateShape(points, holes);
