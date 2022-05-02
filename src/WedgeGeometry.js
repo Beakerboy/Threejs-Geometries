@@ -113,9 +113,6 @@ class WedgeGeometry extends BufferGeometry {
     // An associative array of all the values where the shape crosses the x axis, keys by segment number.
     const crossings = [];
 
-    // A list of any times the intersection is a tangent.
-    const tangents = [];
-
     // The new outline with the addition of any crossing points.
     const newOutline = new Shape();
 
