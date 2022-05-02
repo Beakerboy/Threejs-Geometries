@@ -143,17 +143,7 @@ class WedgeGeometry extends BufferGeometry {
     }
     console.log('crossings: ' + Object.keys(crossings).length);
     if (Object.keys(crossings).length === 0) {
-      // convert points to a shape
-      const shape = new Shape();
-      for (let i = 0; i < points.length; i++) {
-        point = points[i];
-        if (i === 0) {
-          shape.moveTo(point[0], point[1]);
-        } else {
-          shape.lineTo(point[0], point[1]);
-        }
-      }
-      return [shape];
+      return [newOutline];
     }
 
     // Sort crossings and save the crossing number.
