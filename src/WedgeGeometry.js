@@ -185,14 +185,14 @@ class WedgeGeometry extends BufferGeometry {
         // If we can finalize the current shape.
         if (crossing.number === activeCrossing) {
           shapes.push(currentShape);
-          currentShape =  activeShapes.pop();
+          currentShape = activeShapes.pop();
           activeCrossing = pendingCrossbacks.pop();
           currentShape.lineTo(crossing.value, 0);
         } else {
           activeShapes.push(currentShape);
           pendingCrossbacks.push(activeCrossing);
           currentShape = new Shape();
-          activeCrossing = crossing.number - 2 * (crossing.number % 2);
+          activeCrossing = crossing.number + 2 * ((crossing.number + 1) % 2) - 1;
           currentShape.moveTo(crossing.value, 0);
         }
       }
