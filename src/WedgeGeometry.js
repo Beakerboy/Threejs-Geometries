@@ -74,7 +74,6 @@ class WedgeGeometry extends BufferGeometry {
     const newShapes = this.splitShape(newPoints);
 
     const positions = [];
-    console.log('number of shapes: ' + newShapes.length);
     for (let k = 1; k < newShapes.length; k++) {
       points = newShapes[k].extractPoints().shape;
       // Add top of roof
@@ -116,10 +115,6 @@ class WedgeGeometry extends BufferGeometry {
     // The new outline with the addition of any crossing points.
     const newOutline = new Shape();
 
-    // Remove duplicated beginning and end point?
-    //if (points[0][0] === points[points.length - 1][0] && points[0][1] === points[points.length - 1][1]) {
-    //  points.pop();
-    //}
     // Walk the shape and find all crossings.
     var point = [];
     var nextPoint = [];
@@ -170,7 +165,6 @@ class WedgeGeometry extends BufferGeometry {
         number: sortedCrossings.indexOf(value),
       };
     }
-    console.log(crossings);
     // Walk the shape and assemble pieces from matched crossings.
     const shapes = [];
     // A list of crossing numbers that will close each shape in activeShapes.
