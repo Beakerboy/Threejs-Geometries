@@ -185,6 +185,8 @@ class WedgeGeometry extends BufferGeometry {
         // If we can finalize the current shape.
         if (crossing.number === activeCrossing) {
           shapes.push(currentShape);
+          currentShape =  activeShapes.pop();
+          activeCrossing = pendingCrossbacks.pop();
         } else {
           activeShapes.push(currentShape);
           pendingCrossbacks.push(activeCrossing);
