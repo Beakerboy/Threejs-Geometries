@@ -148,7 +148,7 @@ class WedgeGeometry extends BufferGeometry {
     // Sort crossings and save the crossing number.
     var sortedCrossings = [];
     for (const key in crossings) {
-      sortedCrossings.push(crossings[key]);
+      sortedCrossings.push(parseFloat(crossings[key]));
     }
     sortedCrossings.sort();
     for (var key in crossings) {
