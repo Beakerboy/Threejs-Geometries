@@ -192,6 +192,9 @@ class WedgeGeometry extends BufferGeometry {
           activeShapes.push(currentShape);
           pendingCrossbacks.push(activeCrossing);
           currentShape = new Shape();
+          // crossing number is zero indexed.
+          // If it is even, it closes at the next nuber, odd closes at the previous value.
+          // 0=>1, 1=>0, 5=>4
           activeCrossing = crossing.number + 2 * ((crossing.number + 1) % 2) - 1;
           currentShape.moveTo(crossing.value, 0);
         }
