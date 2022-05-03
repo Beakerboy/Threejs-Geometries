@@ -100,7 +100,7 @@ class WedgeGeometry extends BufferGeometry {
     }
     // Todo make wal1s by iterating the outline.
     points = newShapes[0].extractPoints().shape;
-    for(let i = 0; i < points.length; i++) {
+    for (let i = 0; i < points.length; i++) {
       var point = points[i];
       var pointZ;
       if (point.y >= 0) {
