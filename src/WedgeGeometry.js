@@ -120,12 +120,12 @@ class WedgeGeometry extends BufferGeometry {
       } else {
         nextPointZ = depth - depth / minY * nextPoint.y;
       }
-      positions.push(point.x, point.y, 0);
-      positions.push(point.x, point.y, pointZ);
-      positions.push(nextPoint.x, nextPoint.y, 0);
-      positions.push(point.x, point.y, pointZ);
-      positions.push(nextPoint.x, nextPoint.y, nextPointZ);
-      positions.push(nextPoint.x, nextPoint.y, 0);
+      positions.push(...this.unmove([point.x, point.y]), 0);
+      positions.push(...this.unmove([point.x, point.y]), pointZ);
+      positions.push(...this.unmove([nextPoint.x, nextPoint.y]), 0);
+      positions.push(...this.unmove([point.x, point.y]), pointZ);
+      positions.push(...this.unmove([nextPoint.x, nextPoint.y]), nextPointZ);
+      positions.push(...this.unmove([nextPoint.x, nextPoint.y]), 0);
     }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     this.computeVertexNormals();
