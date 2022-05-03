@@ -99,6 +99,34 @@ class WedgeGeometry extends BufferGeometry {
       }
     }
     // Todo make wal1s by iterating the outline.
+    points = newShapes[0].extractPoints().shape;
+    for(let i = 0; i < points.length; i++) {
+      var point = points[i];
+      var pointZ;
+      if (point.y >= 0) {
+        pointZ = depth - depth / maxY * point.y;
+      } else {
+        pointZ = depth - depth / minY * point.y;
+      }
+      var nextPoint;
+      if (i === points.length - 1) {
+        nextPoint = points[0];
+      } else {
+        nextPoint = points[i + 1];
+      }
+      var nextPointZ;
+      if (nextPoint.y >= 0) {
+        nextPointZ = depth - depth / maxY * nextPoint.y;
+      } else {
+        nextPointZ = depth - depth / minY * nextPoint.y;
+      }
+      positions.push(point.x, point.y, 0);
+      positions.push(point.x, point.y, pointZ);
+      positions.push(nextPoint.x, nextPoint.y, 0);
+      positions.push(point.x, point.y, pointZ);
+      positions.push(nextPoint.x, nextPoint.y, nextPointZ);
+      positions.push(nextPoint.x, nextPoint.y, 0);
+    }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     this.computeVertexNormals();
   }
