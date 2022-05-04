@@ -201,14 +201,15 @@
 				WedgeGeometry: function (mesh) {
 					const data = {
 						angle: 0,
-						center: [0,0],
+						center: [0, 0],
 						centerx: 0,
 						centery: 0,
 						depth: 5
 					};
 					function generateGeometry() {
 						data.center = [data.centerx, data.centery];
-						updateGroupGeometry(mesh, new WedgeGeometry(heartShape, data));
+						const geometry = new WedgeGeometry(heartShape, data);
+						updateGroupGeometry(mesh, geometry);
 					}
 					const folder = gui.addFolder( 'THREE.WedgeGeometry' );
 					folder.add( data, 'angle', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
