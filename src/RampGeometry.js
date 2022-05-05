@@ -76,7 +76,7 @@ class RampGeometry extends BufferGeometry {
       positions.push(nextPoint.x, nextPoint.y, 0);
     }
 
-    // The highest and lowest points will be allong the outside
+    // The highest and lowest points will be along the outside
     // Calculate the scaling factor to get he correct height.
     if (!depth) {
       depth = (maxDepth - minDepth) * Math.tan(pitch);
@@ -115,7 +115,8 @@ class RampGeometry extends BufferGeometry {
         positions.push(x, y, z);
       }
     }
-    // Add floor reverse face directions to reverse normals.
+    // Add floor.
+    // Reverse face directions to reverse normals.
     for (let i = 0; i < faces.length; i++) {
       const face = faces[i];
       for (let j = 2; j > -1; j--) {
@@ -125,9 +126,8 @@ class RampGeometry extends BufferGeometry {
       }
     }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
-    // ToDo - add points correctly so only one face needs to be rendered.
     this.computeVertexNormals();
 
   }
 }
-export { RampGeometry };
+export {RampGeometry};
