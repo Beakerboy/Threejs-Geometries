@@ -115,6 +115,15 @@ class RampGeometry extends BufferGeometry {
         positions.push(x, y, z);
       }
     }
+    // Add floor
+    for (let i = 0; i < faces.length; i++) {
+      const face = faces[i];
+      for (let j = 0; j < 3; j++) {
+        const x = vertices[2 * face[j]];
+        const y = vertices[2 * face[j] + 1];
+        positions.push(x, y, 0);
+      }
+    }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     // ToDo - add points correctly so only one face needs to be rendered.
     this.computeVertexNormals();
