@@ -132,6 +132,13 @@
 			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
+			const rectShape = new Sfape();
+			rectShape.moveTo( 1, 2 );
+			rectShape.lineTo( -1, 2 );
+			rectShape.lineTo( -1, -2 );
+			rectShape.lineTo( 1, -2 );
+			rectShape.lineTo( 1, 2 );
+
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
 					const data = {
@@ -216,6 +223,17 @@
 					folder.add( data, 'centerx', -10, 10 ).step( .1 ).onChange( generateGeometry );
 					folder.add( data, 'centery', -10, 10 ).step( .1 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
+				},
+				HippedGeometry: function (mesh) {
+					const data = {
+						pitch: .75
+					};
+					function generateGeometry() {
+						const geometry = new HippedGeometry(rectShape, data);
+						updateGroupGeometry(mesh, geometry);
+					}
+					const folder = gui.addFolder( 'THREE.HippedGeometry' );
+					folder.add( data, 'pitch', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
 				},
 				TorusGeometry: function ( mesh ) {
 
