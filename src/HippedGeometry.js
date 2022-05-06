@@ -259,4 +259,4 @@ class HippedGeometry extends BufferGeometry {
     return [pointX, pointY];
   }
 }
-export { WedgeGeometry };
+export { HippedGeometry };
