@@ -7,6 +7,10 @@
     "browser": true,
     "es6": true
   },
+  "extends": [
+    "mdcs",
+    "plugin:compat/recommended"
+  ],
   "globals": {
     "Building": true,
     "BuildingPart": true,
@@ -21,56 +25,23 @@
     "scene": true
   },
   "rules": {
-    "brace-style": [
+    "no-throw-literal": [
       "error"
     ],
-    "camelcase": [
-      "error"
-    ],
-    "comma-dangle": [
+    "import/extensions": [
       "error",
-      "always-multiline"
-    ],
-    "comma-spacing": [
-      "error"
-    ],
-    "comma-style": [
-      "error"
-    ],
-    "eqeqeq": [
-      "error"
-    ],
-    "indent": [
-      "error",
-      2
-    ],
-    "keyword-spacing": [
-      "error"
-    ],
-    "linebreak-style": [
-      "error",
-      "unix"
-    ],
-    "no-console": [
-      0
-    ],
-    "no-trailing-spaces": [
-      "error"
-    ],
-    "no-undef": [
-      "error"
+      "always"
     ],
     "quotes": [
       "error",
       "single"
     ],
-    "semi": [
+    "prefer-const": [
       "error",
-      "always"
-    ],
-    "space-before-function-paren": [
-      "error",
-      "never"
+      {
+        "destructuring": "any",
+        "ignoreReadBeforeAssign": false
+      }
     ]
   }
 }
