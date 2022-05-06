@@ -26,7 +26,7 @@ class HippedGeometry extends BufferGeometry {
 
     // The max depth of the geometry
     var pitch = options.pitch;
-    
+
     // Get the outer shape and holes.
     var points = shape.extractPoints().shape;
     var holes = shape.extractPoints().holes;
