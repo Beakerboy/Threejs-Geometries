@@ -52,7 +52,7 @@ class WedgeGeometry extends BufferGeometry {
         }
       }
     }
-    // The original shape's point, but roated and centered.
+    // The original shape's point, but rotated and centered.
     const newPoints = [];
 
     var point;
