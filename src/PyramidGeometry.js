@@ -33,6 +33,17 @@ class PyramidGeometry extends BufferGeometry {
       positions.push(center[0], center[1], depth);
       positions.push(nextPoint.x, nextPoint.y, 0);
     }
+    // Add the floor
+    const faces = ShapeUtils.triangulateShape(points, []);
+    for (let i = 0; i < faces.length; i++) {
+      const face = faces[i];
+      for (let j = 2; j > -1; j--) {
+        const x = points[face[j]].x;
+        const y = points[face[j]].y;
+        const z = 0;
+        positions.push(x, y, z);
+      }
+    }
     this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
     // ToDo - add points correctly so only one face needs to be rendered.
     this.computeVertexNormals();
