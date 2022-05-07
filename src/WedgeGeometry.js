@@ -111,7 +111,7 @@ class WedgeGeometry extends BufferGeometry {
       }
     }
 
-    // make wal1s by iterating the outline.
+    // make walls by iterating the outline.
     points = newShapes[0].extractPoints().shape;
     for (let i = 0; i < points.length; i++) {
       var point = points[i];
