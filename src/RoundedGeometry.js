@@ -152,12 +152,12 @@ class RoundedGeometry extends BufferGeometry {
    * Split a shape using the x-axis as the line. Shape is clockwise.
    * Not tested on self-intersecting shapes.
    *
-   * @param {[[number, number]]} points - an array of x, y pairs.
+   * @param {[Shape]} shapes - an array of THREE.Shape. Element 0 is an outline to which crossing points are to be added. The remainder are to be split into separate shapes.
    * @param {number} yValue - Horizontal crossing line to use to divide he shape.
    * @return {[Shape]} an array of shapes. Element 0 is the original shape with
    *                   the addition of new vertices for the crossing points.
    */
-  splitShape(points, yValue = 0) {
+  splitShape(shapes, yValue = 0) {
     // An associative array of all the values where the shape crosses the x axis, keys by segment number.
     const crossings = [];
 
