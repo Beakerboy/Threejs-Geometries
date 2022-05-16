@@ -28,7 +28,7 @@ class RoundedGeometry extends BufferGeometry {
     const segments = options.segments;
 
     // The direction that the downward slope faces.
-    const segments = options.angle;
+    const angle = options.angle;
 
     // Get the outer shape and holes.
     var points = shape.extractPoints().shape;
@@ -70,8 +70,12 @@ class RoundedGeometry extends BufferGeometry {
       }
       newPoints.push(moved);
     }
-
-    const newShapes = this.splitShape(newPoints);
+    const extents = this.extents(newPoints);
+    const diff = (extents[3] - extents[1]) / (segments + 1);
+    for (let i = 0; i < segments; i++) {
+      crossing = extents[1] + diff * (i + 1);
+      newShapes = this.splitShape(newPoints, crossing);
+    }
 
     const positions = [];
     // If the line does not intersect, display the outline.
@@ -149,10 +153,11 @@ class RoundedGeometry extends BufferGeometry {
    * Not tested on self-intersecting shapes.
    *
    * @param {[[number, number]]} points - an array of x, y pairs.
+   * @param {number} yValue - Horizontal crossing line to use to divide he shape.
    * @return {[Shape]} an array of shapes. Element 0 is the original shape with
    *                   the addition of new vertices for the crossing points.
    */
-  splitShape(points) {
+  splitShape(points, yValue = 0) {
     // An associative array of all the values where the shape crosses the x axis, keys by segment number.
     const crossings = [];
 
@@ -171,9 +176,9 @@ class RoundedGeometry extends BufferGeometry {
         newOutline.lineTo(point[0], point[1]);
       }
       nextPoint = points[i + 1];
-      const pointOnLine = (point[1] === 0);
-      const sameSides = ((prevPoint[1] > 0) === (nextPoint[1] > 0));
-      const switchesSides = ((point[1] > 0) !== (nextPoint[1] > 0));
+      const pointOnLine = (point[1] === yValue);
+      const sameSides = ((prevPoint[1] > yValue) === (nextPoint[1] > yValue));
+      const switchesSides = ((point[1] > yValue) !== (nextPoint[1] > yValue));
       if ((pointOnLine && !sameSides) || switchesSides) {
         var crossing;
         if (pointOnLine) {
@@ -184,7 +189,7 @@ class RoundedGeometry extends BufferGeometry {
         }
         crossings[i] = crossing;
         if (!pointOnLine) {
-          newOutline.lineTo(crossing, 0);
+          newOutline.lineTo(crossing, yValue);
         }
       }
       prevPoint = point;
@@ -228,14 +233,14 @@ class RoundedGeometry extends BufferGeometry {
       if (i in crossings) {
         crossing = crossings[i];
         if (crossing.value !== point[0]) {
-          currentShape.lineTo(crossing.value, 0);
+          currentShape.lineTo(crossing.value, yValue);
         }
         // If we can finalize the current shape.
         if (crossing.number === activeCrossing) {
           shapes.push(currentShape);
           currentShape = activeShapes.pop();
           activeCrossing = pendingCrossbacks.pop();
-          currentShape.lineTo(crossing.value, 0);
+          currentShape.lineTo(crossing.value, yValue);
         } else {
           activeShapes.push(currentShape);
           pendingCrossbacks.push(activeCrossing);
@@ -244,12 +249,11 @@ class RoundedGeometry extends BufferGeometry {
           // If it is even, it closes at the next nuber, odd closes at the previous value.
           // 0=>1, 1=>0, 5=>4
           activeCrossing = crossing.number + 2 * ((crossing.number + 1) % 2) - 1;
-          currentShape.moveTo(crossing.value, 0);
+          currentShape.moveTo(crossing.value, yValue);
         }
       }
     }
     shapes.push(currentShape);
-    shapes.unshift(newOutline);
     return shapes;
   }
 
@@ -258,9 +262,8 @@ class RoundedGeometry extends BufferGeometry {
    */
   move(point) {
     const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
-    const pointY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
+    const pointX = point.x * Math.cos(angle) - point.y * Math.sin(angle);
+    const pointY = point.x * Math.sin(angle) + point.y * Math.cos(angle);
     return [pointX, pointY];
   }
 
@@ -269,9 +272,8 @@ class RoundedGeometry extends BufferGeometry {
    */
   unMove(point) {
     const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = point[0] * Math.cos(angle) + point[1] * Math.sin(angle) + center[0];
-    const pointY = -1 * point[0] * Math.sin(angle) + point[1] * Math.cos(angle) + center[1];
+    const pointX = point[0] * Math.cos(angle) + point[1] * Math.sin(angle);
+    const pointY = -1 * point[0] * Math.sin(angle) + point[1] * Math.cos(angle);
     return [pointX, pointY];
   }
 }
