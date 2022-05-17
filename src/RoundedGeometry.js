@@ -149,7 +149,7 @@ class RoundedGeometry extends BufferGeometry {
   }
 
   /**
-   * Split a shape using the x-axis as the line. Shape is clockwise.
+   * Split a shape using a specified y-value as the split line. Shape is clockwise.
    * Not tested on self-intersecting shapes.
    *
    * @param {[Shape]} shapes - an array of THREE.Shape. Element 0 is an outline to which crossing points are to be added. The remainder are to be split into separate shapes.
@@ -158,7 +158,8 @@ class RoundedGeometry extends BufferGeometry {
    *                   the addition of new vertices for the crossing points.
    */
   splitShape(shapes, yValue = 0) {
-    // An associative array of all the values where the shape crosses the x axis, keys by segment number.
+    const outline = shapes.shift();
+    // An associative array of all the values where the shape crosses the y-value keyed by segment number.
     const crossings = [];
 
     // The new outline with the addition of any crossing points.
@@ -216,7 +217,7 @@ class RoundedGeometry extends BufferGeometry {
       };
     }
     // Walk the shape and assemble pieces from matched crossings.
-    const shapes = [];
+    const newShapes = [];
     // A list of crossing numbers that will close each shape in activeShapes.
     const pendingCrossbacks = [];
     const activeShapes = [];
@@ -237,7 +238,7 @@ class RoundedGeometry extends BufferGeometry {
         }
         // If we can finalize the current shape.
         if (crossing.number === activeCrossing) {
-          shapes.push(currentShape);
+          newShapes.push(currentShape);
           currentShape = activeShapes.pop();
           activeCrossing = pendingCrossbacks.pop();
           currentShape.lineTo(crossing.value, yValue);
@@ -253,8 +254,8 @@ class RoundedGeometry extends BufferGeometry {
         }
       }
     }
-    shapes.push(currentShape);
-    return shapes;
+    newShapes.push(currentShape);
+    return newShapes;
   }
 
   /**
