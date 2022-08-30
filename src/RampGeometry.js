@@ -40,7 +40,7 @@ class RampGeometry extends BufferGeometry {
       // Check that any holes are correct direction.
       for (let h = 0; h < holes.length; h++) {
         const hole = holes[h];
-        if (THREE.ShapeUtils.isClockWise(hole)) {
+        if (ShapeUtils.isClockWise( hole )) {
           holes[h] = hole.reverse();
         }
       }
