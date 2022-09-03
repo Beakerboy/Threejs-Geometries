@@ -138,11 +138,16 @@ class HippedGeometry extends BufferGeometry {
    * @return {[number, number]} the coordinates of the intersecting point.
    */
   findIntersectingBisectors(points, point1, point2) {
-    P1 = points[point1];
-    P2 = points[point2];
+    var P1 = points[point1];
+    var P2 = points[point2];
     // The Point before point1
-    // point1_minus = point1 == 0 ? points.length - 1 : point1 - 1;
-    // P1_minus = points[point1_minus];
+    var point1_minus = 0;
+    if (point1 == 0) {
+      point1_minus =  points.length - 1;
+    } else {
+      point1_minus = point1 - 1;
+    }
+    var P1_minus = points[point1_minus];
     //get the length of p1 to p1 minus
     // the point after point1
     // point1_plus = point1 == points.length - 1 ? 0 : point1 + 1;
