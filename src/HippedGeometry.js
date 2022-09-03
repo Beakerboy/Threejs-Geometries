@@ -129,134 +129,27 @@ class HippedGeometry extends BufferGeometry {
   }
 
   /**
-   * Split a shape using the x-axis as the line. Shape is clockwise.
-   * Not tested on self-intersecting shapes.
+   * Given a shape and two points, calculate the point where the bisectors of
+   * the two corners intersect.
    *
    * @param {[[number, number]]} points - an array of x, y pairs.
-   * @return {[Shape]} an array of shapes. Element 0 is the original shape with
-   *                   the addition of new vertices for the crossing points.
+   * @param {integer} point1 - the index in points of the first corner.
+   * @param {integer} point1 - the index in points of the first corner.
+   * @return {[number, number]} the coordinates of the intersecting point.
    */
-  splitShape(points) {
-    // An associative array of all the values where the shape crosses the x axis, keys by segment number.
-    const crossings = [];
-
-    // The new outline with the addition of any crossing points.
-    const newOutline = new Shape();
-
-    // Walk the shape and find all crossings.
-    var point = [];
-    var nextPoint = [];
-    var prevPoint = points[points.length - 1];
-    for (let i = 0; i < points.length - 1; i++) {
-      point = points[i];
-      if (i === 0) {
-        newOutline.moveTo(point[0], point[1]);
-      } else {
-        newOutline.lineTo(point[0], point[1]);
-      }
-      nextPoint = points[i + 1];
-      const pointOnLine = (point[1] === 0);
-      const sameSides = ((prevPoint[1] > 0) === (nextPoint[1] > 0));
-      const switchesSides = ((point[1] > 0) !== (nextPoint[1] > 0));
-      if ((pointOnLine && !sameSides) || switchesSides) {
-        var crossing;
-        if (pointOnLine) {
-          crossing = point[0];
-        } else {
-          var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
-          var crossing = point[0] - point[1] / m;
-        }
-        crossings[i] = crossing;
-        if (!pointOnLine) {
-          newOutline.lineTo(crossing, 0);
-        }
-      }
-      prevPoint = point;
-    }
-    newOutline.lineTo(nextPoint[0], nextPoint[1]);
-    if (Object.keys(crossings).length === 0) {
-      return [newOutline];
-    }
-
-    // Sort crossings and save the crossing number.
-    var sortedCrossings = [];
-    for (const key in crossings) {
-      sortedCrossings.push(crossings[key]);
-    }
-    // Sort numerically.
-    sortedCrossings.sort(function(a, b){
-      return a-b;
-    });
-    for (var key in crossings) {
-      const value = crossings[key];
-      crossings[key] = {
-        value: value,
-        number: sortedCrossings.indexOf(value),
-      };
-    }
-    // Walk the shape and assemble pieces from matched crossings.
-    const shapes = [];
-    // A list of crossing numbers that will close each shape in activeShapes.
-    const pendingCrossbacks = [];
-    const activeShapes = [];
-    // The crossing number that will close the current shape.
-    var activeCrossing = -1;
-    var currentShape = new Shape();
-    for (let i = 0; i < points.length; i++) {
-      point = points[i];
-      if (i === 0) {
-        currentShape.moveTo(point[0], point[1]);
-      } else {
-        currentShape.lineTo(point[0], point[1]);
-      }
-      if (i in crossings) {
-        crossing = crossings[i];
-        if (crossing.value !== point[0]) {
-          currentShape.lineTo(crossing.value, 0);
-        }
-        // If we can finalize the current shape.
-        if (crossing.number === activeCrossing) {
-          shapes.push(currentShape);
-          currentShape = activeShapes.pop();
-          activeCrossing = pendingCrossbacks.pop();
-          currentShape.lineTo(crossing.value, 0);
-        } else {
-          activeShapes.push(currentShape);
-          pendingCrossbacks.push(activeCrossing);
-          currentShape = new Shape();
-          // crossing number is zero indexed.
-          // If it is even, it closes at the next nuber, odd closes at the previous value.
-          // 0=>1, 1=>0, 5=>4
-          activeCrossing = crossing.number + 2 * ((crossing.number + 1) % 2) - 1;
-          currentShape.moveTo(crossing.value, 0);
-        }
-      }
-    }
-    shapes.push(currentShape);
-    shapes.unshift(newOutline);
-    return shapes;
-  }
-
-  /**
-   *
-   */
-  move(point) {
-    const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
-    const pointY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
-    return [pointX, pointY];
-  }
-
-  /**
-   *
-   */
-  unMove(point) {
-    const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = point[0] * Math.cos(angle) + point[1] * Math.sin(angle) + center[0];
-    const pointY = -1 * point[0] * Math.sin(angle) + point[1] * Math.cos(angle) + center[1];
-    return [pointX, pointY];
+  findIntersectingBisectors(points, point1, point2) {
+    P1 = points[point1];
+    P2 = points[point2];
+    // The Point before point1
+    // point1_minus = point1 == 0 ? points.length - 1 : point1 - 1;
+    // P1_minus = points[point1_minus];
+    //get the length of p1 to p1 minus
+    // the point after point1
+    // point1_plus = point1 == points.length - 1 ? 0 : point1 + 1;
+    // P1_plus = points[point1_plus];
+    // Get the length of p1 to p1 plus
+    // rescale p1 plus to have the same length as p1minus.
+    // m1 = the two legs on p1 to the same length. Average the x and points
   }
 }
 export { HippedGeometry };
