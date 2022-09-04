@@ -175,20 +175,16 @@ class HippedGeometry extends BufferGeometry {
    * Calculate the angle between two points
    */
   calculateAngle(points, point1, point2) {
-
-    
+    var P1 = points[point1];
+    var P2 = points[point2];
+    return Math.atan2(P2.y - P1.y, P2.x - P1.x);
   }
   
   /**
    * Calculate the angle formed between two edges of a shape at a given point.
    */
   calculateVertexAngle(points, vertex) {
-    var vertex_minus = getPreviousPoint(points, vertex);
-    var vertex_plus = getNextPoint(points, vertex);
-    var P1 = points[vertex_minus];
-    var P2 = points[vertex];
-    var P3 = points[vertex_plus];
-    return Math.atan2(P1.y - P2.y, P1.x - P2.x) - Math.atan2(P3.y - P2.y, P3.x - P2.x);
+    return calculateAngle(points, vertex, getPreviousPoint(points, vertex)) - calculateAngle(points, vertex, getNextPoint(points, vertex));
   }
 }
 export { HippedGeometry };
