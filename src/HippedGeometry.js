@@ -139,23 +139,13 @@ class HippedGeometry extends BufferGeometry {
    */
   findIntersectingBisectors(points, point1, point2) {
     var P1 = points[point1];
-    var point1_plus = 0;
-    if (point1 == points.length - 1) {
-      point1_plus =  0;
-    } else {
-      point1_plus = point1 + 1;
-    }
+    var point1_plus = getNextPoint(points, point1);
     var A1 = calculateAngle(points, point1);
     var m1 = Math.tan(A1 / 2 - calculateAngle(points, point1, point1_plus));
     var b1 = P1.y - m1 * P1.x;
 
     var P2 = points[point2];
-    var point2_plus = 0;
-    if (point2 == points.length - 1) {
-      point2_plus =  0;
-    } else {
-      point2_plus = point2 + 1;
-    }
+    var point2_plus = getNextPoint(points, point2);
     var A2 = calculateAngle(points, point2);
     var m2 = Math.tan(A2 / 2 - calculateAngle(points, point2, point2_plus));
     var b2 = P2.y - m2 * P2.x;
@@ -163,6 +153,22 @@ class HippedGeometry extends BufferGeometry {
     var x = (b1 - b2) / (m2 - m1);
     var y = m1 * x + b1;
     return [x, y];
+  }
+
+  getNextPoint(points, point) {
+    if (point == points.length - 1) {
+      return 0;
+    } else {
+      return point + 1;
+    }
+  }
+
+  getPreviousPoint(points, point) {
+    if (point == 0) {
+      return points.length - 1;
+    } else {
+      return point - 1;
+    }
   }
 
   /**
@@ -177,18 +183,8 @@ class HippedGeometry extends BufferGeometry {
    * Calculate the angle formed between two edges of a shape at a given point.
    */
   calculateVertexAngle(points, vertex) {
-    var vertex_minus = 0;
-    if (vertex == 0) {
-      vertex_minus =  points.length - 1;
-    } else {
-      vertex_minus = vertex - 1;
-    }
-    var vertex_plus = 0;
-    if (vertex == points.length - 1) {
-      vertex_plus =  0;
-    } else {
-      vertex_plus = vertex + 1;
-    }
+    var vertex_minus = getPreviousPoint(points, vertex);
+    var vertex_plus = getNextPoint(points, vertex);
     var P1 = points[vertex_minus];
     var P2 = points[vertex];
     var P3 = points[vertex_plus];
