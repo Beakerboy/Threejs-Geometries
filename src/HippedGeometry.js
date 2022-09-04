@@ -139,22 +139,60 @@ class HippedGeometry extends BufferGeometry {
    */
   findIntersectingBisectors(points, point1, point2) {
     var P1 = points[point1];
-    var P2 = points[point2];
-    // The Point before point1
-    var point1_minus = 0;
-    if (point1 == 0) {
-      point1_minus =  points.length - 1;
+    var point1_plus = 0;
+    if (point1 == points.length - 1) {
+      point1_plus =  0;
     } else {
-      point1_minus = point1 - 1;
+      point1_plus = point1 + 1;
     }
-    var P1_minus = points[point1_minus];
-    //get the length of p1 to p1 minus
-    // the point after point1
-    // point1_plus = point1 == points.length - 1 ? 0 : point1 + 1;
-    // P1_plus = points[point1_plus];
-    // Get the length of p1 to p1 plus
-    // rescale p1 plus to have the same length as p1minus.
-    // m1 = the two legs on p1 to the same length. Average the x and points
+    var A1 = calculateAngle(points, point1);
+    var m1 = Math.tan(A1 / 2 - calculateAngle(points, point1, point1_plus));
+    var b1 = P1.y - m1 * P1.x;
+
+    var P2 = points[point2];
+    var point2_plus = 0;
+    if (point2 == points.length - 1) {
+      point2_plus =  0;
+    } else {
+      point2_plus = point2 + 1;
+    }
+    var A2 = calculateAngle(points, point2);
+    var m2 = Math.tan(A2 / 2 - calculateAngle(points, point2, point2_plus));
+    var b2 = P2.y - m2 * P2.x;
+
+    var x = (b1 - b2) / (m2 - m1);
+    var y = m1 * x + b1;
+    return [x, y];
+  }
+
+  /**
+   * Calculate the angle between two points
+   */
+  calculateAngle(points, point1, point2) {
+
+    
+  }
+  
+  /**
+   * Calculate the angle formed between two edges of a shape at a given point.
+   */
+  calculateVertexAngle(points, vertex) {
+    var vertex_minus = 0;
+    if (vertex == 0) {
+      vertex_minus =  points.length - 1;
+    } else {
+      vertex_minus = vertex - 1;
+    }
+    var vertex_plus = 0;
+    if (vertex == points.length - 1) {
+      vertex_plus =  0;
+    } else {
+      vertex_plus = vertex + 1;
+    }
+    var P1 = points[vertex_minus];
+    var P2 = points[vertex];
+    var P3 = points[vertex_plus];
+    return Math.atan2(P1.y - P2.y, P1.x - P2.x) - Math.atan2(P3.y - P2.y, P3.x - P2.x);
   }
 }
 export { HippedGeometry };
