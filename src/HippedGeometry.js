@@ -155,6 +155,14 @@ class HippedGeometry extends BufferGeometry {
     return [x, y];
   }
 
+  /**
+   * Given an array and an index, return the next index. If the provided
+   * index is the last index, wrap back to the first.
+   *
+   * @param {array} points - an array.
+   * @param {integer} point - the index in points.
+   * @return {integer} the next, or the first index.
+   */
   getNextPoint(points, point) {
     if (point == points.length - 1) {
       return 0;
@@ -163,6 +171,14 @@ class HippedGeometry extends BufferGeometry {
     }
   }
 
+  /**
+   * Given an array and an index, return the previous index. If the provided
+   * index is the first index, wrap back to the last.
+   *
+   * @param {array} points - an array.
+   * @param {integer} point - the index in points.
+   * @return {integer} the previous, or the last index.
+   */
   getPreviousPoint(points, point) {
     if (point == 0) {
       return points.length - 1;
