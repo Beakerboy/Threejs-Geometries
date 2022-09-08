@@ -131,6 +131,16 @@ class HippedGeometry extends BufferGeometry {
    *                   the addition of new vertices for the crossing points.
    */
   splitShape(points) {
+    for (let i = 0; i < points.length; i++) {
+      //x = findIntersectingBisectors(points, i, getNextPoint(points, i));
+      // if x is inside object save the pair
+      // check matches
+      // if two matching points only match each other add the triangle to savedShapes
+      //   flag the two points as unusable.
+      //   Insert the new Point to the shape betweeen the matching points
+      // if one point has two matches, exclude the longer match and recheck.
+    }
+    // if there are only two free points, connect them and return.
   }
 
   /**
