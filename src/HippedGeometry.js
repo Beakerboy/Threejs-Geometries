@@ -123,6 +123,17 @@ class HippedGeometry extends BufferGeometry {
   }
 
   /**
+   * Split a shape into straight skeleton pieces. Shape is clockwise.
+   * Not tested on self-intersecting shapes.
+   *
+   * @param {[[number, number]]} points - an array of x, y pairs.
+   * @return {[Shape]} an array of shapes. Element 0 is the original shape with
+   *                   the addition of new vertices for the crossing points.
+   */
+  splitShape(points) {
+  }
+
+  /**
    * Given a shape and two points, calculate the point where the bisectors of
    * the two corners intersect.
    *
