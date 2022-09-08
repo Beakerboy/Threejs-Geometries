@@ -24,18 +24,12 @@ class HippedGeometry extends BufferGeometry {
     // The max depth of the geometry
     var depth = options.depth;
 
-    // The max depth of the geometry
+    // Use the pitch to calculate the max depth of the geometry
     var pitch = options.pitch;
 
     // Get the outer shape and holes.
     var points = shape.extractPoints().shape;
     var holes = shape.extractPoints().holes;
-
-    // The outer shape is the original shape plus any crossing points.
-    const outerShape = new Shape();
-
-    // A straight array of vertices for the outer shape
-    const outerVertices = [];
 
     // Ensuse all paths are in the correct direction for the normals
     const reverse = ! ShapeUtils.isClockWise( points );
