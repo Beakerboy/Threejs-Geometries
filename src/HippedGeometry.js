@@ -144,6 +144,13 @@ class HippedGeometry extends BufferGeometry {
   }
 
   /**
+   * Calculate the distance between the last point and the line between points 1 and 2
+   */
+  calculateLastPointDistance(points) {
+   
+  }
+
+  /**
    * Given a shape and two points, calculate the point where the bisectors of
    * the two corners intersect.
    *
