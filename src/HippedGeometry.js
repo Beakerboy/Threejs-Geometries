@@ -146,7 +146,9 @@ class HippedGeometry extends BufferGeometry {
   /**
    * Calculate the distance between the last point and the line between points 1 and 2
    */
-  calculateLastPointDistance(points) {
+  calculateLastPointDistance(points, index) {
+    p0x = points[index][0];
+    D = abs((p2x - p1x) * (p1y - p0y) - (p1x - p1x) * (p2y - p1y)) / Math.sqr((p2x - p1x)^2 + (py2 - py1)^2);
    
   }
 
