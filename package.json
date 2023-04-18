@@ -12,6 +12,9 @@
     "eslint": "^8.13",
     "eslint-config-mdcs": "^5.0.0",
     "eslint-plugin-compat": "^4.0.2",
-    "jest": "^27.4.7"
+    "qunit": "^2.4"
+  },
+  "scripts": {
+    "test": "qunit"
   }
 }
