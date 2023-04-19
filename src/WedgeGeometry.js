@@ -268,74 +268,90 @@ class WedgeGeometry extends BufferGeometry {
 		} );
 		for ( var key in crossings ) {
 			const value = crossings[ key ];
-      crossings[key] = {
-        value: value,
-        number: sortedCrossings.indexOf(value),
-      };
-    }
-    // Walk the shape and assemble pieces from matched crossings.
-    const shapes = [];
-    // A list of crossing numbers that will close each shape in activeShapes.
-    const pendingCrossbacks = [];
-    const activeShapes = [];
-    // The crossing number that will close the current shape.
-    var activeCrossing = -1;
-    var currentShape = new Shape();
-    for (let i = 0; i < points.length; i++) {
-      point = points[i];
-      if (i === 0) {
-        currentShape.moveTo(point[0], point[1]);
-      } else {
-        currentShape.lineTo(point[0], point[1]);
-      }
-      if (i in crossings) {
-        crossing = crossings[i];
-        if (crossing.value !== point[0]) {
-          currentShape.lineTo(crossing.value, 0);
-        }
-        // If we can finalize the current shape.
-        if (crossing.number === activeCrossing) {
-          shapes.push(currentShape);
-          currentShape = activeShapes.pop();
-          activeCrossing = pendingCrossbacks.pop();
-          currentShape.lineTo(crossing.value, 0);
-        } else {
-          activeShapes.push(currentShape);
-          pendingCrossbacks.push(activeCrossing);
-          currentShape = new Shape();
-          // crossing number is zero indexed.
-          // If it is even, it closes at the next nuber, odd closes at the previous value.
-          // 0=>1, 1=>0, 5=>4
-          activeCrossing = crossing.number + 2 * ((crossing.number + 1) % 2) - 1;
-          currentShape.moveTo(crossing.value, 0);
-        }
-      }
-    }
-    shapes.push(currentShape);
-    shapes.unshift(newOutline);
-    return shapes;
-  }
+			crossings[ key ] = {
+				value: value,
+				number: sortedCrossings.indexOf(value),
+			};
+		}
+		// Walk the shape and assemble pieces from matched crossings.
+		const shapes = [];
+		// A list of crossing numbers that will close each shape in activeShapes.
+		const pendingCrossbacks = [];
+		const activeShapes = [];
+		// The crossing number that will close the current shape.
+		var activeCrossing = - 1;
+		var currentShape = new Shape();
+		for ( let i = 0; i < points.length; i ++ ) {
 
-  /**
-   *
-   */
-  move(point) {
-    const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = (point.x - center[0]) * Math.cos(angle) - (point.y - center[1]) * Math.sin(angle);
-    const pointY = (point.x - center[0]) * Math.sin(angle) + (point.y - center[1]) * Math.cos(angle);
-    return [pointX, pointY];
-  }
+			point = points[ i ];
+			if ( i === 0 ) {
 
-  /**
-   *
-   */
-  unMove(point) {
-    const angle = this.parameters.options.angle;
-    const center = this.parameters.options.center;
-    const pointX = point[0] * Math.cos(angle) + point[1] * Math.sin(angle) + center[0];
-    const pointY = -1 * point[0] * Math.sin(angle) + point[1] * Math.cos(angle) + center[1];
-    return [pointX, pointY];
-  }
+				currentShape.moveTo( point[ 0 ], point[ 1 ] );
+
+			} else {
+
+				currentShape.lineTo(point[0], point[1]);
+
+			}
+			if ( i in crossings ) {
+
+				crossing = crossings[ i ];
+				if ( crossing.value !== point[ 0 ] ) {
+
+					currentShape.lineTo( crossing.value, 0 );
+
+				}
+				// If we can finalize the current shape.
+				if (crossing.number === activeCrossing) {
+
+					shapes.push(currentShape);
+					currentShape = activeShapes.pop();
+					activeCrossing = pendingCrossbacks.pop();
+					currentShape.lineTo( crossing.value, 0 );
+
+				} else {
+
+					activeShapes.push( currentShape );
+					pendingCrossbacks.push( activeCrossing );
+					currentShape = new Shape();
+					// crossing number is zero indexed.
+					// If it is even, it closes at the next nuber, odd closes at the previous value.
+					// 0=>1, 1=>0, 5=>4
+					activeCrossing = crossing.number + 2 * ( ( crossing.number + 1 ) % 2 ) - 1;
+					currentShape.moveTo( crossing.value, 0 );
+
+				}
+			}
+		}
+		shapes.push( currentShape );
+		shapes.unshift( newOutline );
+		return shapes;
+	}
+
+	/**
+	*
+	*/
+	move( point ) {
+
+		const angle = this.parameters.options.angle;
+		const center = this.parameters.options.center;
+		const pointX = ( point.x - center[ 0 ] ) * Math.cos( angle ) - ( point.y - center[ 1 ] ) * Math.sin( angle );
+		const pointY = ( point.x - center[ 0 ] ) * Math.sin( angle ) + ( point.y - center[ 1 ] ) * Math.cos( angle );
+		return [ pointX, pointY ];
+
+	}
+
+	/**
+	*
+	*/
+	unMove( point ) {
+
+		const angle = this.parameters.options.angle;
+		const center = this.parameters.options.center;
+		const pointX = point[ 0 ] * Math.cos( angle ) + point[ 1 ] * Math.sin( angle ) + center[ 0 ];
+		const pointY = -1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
+		return [ pointX, pointY ];
+
+	}
 }
 export { WedgeGeometry };
