@@ -49,7 +49,7 @@ class WedgeGeometry extends BufferGeometry {
 			// Check that any holes are correct direction.
 			for ( let h = 0; h < holes.length; h ++ ) {
 
-				const hole = holes[h];
+				const hole = holes[ h ];
 				if ( THREE.ShapeUtils.isClockWise( hole ) ) {
 
 					holes[ h ] = hole.reverse();
@@ -81,11 +81,12 @@ class WedgeGeometry extends BufferGeometry {
 				maxY = Math.max( maxY, moved[ 1 ] );
 
 			}
+
 			newPoints.push( moved );
 
 		}
 
-		const newShapes = this.splitShape(newPoints);
+		const newShapes = this.splitShape( newPoints );
 
 		const positions = [];
 		// If the line does not intersect, display the outline.
@@ -101,26 +102,28 @@ class WedgeGeometry extends BufferGeometry {
 				const face = faces[ i ];
 				for ( let j = 0; j < 3; j ++ ) {
 
-					const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ]].y ] );
+					const unmoved = this.unMove( [ points[ face[ j ] ].x, points[ face[ j ] ].y ] );
 					const x = unmoved[ 0 ];
 					const y = unmoved[ 1 ];
 					var z;
 					if ( points[ face[ j ] ].y >= 0 ) {
-	
+
 						z = depth - depth / maxY * points[ face[ j ] ].y;
-	
+
 					} else {
 
 						z = depth - depth / minY * points[ face[ j ] ].y;
-	
-					}
-          //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
-          positions.push(x, y, z);
-        }
-      }
-    }
 
-    // Build the floor
+					}
+					//const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
+					positions.push(x, y, z);
+				}
+
+			}
+
+		}
+
+		// Build the floor
     points = newShapes[ 0 ].extractPoints().shape;
     const faces = ShapeUtils.triangulateShape( points, holes );
     for ( let i = 0; i < faces.length; i ++ ) {
@@ -206,33 +209,47 @@ class WedgeGeometry extends BufferGeometry {
     var prevPoint = points[points.length - 1];
     for (let i = 0; i < points.length - 1; i++) {
       point = points[i];
-      if (i === 0) {
-        newOutline.moveTo(point[0], point[1]);
+      if ( i === 0 ) {
+
+        newOutline.moveTo( point[ 0 ], point[ 1 ] );
+
       } else {
-        newOutline.lineTo(point[0], point[1]);
+
+        newOutline.lineTo( point[ 0 ], point[ 1 ] );
+
       }
-      nextPoint = points[i + 1];
-      const pointOnLine = (point[1] === 0);
-      const sameSides = ((prevPoint[1] > 0) === (nextPoint[1] > 0));
-      const switchesSides = ((point[1] > 0) !== (nextPoint[1] > 0));
-      if ((pointOnLine && !sameSides) || switchesSides) {
+      nextPoint = points[ i + 1 ];
+      const pointOnLine = ( point[ 1 ] === 0 );
+      const sameSides = ( (prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
+      const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
+      if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
+
         var crossing;
-        if (pointOnLine) {
-          crossing = point[0];
+        if ( pointOnLine ) {
+
+          crossing = point[ 0 ];
+
         } else {
-          var m = (nextPoint[1] - point[1]) / (nextPoint[0] - point[0]);
-          var crossing = point[0] - point[1] / m;
+
+          var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
+          var crossing = point[ 0 ] - point[ 1 ] / m;
+
         }
         crossings[i] = crossing;
-        if (!pointOnLine) {
-          newOutline.lineTo(crossing, 0);
+        if ( ! pointOnLine ) {
+
+          newOutline.lineTo( crossing, 0 );
+
         }
+
       }
       prevPoint = point;
     }
-    newOutline.lineTo(nextPoint[0], nextPoint[1]);
-    if (Object.keys(crossings).length === 0) {
-      return [newOutline];
+    newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
+    if ( Object.keys( crossings ).length === 0 ) {
+
+      return [ newOutline ];
+
     }
 
     // Sort crossings and save the crossing number.
