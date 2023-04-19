@@ -11,17 +11,17 @@ import {
  */
 class RampGeometry extends BufferGeometry {
 
-	constructor(shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
+	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
 
 		super();
 		this.type = 'RampGeometry';
 
 		this.parameters = {
-			
+
 			shape: shape,
 			options: options,
 
-    };
+		};
 
 		// The max depth of the geometry
 		var depth = options.depth;
@@ -48,9 +48,8 @@ class RampGeometry extends BufferGeometry {
 
 					holes[h] = hole.reverse();
 
-        }
-
-      }
+				}
+			}
 
 		}
 
@@ -76,18 +75,18 @@ class RampGeometry extends BufferGeometry {
 				minDepth = rampDepth;
 				maxDepth = rampDepth;
 
-      } else {
+			} else {
 
-        minDepth = Math.min( rampDepth, minDepth );
-        maxDepth = Math.max( rampDepth, maxDepth );
+				minDepth = Math.min( rampDepth, minDepth );
+				maxDepth = Math.max( rampDepth, maxDepth );
 
-      }
+			}
 			positions.push( point.x, point.y, rampDepth );
 			positions.push( nextPoint.x, nextPoint.y, 0 );
 			positions.push( point.x, point.y, rampDepth );
 			positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
 			positions.push( nextPoint.x, nextPoint.y, 0 );
-    }
+		}
 
     // The highest and lowest points will be along the outside
     // Calculate the scaling factor to get he correct height.
