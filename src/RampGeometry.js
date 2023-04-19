@@ -146,9 +146,9 @@ class RampGeometry extends BufferGeometry {
 			}
 
 		}
+
 		// Add floor.
 		// Reverse face directions to reverse normals.
-
 		for ( let i = 0; i < faces.length; i ++ ) {
 
 			const face = faces[ i ];
