@@ -91,6 +91,7 @@ class RampGeometry extends BufferGeometry {
 			positions.push( nextPoint.x, nextPoint.y, 0 );
 
 		}
+
 		// The highest and lowest points will be along the outside
 		// Calculate the scaling factor to get he correct height.
 		if ( ! depth ) {
@@ -98,6 +99,7 @@ class RampGeometry extends BufferGeometry {
 			depth = ( maxDepth - minDepth ) * Math.tan( pitch );
 
 		}
+
 		const scale = depth / ( maxDepth - minDepth );
 		for ( let i = 0; i < points.length - 1; i ++ ) {
 
@@ -135,7 +137,8 @@ class RampGeometry extends BufferGeometry {
 
 			const face = faces[ i ];
 			for ( let j = 0; j < 3; j ++ ) {
-				const x = vertices[2 * face[j]];
+
+				const x = vertices[ 2 * face[ j ] ];
 				const y = vertices[ 2 * face[ j ] + 1 ];
 				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
 				positions.push( x, y, z );
