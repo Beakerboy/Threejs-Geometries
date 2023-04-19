@@ -44,10 +44,10 @@ class RampGeometry extends BufferGeometry {
 			// Check that any holes are correct direction.
 			for ( let h = 0; h < holes.length; h ++ ) {
 
-				const hole = holes[h];
-				if (ShapeUtils.isClockWise( hole )) {
+				const hole = holes[ h ];
+				if ( ShapeUtils.isClockWise( hole ) ) {
 
-					holes[h] = hole.reverse();
+					holes[ h ] = hole.reverse();
 
 				}
 
@@ -71,7 +71,7 @@ class RampGeometry extends BufferGeometry {
 			nextPoint = points[ i + 1 ];
 			positions.push( point.x, point.y, 0 );
 			rampDepth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
-			nextRampDepth = nextPoint.x * Math.sin(angle) - nextPoint.y * Math.cos(angle);
+			nextRampDepth = nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle );
 			if ( i === 0 ) {
 
 				minDepth = rampDepth;
@@ -83,82 +83,82 @@ class RampGeometry extends BufferGeometry {
 				maxDepth = Math.max( rampDepth, maxDepth );
 
 			}
+
 			positions.push( point.x, point.y, rampDepth );
 			positions.push( nextPoint.x, nextPoint.y, 0 );
 			positions.push( point.x, point.y, rampDepth );
 			positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
 			positions.push( nextPoint.x, nextPoint.y, 0 );
+
 		}
+		// The highest and lowest points will be along the outside
+		// Calculate the scaling factor to get he correct height.
+		if ( !depth ) {
 
-    // The highest and lowest points will be along the outside
-    // Calculate the scaling factor to get he correct height.
-    if ( !depth ) {
+			depth = ( maxDepth - minDepth ) * Math.tan( pitch );
 
-      depth = ( maxDepth - minDepth ) * Math.tan( pitch );
+		}
+		const scale = depth / ( maxDepth - minDepth );
+		for ( let i = 0; i < points.length - 1; i ++ ) {
 
-    }
-    const scale = depth / ( maxDepth - minDepth );
-    for ( let i = 0; i < points.length - 1; i ++ ) {
+			positions[ 18 * i + 5 ] = ( positions[ 18 * i + 5 ] - minDepth ) * scale;
+			positions[ 18 * i + 11 ] = ( positions[ 18 * i + 11 ] - minDepth ) * scale;
+			positions[ 18 * i + 14 ] = ( positions[ 18 * i + 14 ] - minDepth ) * scale;
 
-      positions[ 18 * i + 5 ] = ( positions[ 18 * i + 5 ] - minDepth ) * scale;
-      positions[ 18 * i + 11 ] = ( positions[ 18 * i + 11 ] - minDepth ) * scale;
-      positions[ 18 * i + 14 ] = ( positions[ 18 * i + 14 ] - minDepth ) * scale;
+		}
+		// Add the sides of any holes
+		for ( let h = 0; h < holes.length; h ++ ) {
 
-    }
-    // Add the sides of any holes
-    for ( let h = 0; h < holes.length; h ++ ) {
+			const hole = holes[ h ];
+			for ( let i = 0; i < hole.length - 1; i ++ ) {
 
-      const hole = holes[ h ];
-      for ( let i = 0; i < hole.length - 1; i ++ ) {
+				point = hole[ i ];
+				vertices.push( point.x, point.y );
+				nextPoint = hole[ i + 1 ];
+				positions.push( point.x, point.y, 0 );
+				rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle )- minDepth ) * scale;
+				nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
+				positions.push( point.x, point.y, rampDepth );
+				positions.push( nextPoint.x, nextPoint.y, 0 );
+				positions.push( point.x, point.y, rampDepth );
+				positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
+				positions.push( nextPoint.x, nextPoint.y, 0 );
 
-        point = hole[ i ];
-        vertices.push( point.x, point.y );
-        nextPoint = hole[ i + 1 ];
-        positions.push( point.x, point.y, 0 );
-        rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle )- minDepth ) * scale;
-        nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
-        positions.push( point.x, point.y, rampDepth );
-        positions.push( nextPoint.x, nextPoint.y, 0 );
-        positions.push( point.x, point.y, rampDepth );
-        positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
-        positions.push( nextPoint.x, nextPoint.y, 0 );
+			}
 
-      }
+		}
+		// Add top of roof
+		const faces = ShapeUtils.triangulateShape( points, holes );
+		for ( let i = 0; i < faces.length; i ++ ) {
 
-    }
-    // Add top of roof
-    const faces = ShapeUtils.triangulateShape( points, holes );
-    for ( let i = 0; i < faces.length; i ++ ) {
+			const face = faces[ i ];
+			for ( let j = 0; j < 3; j ++ ) {
 
-      const face = faces[ i ];
-      for ( let j = 0; j < 3; j ++ ) {
+				const y = vertices[ 2 * face[ j ] + 1 ];
+				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
+				positions.push( x, y, z );
 
-        const x = vertices[ 2 * face[ j ] ];
-        const y = vertices[ 2 * face[ j ] + 1 ];
-        const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
-        positions.push( x, y, z );
+			}
 
-      }
+		}
+		// Add floor.
+		// Reverse face directions to reverse normals.
+		for ( let i = 0; i < faces.length; i ++ ) {
 
-    }
-    // Add floor.
-    // Reverse face directions to reverse normals.
-    for ( let i = 0; i < faces.length; i ++ ) {
+			const face = faces[i];
+			for ( let j = 2; j > - 1; j -- ) {
 
-      const face = faces[i];
-      for ( let j = 2; j > - 1; j -- ) {
+				const x = vertices[ 2 * face[  j] ];
+				const y = vertices[ 2 * face[ j ] + 1 ];
+				positions.push( x, y, 0 );
 
-        const x = vertices[ 2 * face[  j] ];
-        const y = vertices[ 2 * face[ j ] + 1 ];
-        positions.push( x, y, 0 );
+			}
 
-      }
+		}
+		this.setAttribute( 'position', new BufferAttribute(new Float32Array( positions ), 3 ) );
+		this.computeVertexNormals();
 
-    }
-    this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
-    this.computeVertexNormals();
-
-  }
+	}
 
 }
 export {RampGeometry};
