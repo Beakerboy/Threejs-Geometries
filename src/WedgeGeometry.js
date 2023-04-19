@@ -201,7 +201,7 @@ class WedgeGeometry extends BufferGeometry {
 	* @return {[Shape]} an array of shapes. Element 0 is the original shape with
 	*                   the addition of new vertices for the crossing points.
 	*/
-	splitShape(points) {
+	splitShape( points ) {
 
 		// An associative array of all the values where the shape crosses the x axis, keys by segment number.
 		const crossings = [];
