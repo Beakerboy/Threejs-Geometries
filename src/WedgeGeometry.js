@@ -124,145 +124,150 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Build the floor
-    points = newShapes[ 0 ].extractPoints().shape;
-    const faces = ShapeUtils.triangulateShape( points, holes );
-    for ( let i = 0; i < faces.length; i ++ ) {
+		points = newShapes[ 0 ].extractPoints().shape;
+		const faces = ShapeUtils.triangulateShape( points, holes );
+		for ( let i = 0; i < faces.length; i ++ ) {
 
-      const face = faces[ i ];
-      for ( let j = 0; j < 3; j ++ ) {
+			const face = faces[ i ];
+			for ( let j = 0; j < 3; j ++ ) {
 
-        const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ] ].y] );
-        const x = unmoved[ 0 ];
-        const y = unmoved[ 1 ];
-        positions.push( x, y, 0 );
+				const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ] ].y] );
+				const x = unmoved[ 0 ];
+				const y = unmoved[ 1 ];
+				positions.push( x, y, 0 );
 
-      }
+			}
 
-    }
+		}
 
-    // Make walls by iterating the outline.
-    points = newShapes[ 0 ].extractPoints().shape;
-    for ( let i = 0; i < points.length; i ++ ) {
+		// Make walls by iterating the outline.
+		points = newShapes[ 0 ].extractPoints().shape;
+		for ( let i = 0; i < points.length; i ++ ) {
 
-      var point = points[ i ];
-      var pointZ;
-      if ( point.y >= 0 ) {
+			var point = points[ i ];
+			var pointZ;
+			if ( point.y >= 0 ) {
 
-        pointZ = depth - depth / maxY * point.y;
+				pointZ = depth - depth / maxY * point.y;
 
-      } else {
+			} else {
 
-        pointZ = depth - depth / minY * point.y;
+				pointZ = depth - depth / minY * point.y;
 
-      }
-      var nextPoint;
-      if ( i === points.length - 1 ) {
+			}
+			var nextPoint;
+			if ( i === points.length - 1 ) {
 
-        nextPoint = points[ 0 ];
+				nextPoint = points[ 0 ];
 
-      } else {
+			} else {
 
-        nextPoint = points[ i + 1 ];
+				nextPoint = points[ i + 1 ];
 
-      }
-      var nextPointZ;
-      if ( nextPoint.y >= 0 ) {
+			}
+			var nextPointZ;
+			if ( nextPoint.y >= 0 ) {
 
-        nextPointZ = depth - depth / maxY * nextPoint.y;
+				nextPointZ = depth - depth / maxY * nextPoint.y;
 
-      } else {
+			} else {
 
-        nextPointZ = depth - depth / minY * nextPoint.y;
+				nextPointZ = depth - depth / minY * nextPoint.y;
 
-      }
-      positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
-      positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
-      positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
-      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+			}
+			positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
+			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
+			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
-    }
-    this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
-    this.computeVertexNormals();
+		}
+		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
+		this.computeVertexNormals();
 
-  }
+	}
 
-  /**
-   * Split a shape using the x-axis as the line. Shape is clockwise.
-   * Not tested on self-intersecting shapes.
-   *
-   * @param {[[number, number]]} points - an array of x, y pairs.
-   * @return {[Shape]} an array of shapes. Element 0 is the original shape with
-   *                   the addition of new vertices for the crossing points.
-   */
-  splitShape(points) {
-    // An associative array of all the values where the shape crosses the x axis, keys by segment number.
-    const crossings = [];
+	/**
+	* Split a shape using the x-axis as the line. Shape is clockwise.
+	* Not tested on self-intersecting shapes.
+	*
+	* @param {[[number, number]]} points - an array of x, y pairs.
+	* @return {[Shape]} an array of shapes. Element 0 is the original shape with
+	*                   the addition of new vertices for the crossing points.
+	*/
+	splitShape(points) {
+		// An associative array of all the values where the shape crosses the x axis, keys by segment number.
+		const crossings = [];
 
-    // The new outline with the addition of any crossing points.
-    const newOutline = new Shape();
+		// The new outline with the addition of any crossing points.
+		const newOutline = new Shape();
 
-    // Walk the shape and find all crossings.
-    var point = [];
-    var nextPoint = [];
-    var prevPoint = points[points.length - 1];
-    for (let i = 0; i < points.length - 1; i++) {
-      point = points[i];
-      if ( i === 0 ) {
+		// Walk the shape and find all crossings.
+		var point = [];
+		var nextPoint = [];
+		var prevPoint = points[points.length - 1];
+		for (let i = 0; i < points.length - 1; i++) {
 
-        newOutline.moveTo( point[ 0 ], point[ 1 ] );
+			point = points[i];
+			if ( i === 0 ) {
 
-      } else {
+				newOutline.moveTo( point[ 0 ], point[ 1 ] );
 
-        newOutline.lineTo( point[ 0 ], point[ 1 ] );
+			} else {
 
-      }
-      nextPoint = points[ i + 1 ];
-      const pointOnLine = ( point[ 1 ] === 0 );
-      const sameSides = ( (prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
-      const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
-      if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
+				newOutline.lineTo( point[ 0 ], point[ 1 ] );
 
-        var crossing;
-        if ( pointOnLine ) {
+			}
+			nextPoint = points[ i + 1 ];
+			const pointOnLine = ( point[ 1 ] === 0 );
+			const sameSides = ( (prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
+			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
+			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
 
-          crossing = point[ 0 ];
+				var crossing;
+				if ( pointOnLine ) {
 
-        } else {
+					crossing = point[ 0 ];
 
-          var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
-          var crossing = point[ 0 ] - point[ 1 ] / m;
+				} else {
 
-        }
-        crossings[i] = crossing;
-        if ( ! pointOnLine ) {
+					var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
+					var crossing = point[ 0 ] - point[ 1 ] / m;
 
-          newOutline.lineTo( crossing, 0 );
+				}
+				crossings[ i ] = crossing;
+				if ( ! pointOnLine ) {
 
-        }
+					newOutline.lineTo( crossing, 0 );
 
-      }
-      prevPoint = point;
-    }
-    newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
-    if ( Object.keys( crossings ).length === 0 ) {
+				}
 
-      return [ newOutline ];
+			}
+			prevPoint = point;
+		}
+		newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
+		if ( Object.keys( crossings ).length === 0 ) {
 
-    }
+			return [ newOutline ];
 
-    // Sort crossings and save the crossing number.
-    var sortedCrossings = [];
-    for (const key in crossings) {
-      sortedCrossings.push(crossings[key]);
-    }
-    // Sort numerically.
-    sortedCrossings.sort(function(a, b){
-      return a-b;
-    });
-    for (var key in crossings) {
-      const value = crossings[key];
+		}
+
+		// Sort crossings and save the crossing number.
+		var sortedCrossings = [];
+		for ( const key in crossings ) {
+
+			sortedCrossings.push( crossings[ key ] );
+
+		}
+		// Sort numerically.
+		sortedCrossings.sort( function( a, b ){
+
+			return a - b;
+
+		} );
+		for ( var key in crossings ) {
+			const value = crossings[ key ];
       crossings[key] = {
         value: value,
         number: sortedCrossings.indexOf(value),
