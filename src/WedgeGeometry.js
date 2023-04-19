@@ -2,7 +2,6 @@ import {
 	BufferGeometry,
 	Vector2,
 	Shape,
-	ShapeGeometry,
 	ShapeUtils,
 	BufferAttribute,
 } from 'three';
@@ -11,7 +10,7 @@ import {
  * Modify ExtrudeGeometry such that z varies with x and y
  */
 class WedgeGeometry extends BufferGeometry {
- 
+
 	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
 
 		super();
