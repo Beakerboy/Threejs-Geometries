@@ -260,6 +260,7 @@ class WedgeGeometry extends BufferGeometry {
 			sortedCrossings.push( crossings[ key ] );
 
 		}
+
 		// Sort numerically.
 		sortedCrossings.sort( function( a, b ){
 
@@ -267,12 +268,15 @@ class WedgeGeometry extends BufferGeometry {
 
 		} );
 		for ( var key in crossings ) {
+
 			const value = crossings[ key ];
 			crossings[ key ] = {
 				value: value,
 				number: sortedCrossings.indexOf(value),
 			};
+
 		}
+
 		// Walk the shape and assemble pieces from matched crossings.
 		const shapes = [];
 		// A list of crossing numbers that will close each shape in activeShapes.
@@ -290,9 +294,10 @@ class WedgeGeometry extends BufferGeometry {
 
 			} else {
 
-				currentShape.lineTo(point[0], point[1]);
+				currentShape.lineTo( point[ 0 ], point[ 1 ] );
 
 			}
+
 			if ( i in crossings ) {
 
 				crossing = crossings[ i ];
@@ -302,9 +307,9 @@ class WedgeGeometry extends BufferGeometry {
 
 				}
 				// If we can finalize the current shape.
-				if (crossing.number === activeCrossing) {
+				if ( crossing.number === activeCrossing ) {
 
-					shapes.push(currentShape);
+					shapes.push( currentShape );
 					currentShape = activeShapes.pop();
 					activeCrossing = pendingCrossbacks.pop();
 					currentShape.lineTo( crossing.value, 0 );
@@ -321,11 +326,15 @@ class WedgeGeometry extends BufferGeometry {
 					currentShape.moveTo( crossing.value, 0 );
 
 				}
+
 			}
+
 		}
+
 		shapes.push( currentShape );
 		shapes.unshift( newOutline );
 		return shapes;
+
 	}
 
 	/**
@@ -349,9 +358,10 @@ class WedgeGeometry extends BufferGeometry {
 		const angle = this.parameters.options.angle;
 		const center = this.parameters.options.center;
 		const pointX = point[ 0 ] * Math.cos( angle ) + point[ 1 ] * Math.sin( angle ) + center[ 0 ];
-		const pointY = -1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
+		const pointY = - 1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
 		return [ pointX, pointY ];
 
 	}
+
 }
 export { WedgeGeometry };
