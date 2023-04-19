@@ -115,6 +115,7 @@ class WedgeGeometry extends BufferGeometry {
 						z = depth - depth / minY * points[ face[ j ] ].y;
 
 					}
+
 					//const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
 					positions.push( x, y, z );
 
