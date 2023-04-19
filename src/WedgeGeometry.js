@@ -219,9 +219,10 @@ class WedgeGeometry extends BufferGeometry {
 				newOutline.lineTo( point[ 0 ], point[ 1 ] );
 
 			}
+
 			nextPoint = points[ i + 1 ];
 			const pointOnLine = ( point[ 1 ] === 0 );
-			const sameSides = ( (prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
+			const sameSides = ( ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
 			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
 			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
 
@@ -236,6 +237,7 @@ class WedgeGeometry extends BufferGeometry {
 					var crossing = point[ 0 ] - point[ 1 ] / m;
 
 				}
+
 				crossings[ i ] = crossing;
 				if ( ! pointOnLine ) {
 
@@ -244,8 +246,11 @@ class WedgeGeometry extends BufferGeometry {
 				}
 
 			}
+
 			prevPoint = point;
+
 		}
+
 		newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
 		if ( Object.keys( crossings ).length === 0 ) {
 
@@ -262,7 +267,7 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Sort numerically.
-		sortedCrossings.sort( function( a, b ){
+		sortedCrossings.sort( function ( a, b ) {
 
 			return a - b;
 
@@ -272,7 +277,7 @@ class WedgeGeometry extends BufferGeometry {
 			const value = crossings[ key ];
 			crossings[ key ] = {
 				value: value,
-				number: sortedCrossings.indexOf(value),
+				number: sortedCrossings.indexOf( value ),
 			};
 
 		}
@@ -306,6 +311,7 @@ class WedgeGeometry extends BufferGeometry {
 					currentShape.lineTo( crossing.value, 0 );
 
 				}
+
 				// If we can finalize the current shape.
 				if ( crossing.number === activeCrossing ) {
 
