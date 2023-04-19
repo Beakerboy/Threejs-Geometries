@@ -8,7 +8,7 @@ import {
 
 class PyramidGeometry extends BufferGeometry {
 
-	constructor(shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
+	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
 
 		super();
 
@@ -35,7 +35,7 @@ class PyramidGeometry extends BufferGeometry {
 			point = points[ i ];
 			nextPoint = points[ i + 1 ];
 			positions.push( point.x, point.y, 0 );
-			positions.push( center[0], center[1], depth );
+			positions.push( center[0], center[ 1 ], depth );
 			positions.push( nextPoint.x, nextPoint.y, 0 );
 
 		}
@@ -44,6 +44,7 @@ class PyramidGeometry extends BufferGeometry {
 		const faces = ShapeUtils.triangulateShape( points, [] );
 
 		for ( let i = 0; i < faces.length; i ++ ) {
+
 			const face = faces[ i ];
 
 			for ( let j = 2; j > - 1; j -- ) {
