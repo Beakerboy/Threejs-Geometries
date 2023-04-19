@@ -115,8 +115,9 @@ class WedgeGeometry extends BufferGeometry {
 						z = depth - depth / minY * points[ face[ j ] ].y;
 
 					}
-					//const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
-					positions.push(x, y, z);
+					//const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
+					positions.push( x, y, z );
+
 				}
 
 			}
@@ -131,7 +132,7 @@ class WedgeGeometry extends BufferGeometry {
 			const face = faces[ i ];
 			for ( let j = 0; j < 3; j ++ ) {
 
-				const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ] ].y] );
+				const unmoved = this.unMove( [ points[ face[ j ] ].x, points[ face[ j ] ].y ] );
 				const x = unmoved[ 0 ];
 				const y = unmoved[ 1 ];
 				positions.push( x, y, 0 );
@@ -155,6 +156,7 @@ class WedgeGeometry extends BufferGeometry {
 				pointZ = depth - depth / minY * point.y;
 
 			}
+
 			var nextPoint;
 			if ( i === points.length - 1 ) {
 
@@ -165,6 +167,7 @@ class WedgeGeometry extends BufferGeometry {
 				nextPoint = points[ i + 1 ];
 
 			}
+
 			var nextPointZ;
 			if ( nextPoint.y >= 0 ) {
 
@@ -175,6 +178,7 @@ class WedgeGeometry extends BufferGeometry {
 				nextPointZ = depth - depth / minY * nextPoint.y;
 
 			}
+
 			positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
 			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
 			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
@@ -183,6 +187,7 @@ class WedgeGeometry extends BufferGeometry {
 			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 		}
+
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
 		this.computeVertexNormals();
 
@@ -197,6 +202,7 @@ class WedgeGeometry extends BufferGeometry {
 	*                   the addition of new vertices for the crossing points.
 	*/
 	splitShape(points) {
+
 		// An associative array of all the values where the shape crosses the x axis, keys by segment number.
 		const crossings = [];
 
@@ -206,10 +212,10 @@ class WedgeGeometry extends BufferGeometry {
 		// Walk the shape and find all crossings.
 		var point = [];
 		var nextPoint = [];
-		var prevPoint = points[points.length - 1];
-		for (let i = 0; i < points.length - 1; i++) {
+		var prevPoint = points[ points.length - 1 ];
+		for ( let i = 0; i < points.length - 1; i ++ ) {
 
-			point = points[i];
+			point = points[ i ];
 			if ( i === 0 ) {
 
 				newOutline.moveTo( point[ 0 ], point[ 1 ] );
