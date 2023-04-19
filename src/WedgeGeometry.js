@@ -11,64 +11,79 @@ import {
  * Modify ExtrudeGeometry such that z varies with x and y
  */
 class WedgeGeometry extends BufferGeometry {
-  constructor(shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {}) {
+ 
+  constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
+
     super();
-
     this.type = 'WedgeGeometry';
-
     this.parameters = {
-      shape: shape,
-      options: options,
+
+			shape: shape,
+			options: options,
+
     };
 
-    // The max depth of the geometry
-    var depth = options.depth;
+		// The max depth of the geometry
+		var depth = options.depth;
 
-    // a point on which the peak will pass through
-    const center = options.center;
+		// a point on which the peak will pass through
+		const center = options.center;
 
-    // The direction that the downward slope faces,
-    const angle = options.angle;
+		// The direction that the downward slope faces,
+		const angle = options.angle;
 
-    // Get the outer shape and holes.
-    var points = shape.extractPoints().shape;
-    var holes = shape.extractPoints().holes;
+		// Get the outer shape and holes.
+		var points = shape.extractPoints().shape;
+		var holes = shape.extractPoints().holes;
 
-    // The outer shape is the original shape plus any crossing points.
-    const outerShape = new Shape();
+		// The outer shape is the original shape plus any crossing points.
+		const outerShape = new Shape();
 
-    // A straight array of vertices for the outer shape
-    const outerVertices = [];
+		// A straight array of vertices for the outer shape
+		const outerVertices = [];
 
-    // Ensuse all paths are in the correct direction for the normals
-    const reverse = ! ShapeUtils.isClockWise( points );
-    if ( reverse ) {
-      points = points.reverse();
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points = points.reverse();
       // Check that any holes are correct direction.
-      for (let h = 0; h < holes.length; h++) {
+      for ( let h = 0; h < holes.length; h ++ ) {
+
         const hole = holes[h];
-        if (THREE.ShapeUtils.isClockWise(hole)) {
+        if ( THREE.ShapeUtils.isClockWise( hole ) ) {
+
           holes[h] = hole.reverse();
+
         }
+
       }
+
     }
-    // The original shape's point, but rotated and centered.
-    const newPoints = [];
+
+		// The original shape's point, but rotated and centered.
+		const newPoints = [];
 
     var point;
     var minY;
     var maxY;
-    for (let i = 0; i < points.length; i++) {
-      point = points[i];
-      const moved = this.move(point);
-      if (i === 0) {
-        minY = moved[1];
-        maxY = moved[1];
+    for ( let i = 0; i < points.length; i ++ ) {
+
+      point = points[ i ];
+      const moved = this.move( point );
+      if ( i === 0 ) {
+
+        minY = moved[ 1 ];
+        maxY = moved[ 1 ];
+
       } else {
-        minY = Math.min(minY, moved[1]);
-        maxY = Math.max(maxY, moved[1]);
+
+        minY = Math.min( minY, moved[ 1 ] );
+        maxY = Math.max( maxY, moved[ 1 ] );
+
       }
-      newPoints.push(moved);
+      newPoints.push( moved );
+
     }
 
     const newShapes = this.splitShape(newPoints);
@@ -77,71 +92,95 @@ class WedgeGeometry extends BufferGeometry {
     // If the line does not intersect, display the outline.
     // otherwise just the parts.
     const startK = newShapes.length > 1 ? 1 : 0;
-    for (let k = startK; k < newShapes.length; k++) {
-      points = newShapes[k].extractPoints().shape;
+    for ( let k = startK; k < newShapes.length; k ++ ) {
+      points = newShapes[ k ].extractPoints().shape;
       // Add top of roof
-      const faces = ShapeUtils.triangulateShape(points, holes);
-      for (let i = 0; i < faces.length; i++) {
-        const face = faces[i];
-        for (let j = 0; j < 3; j++) {
-          const unmoved = this.unMove([points[face[j]].x, points[face[j]].y]);
-          const x = unmoved[0];
-          const y = unmoved[1];
+      const faces = ShapeUtils.triangulateShape( points, holes );
+      for ( let i = 0; i < faces.length; i ++ ) {
+        const face = faces[ i ];
+        for ( let j = 0; j < 3; j ++ ) {
+          const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ]].y ] );
+          const x = unmoved[ 0 ];
+          const y = unmoved[ 1 ];
           var z;
-          if (points[face[j]].y >= 0) {
-            z = depth - depth / maxY * points[face[j]].y;
+          if ( points[ face[ j ] ].y >= 0 ) {
+	
+            z = depth - depth / maxY * points[ face[ j ] ].y;
+	
           } else {
-            z = depth - depth / minY * points[face[j]].y;
+
+            z = depth - depth / minY * points[ face[ j ] ].y;
+	
           }
           //const z = (x * Math.sin(angle) - y * Math.cos(angle) - minDepth) * scale;
           positions.push(x, y, z);
         }
       }
     }
+
     // Build the floor
-    points = newShapes[0].extractPoints().shape;
-    const faces = ShapeUtils.triangulateShape(points, holes);
-    for (let i = 0; i < faces.length; i++) {
-      const face = faces[i];
-      for (let j = 0; j < 3; j++) {
-        const unmoved = this.unMove([points[face[j]].x, points[face[j]].y]);
-        const x = unmoved[0];
-        const y = unmoved[1];
-        positions.push(x, y, 0);
+    points = newShapes[ 0 ].extractPoints().shape;
+    const faces = ShapeUtils.triangulateShape( points, holes );
+    for ( let i = 0; i < faces.length; i ++ ) {
+
+      const face = faces[ i ];
+      for ( let j = 0; j < 3; j ++ ) {
+
+        const unmoved = this.unMove( [ points[face[ j ] ].x, points[ face[ j ] ].y] );
+        const x = unmoved[ 0 ];
+        const y = unmoved[ 1 ];
+        positions.push( x, y, 0 );
+
       }
+
     }
 
-    // make walls by iterating the outline.
-    points = newShapes[0].extractPoints().shape;
-    for (let i = 0; i < points.length; i++) {
-      var point = points[i];
+    // Make walls by iterating the outline.
+    points = newShapes[ 0 ].extractPoints().shape;
+    for ( let i = 0; i < points.length; i ++ ) {
+
+      var point = points[ i ];
       var pointZ;
-      if (point.y >= 0) {
+      if ( point.y >= 0 ) {
+
         pointZ = depth - depth / maxY * point.y;
+
       } else {
+
         pointZ = depth - depth / minY * point.y;
+
       }
       var nextPoint;
-      if (i === points.length - 1) {
-        nextPoint = points[0];
+      if ( i === points.length - 1 ) {
+
+        nextPoint = points[ 0 ];
+
       } else {
-        nextPoint = points[i + 1];
+
+        nextPoint = points[ i + 1 ];
+
       }
       var nextPointZ;
-      if (nextPoint.y >= 0) {
+      if ( nextPoint.y >= 0 ) {
+
         nextPointZ = depth - depth / maxY * nextPoint.y;
+
       } else {
+
         nextPointZ = depth - depth / minY * nextPoint.y;
+
       }
-      positions.push(...this.unMove([point.x, point.y]), 0);
-      positions.push(...this.unMove([point.x, point.y]), pointZ);
-      positions.push(...this.unMove([nextPoint.x, nextPoint.y]), 0);
-      positions.push(...this.unMove([point.x, point.y]), pointZ);
-      positions.push(...this.unMove([nextPoint.x, nextPoint.y]), nextPointZ);
-      positions.push(...this.unMove([nextPoint.x, nextPoint.y]), 0);
+      positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
+      positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+      positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
+      positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+
     }
-    this.setAttribute('position', new BufferAttribute(new Float32Array(positions), 3));
+    this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
     this.computeVertexNormals();
+
   }
 
   /**
