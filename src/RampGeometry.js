@@ -93,7 +93,7 @@ class RampGeometry extends BufferGeometry {
 		}
 		// The highest and lowest points will be along the outside
 		// Calculate the scaling factor to get he correct height.
-		if ( !depth ) {
+		if ( ! depth ) {
 
 			depth = ( maxDepth - minDepth ) * Math.tan( pitch );
 
@@ -106,6 +106,7 @@ class RampGeometry extends BufferGeometry {
 			positions[ 18 * i + 14 ] = ( positions[ 18 * i + 14 ] - minDepth ) * scale;
 
 		}
+
 		// Add the sides of any holes
 		for ( let h = 0; h < holes.length; h ++ ) {
 
@@ -116,7 +117,7 @@ class RampGeometry extends BufferGeometry {
 				vertices.push( point.x, point.y );
 				nextPoint = hole[ i + 1 ];
 				positions.push( point.x, point.y, 0 );
-				rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle )- minDepth ) * scale;
+				rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
 				nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
 				positions.push( point.x, point.y, rampDepth );
 				positions.push( nextPoint.x, nextPoint.y, 0 );
@@ -127,13 +128,14 @@ class RampGeometry extends BufferGeometry {
 			}
 
 		}
+
 		// Add top of roof
 		const faces = ShapeUtils.triangulateShape( points, holes );
 		for ( let i = 0; i < faces.length; i ++ ) {
 
 			const face = faces[ i ];
 			for ( let j = 0; j < 3; j ++ ) {
-
+				const x = vertices[2 * face[j]];
 				const y = vertices[ 2 * face[ j ] + 1 ];
 				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
 				positions.push( x, y, z );
@@ -143,22 +145,24 @@ class RampGeometry extends BufferGeometry {
 		}
 		// Add floor.
 		// Reverse face directions to reverse normals.
+
 		for ( let i = 0; i < faces.length; i ++ ) {
 
-			const face = faces[i];
+			const face = faces[ i ];
 			for ( let j = 2; j > - 1; j -- ) {
 
-				const x = vertices[ 2 * face[  j] ];
+				const x = vertices[ 2 * face[ j ] ];
 				const y = vertices[ 2 * face[ j ] + 1 ];
 				positions.push( x, y, 0 );
 
 			}
 
 		}
-		this.setAttribute( 'position', new BufferAttribute(new Float32Array( positions ), 3 ) );
+
+		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
 		this.computeVertexNormals();
 
 	}
 
 }
-export {RampGeometry};
+export { RampGeometry };
