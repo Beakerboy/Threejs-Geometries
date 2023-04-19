@@ -115,7 +115,7 @@ class RampGeometry extends BufferGeometry {
         vertices.push( point.x, point.y );
         nextPoint = hole[ i + 1 ];
         positions.push( point.x, point.y, 0 );
-        rampDepth = ( point.x * Math.sin(a ngle ) - point.y * Math.cos( angle )- minDepth ) * scale;
+        rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle )- minDepth ) * scale;
         nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
         positions.push( point.x, point.y, rampDepth );
         positions.push( nextPoint.x, nextPoint.y, 0 );
