@@ -10,7 +10,6 @@ class PyramidGeometry extends BufferGeometry {
 
 	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
 
-		var reverse;
 		super();
 
 		this.type = 'PyramidGeometry';
@@ -25,6 +24,7 @@ class PyramidGeometry extends BufferGeometry {
 		var point;
 		var nextPoint;
 		var points = shape.extractPoints().shape;
+		const reverse = ! ShapeUtils.isClockWise( points );
 		if ( reverse ) {
 
 			points = points.reverse();
