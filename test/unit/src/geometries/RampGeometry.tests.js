@@ -2,7 +2,7 @@
 
 import { RampGeometry } from '../../../../src/RampGeometry.js';
 
-import { BufferGeometry } from 'tree';
+import { BufferGeometry } from 'three';
 import { runStdGeometryTests } from 'three';
 
 export default QUnit.module( 'Geometries', () => {
