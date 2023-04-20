@@ -7,30 +7,32 @@ import { runStdGeometryTests } from 'three';
 
 export default QUnit.module( 'Geometries', () => {
 
-	QUnit.module( 'SphereGeometry', ( hooks ) => {
+	QUnit.module( 'RampGeometry', ( hooks ) => {
 
 		let geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const parameters = {
-				radius: 10,
-				widthSegments: 20,
-				heightSegments: 30,
-				phiStart: 0.5,
-				phiLength: 1.0,
-				thetaStart: 0.4,
-				thetaLength: 2.0,
+			const x = 0, y = 0;
+
+			const heartShape = new Shape();
+
+			heartShape.moveTo( x + 5, y + 5 );
+			heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
+			heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7, x - 6, y + 7 );
+			heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
+			heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
+			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
+			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+			
+			const options = {
+				angle: 0,
+				depth: 5,
 			};
 
 			geometries = [
-				new SphereGeometry(),
-				new SphereGeometry( parameters.radius ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments, parameters.heightSegments ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments, parameters.heightSegments, parameters.phiStart ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments, parameters.heightSegments, parameters.phiStart, parameters.phiLength ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments, parameters.heightSegments, parameters.phiStart, parameters.phiLength, parameters.thetaStart ),
-				new SphereGeometry( parameters.radius, parameters.widthSegments, parameters.heightSegments, parameters.phiStart, parameters.phiLength, parameters.thetaStart, parameters.thetaLength ),
+				new RampGeometry(),
+				new RampGeometry( heartShape ),
+				new RampGeometry( heartShape, options ),
 			];
 
 		} );
@@ -38,10 +40,10 @@ export default QUnit.module( 'Geometries', () => {
 		// INHERITANCE
 		QUnit.test( 'Extending', ( assert ) => {
 
-			const object = new SphereGeometry();
+			const object = new RampGeometry();
 			assert.strictEqual(
 				object instanceof BufferGeometry, true,
-				'SphereGeometry extends from BufferGeometry'
+				'RampGeometry extends from BufferGeometry'
 			);
 
 		} );
@@ -49,7 +51,7 @@ export default QUnit.module( 'Geometries', () => {
 		// INSTANCING
 		QUnit.test( 'Instancing', ( assert ) => {
 
-			const object = new SphereGeometry();
+			const object = new RampGeometry();
 			assert.ok( object, 'Can instantiate a SphereGeometry.' );
 
 		} );
@@ -57,10 +59,10 @@ export default QUnit.module( 'Geometries', () => {
 		// PROPERTIES
 		QUnit.test( 'type', ( assert ) => {
 
-			const object = new SphereGeometry();
+			const object = new RampGeometry();
 			assert.ok(
-				object.type === 'SphereGeometry',
-				'SphereGeometry.type should be SphereGeometry'
+				object.type === 'RampGeometry',
+				'RampGeometry.type should be RampGeometry'
 			);
 
 		} );
