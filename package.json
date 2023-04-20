@@ -7,7 +7,7 @@
     "url": "https://github.com/Beakerboy/Threejs-Geometries.git"
   },
   "dependencies": {
-    "three": "^0.138.3"
+    "three": ""
   },
   "devDependencies" : {
     "three": "mrdoob/three.js#dev",
