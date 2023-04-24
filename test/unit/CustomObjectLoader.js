@@ -1,10 +1,11 @@
 import { ObjectLoader } from 'three';
+import * as CustomGeometries from './Geometries.js';
 
 class CustomObjectLoader extends ObjectLoader {
 	constructor( manager ) {
 
 		super( manager );
-		import * as Geometries from './Geometries.js';
+		Geometries = Geometries + CustomGeometries;
 		
 	}
 }
