@@ -1,4 +1,4 @@
-import * as Geometries from 'Geometries.js';
+import * as Geometries from './Geometries.js';
 import ObjectLoader from 'three';
 
 class CustomObjectLoader extends ObjectLoader {
