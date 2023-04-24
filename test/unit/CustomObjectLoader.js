@@ -4,7 +4,7 @@ class CustomObjectLoader extends ObjectLoader {
   constructor( manager ) {
 
 		super( manager );
-    import * as Geometries from './Geometries.js';
+		import * as Geometries from './Geometries.js';
     
 	}
 }
