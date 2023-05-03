@@ -8,7 +8,7 @@ class CustomObjectLoader extends ObjectLoader {
 
 		super( manager );
 		Geometries = Geometries + CustomGeometries;
-		
+
 	}
 
 }
