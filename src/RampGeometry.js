@@ -190,5 +190,6 @@ class RampGeometry extends BufferGeometry {
 		return new RampGeometry( geometryShapes, data.options );
 
 	}
+
 }
 export { RampGeometry };
