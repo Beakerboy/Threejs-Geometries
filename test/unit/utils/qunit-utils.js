@@ -1,6 +1,6 @@
 //
 // Custom QUnit assertions.
-global QUnit
+///* global QUnit */
 import { SmartComparer } from './SmartComparer.js';
 import { CustomObjectLoader as ObjectLoader } from '../CustomObjectLoader.js';
 
