@@ -58,7 +58,7 @@ import { BufferGeometryLoader } from 'three';
 import { Loader } from 'three';
 import { FileLoader } from 'three';
 import * as Geometries from './Geometries.js';
-import { getTypedArray } from 'three';
+// import { getTypedArray } from 'three';
 
 class CustomObjectLoader extends Loader {
 
