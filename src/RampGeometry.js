@@ -167,27 +167,9 @@ class RampGeometry extends BufferGeometry {
 
 	}
 
-	static fromJSON( data, shapes ) {
+	static fromJSON( data, shape ) {
 
-		const geometryShapes = [];
-
-		for ( let j = 0, jl = data.shapes.length; j < jl; j ++ ) {
-
-			const shape = shapes[ data.shapes[ j ] ];
-
-			geometryShapes.push( shape );
-
-		}
-
-		const extrudePath = data.options.extrudePath;
-
-		if ( extrudePath !== undefined ) {
-
-			data.options.extrudePath = new Curves[ extrudePath.type ]().fromJSON( extrudePath );
-
-		}
-
-		return new RampGeometry( geometryShapes, data.options );
+		return new RampGeometry( shape, data.options );
 
 	}
 
