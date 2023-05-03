@@ -47,7 +47,7 @@ import { PerspectiveCamera } from 'three';
 import { Scene } from 'three';
 import { CubeTexture } from 'three';
 import { Texture } from 'three';
-import Source from 'three';
+# import Source from 'three';
 import { DataTexture } from 'three';
 import { ImageLoader } from 'three';
 import { LoadingManager } from 'three';
@@ -456,14 +456,14 @@ class CustomObjectLoader extends Loader {
 
 					}
 
-					images[ image.uuid ] = new Source( imageArray );
+					images[ image.uuid ] = new three.Source( imageArray );
 
 				} else {
 
 					// load single image
 
 					const deserializedImage = deserializeImage( image.url );
-					images[ image.uuid ] = new Source( deserializedImage );
+					images[ image.uuid ] = new three.Source( deserializedImage );
 
 
 				}
@@ -553,14 +553,14 @@ class CustomObjectLoader extends Loader {
 
 					}
 
-					images[ image.uuid ] = new Source( imageArray );
+					images[ image.uuid ] = new three.Source( imageArray );
 
 				} else {
 
 					// load single image
 
 					const deserializedImage = await deserializeImage( image.url );
-					images[ image.uuid ] = new Source( deserializedImage );
+					images[ image.uuid ] = new three.Source( deserializedImage );
 
 				}
 
