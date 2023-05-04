@@ -52,7 +52,7 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Instancing', ( assert ) => {
 
 			const object = new RampGeometry();
-			assert.ok( object, 'Can instantiate a SphereGeometry.' );
+			assert.ok( object, 'Can instantiate a RampGeometry.' );
 
 		} );
 
