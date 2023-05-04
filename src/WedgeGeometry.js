@@ -11,7 +11,7 @@ import {
  */
 class WedgeGeometry extends BufferGeometry {
 
-	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
+	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = { center: [ 0, 0 ], angle: 0, depth: 0 } ) {
 
 		super();
 		this.type = 'WedgeGeometry';
