@@ -25,7 +25,7 @@ export default QUnit.module( 'Geometries', () => {
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const options = {
-				center: [0, 0],
+				center: [ 0, 0 ],
 				depth: 5,
 			};
 
