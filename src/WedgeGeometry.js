@@ -26,7 +26,7 @@ class WedgeGeometry extends BufferGeometry {
 		var depth = options.depth;
 
 		// a point on which the peak will pass through
-		const center = options.center!== undefined ? options.center: [ 0, 0 ];
+		const center = options.center !== undefined ? options.center: [ 0, 0 ];
 
 		// The direction that the downward slope faces,
 		const angle = options.angle;
