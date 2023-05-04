@@ -8,7 +8,7 @@ import {
 
 class PyramidGeometry extends BufferGeometry {
 
-	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = { center: [ 0, 0 ], depth: 0} ) {
+	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = { center: [ 0, 0 ], depth: 0 } ) {
 
 		super();
 
