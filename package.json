@@ -17,6 +17,6 @@
     "qunit": "^2.4"
   },
   "scripts": {
-    "test": "nyc qunit"
+    "test": "nyc --all qunit"
   }
 }
