@@ -65,5 +65,11 @@ class PyramidGeometry extends BufferGeometry {
 
 	}
 
+	static fromJSON( data, shape ) {
+
+		return new PyramidGeometry( shape, data.options );
+
+	}
+
 }
 export { PyramidGeometry };
