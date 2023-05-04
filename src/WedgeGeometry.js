@@ -11,7 +11,7 @@ import {
  */
 class WedgeGeometry extends BufferGeometry {
 
-	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = { center: [ 0, 0 ], angle: 0, depth: 0 } ) {
+	constructor( shape = new Shape( [ new Vector2( 0.5, 0.5 ), new Vector2( - 0.5, 0.5 ), new Vector2( - 0.5, - 0.5 ), new Vector2( 0.5, - 0.5 ) ] ), options = {} ) {
 
 		super();
 		this.type = 'WedgeGeometry';
@@ -26,7 +26,7 @@ class WedgeGeometry extends BufferGeometry {
 		var depth = options.depth;
 
 		// a point on which the peak will pass through
-		const center = options.center;
+		const center = options.center!== undefined ? options.center: [ 0, 0 ];
 
 		// The direction that the downward slope faces,
 		const angle = options.angle;
