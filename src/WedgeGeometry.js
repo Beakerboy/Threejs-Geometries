@@ -378,7 +378,7 @@ class WedgeGeometry extends BufferGeometry {
 
 	static fromJSON( data, shape ) {
 
-		return new RampGeometry( shape, data.options );
+		return new WedgeGeometry( shape, data.options );
 
 	}
 
