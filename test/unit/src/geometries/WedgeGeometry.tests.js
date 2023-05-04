@@ -27,7 +27,7 @@ export default QUnit.module( 'Geometries', () => {
 			const options = {
 				angle: 0,
 				depth: 5,
-                                center: [ 0, 0 ],
+				center: [ 0, 0 ],
 			};
 
 			geometries = [
