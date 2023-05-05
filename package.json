@@ -17,6 +17,7 @@
     "qunit": "^2.4"
   },
   "scripts": {
+    "lint": "eslint .",
     "test": "nyc qunit"
   },
   "nyc": {
