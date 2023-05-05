@@ -10,4 +10,4 @@ jobs:
     - name: Lint
       run: npm run lint
     - name: Test
-      run: nyc npm qunit
+      run: npm test
