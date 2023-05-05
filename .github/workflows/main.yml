@@ -6,8 +6,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Install modules
-      run: npm -dd install
+      run: npm global install
     - name: Lint
       run: npm run lint
     - name: Test
-      run: npx nyc qunit
+      run: nyc npm qunit
