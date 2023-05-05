@@ -17,6 +17,9 @@
     "qunit": "^2.4"
   },
   "scripts": {
-    "test": "nyc --all --exclude-after-remap=false qunit"
+    "test": "nyc qunit"
+  },
+  "nyc": {
+    "all": true
   }
 }
