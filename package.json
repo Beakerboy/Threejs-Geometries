@@ -7,7 +7,7 @@
     "url": "https://github.com/Beakerboy/Threejs-Geometries.git"
   },
   "exports": {
-    "./src/*": "./src/*",
+    "./src/*": "./src/*"
   },
   "dependencies": {
     "three": "^0.138.3"
