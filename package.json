@@ -6,6 +6,9 @@
     "type": "git",
     "url": "https://github.com/Beakerboy/Threejs-Geometries.git"
   },
+  "exports": {
+    "./src/*": "./src/*"
+  },
   "dependencies": {
     "three": "^0.138.3"
   },
@@ -13,9 +16,19 @@
     "eslint": "^8.13",
     "eslint-config-mdcs": "^5.0.0",
     "eslint-plugin-compat": "^4.0.2",
-    "qunit": "^2.4"
+    "c8": "*",
+    "coveralls": "*",
+    "qunit": "*"
   },
   "scripts": {
-    "test": "qunit"
+    "lint": "eslint .",
+    "test": "c8 qunit"
+  },
+  "c8": {
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
   }
 }
