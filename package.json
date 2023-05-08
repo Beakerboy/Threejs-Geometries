@@ -24,7 +24,11 @@
     "lint": "eslint .",
     "test": "c8 qunit"
   },
-  "nyc": {
-    "all": true
+  "c8": {
+    "all": true,
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ]
   }
 }
