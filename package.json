@@ -17,6 +17,7 @@
     "eslint-config-mdcs": "^5.0.0",
     "eslint-plugin-compat": "^4.0.2",
     "c8": "*",
+    "coveralls": "*",
     "qunit": "*"
   },
   "scripts": {
