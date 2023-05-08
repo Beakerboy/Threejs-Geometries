@@ -16,12 +16,12 @@
     "eslint": "^8.13",
     "eslint-config-mdcs": "^5.0.0",
     "eslint-plugin-compat": "^4.0.2",
-    "nyc": "*",
+    "c8": "*",
     "qunit": "*"
   },
   "scripts": {
     "lint": "eslint .",
-    "test": "nyc qunit"
+    "test": "c8 qunit"
   },
   "nyc": {
     "all": true
