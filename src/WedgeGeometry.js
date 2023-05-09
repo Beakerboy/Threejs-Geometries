@@ -50,7 +50,7 @@ class WedgeGeometry extends BufferGeometry {
 			for ( let h = 0; h < holes.length; h ++ ) {
 
 				const hole = holes[ h ];
-				if ( THREE.ShapeUtils.isClockWise( hole ) ) {
+				if ( ShapeUtils.isClockWise( hole ) ) {
 
 					holes[ h ] = hole.reverse();
 

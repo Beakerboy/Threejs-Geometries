@@ -24,6 +24,22 @@ export default QUnit.module( 'Geometries', () => {
 			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
+			const rectangle = new Shape();
+			rectangle.moveTo( - 2, - 1 );
+			rectangle.lineTo( 2, - 1 );
+			rectangle.lineTo( 2, 1 );
+			rectangle.lineTo( - 2, 1 );
+			rectangle.lineTo( - 2, - 1 );
+
+			// Clockwise square
+			const square = new Shape();
+			square.moveTo( - .5, .5 );
+			square.lineTo( .5, .5 );
+			square.lineTo( .5, - .5 );
+			square.lineTo( - .5, - .5 );
+			square.lineTo( - .5, .5 );
+			rectangle.holes.push( square );
+
 			const options = {
 				angle: 0,
 				depth: 5,
@@ -34,6 +50,12 @@ export default QUnit.module( 'Geometries', () => {
 				new WedgeGeometry(),
 				new WedgeGeometry( heartShape ),
 				new WedgeGeometry( heartShape, options ),
+				// Outer shape in wrong direction, with hole in wrong direction.
+				new WedgeGeometry( rectangle, {
+					angle: 0,
+					depth: 5,
+					center: [ 4, 4 ],
+				} ),
 			];
 
 		} );
