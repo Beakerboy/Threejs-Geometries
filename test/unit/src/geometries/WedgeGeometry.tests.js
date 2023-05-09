@@ -51,7 +51,7 @@ export default QUnit.module( 'Geometries', () => {
 				new WedgeGeometry( rectangle,  {
 					angle: 0,
 					depth: 5,
-					center: [ 0, 4 ],
+					center: [ 4, 4 ],
 				} ),
 			];
 
