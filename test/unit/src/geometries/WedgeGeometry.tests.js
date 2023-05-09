@@ -25,17 +25,17 @@ export default QUnit.module( 'Geometries', () => {
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const rectangle = new Shape();
-			rectangle.moveTo( -2, 1 );
-			rectangle.lineTo( 2, -1 );
-			rectangle.lineTo( -2, -1 );
-			rectangle.lineTo( -2, 1 );
+			rectangle.moveTo( - 2, 1 );
+			rectangle.lineTo( 2, - 1 );
+			rectangle.lineTo( - 2, - 1 );
+			rectangle.lineTo( - 2, 1 );
 			
 			const square = new Shape();
-			square.moveTo( -.5, .5 );
+			square.moveTo( - .5, .5 );
 			square.lineTo( .5, -.5 );
-			square.lineTo( -.5, -.5 );
-			square.lineTo( -.5, .5 );
-			rectangle.holes.push(square);
+			square.lineTo( - .5, - .5 );
+			square.lineTo( - .5, .5 );
+			rectangle.holes.push( square );
 			
 			const options = {
 				angle: 0,
