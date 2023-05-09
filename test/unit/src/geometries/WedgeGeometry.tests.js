@@ -47,6 +47,7 @@ export default QUnit.module( 'Geometries', () => {
 				new WedgeGeometry(),
 				new WedgeGeometry( heartShape ),
 				new WedgeGeometry( heartShape, options ),
+				// Outer shape in wrong direction, with hole in wrong direction.
 				new WedgeGeometry( rectangle, options ),
 			];
 
