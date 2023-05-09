@@ -27,11 +27,14 @@ export default QUnit.module( 'Geometries', () => {
 			const rectangle = new Shape();
 			rectangle.moveTo( - 2, - 1 );
 			rectangle.lineTo( 2, - 1 );
+			rectangle.lineTo( 2, 1 );
 			rectangle.lineTo( - 2, 1 );
-			rectangle.lineTo( - 2, 1 );
+			rectangle.lineTo( - 2, - 1 );
 
+			// Clockwise square
 			const square = new Shape();
 			square.moveTo( - .5, .5 );
+			square.lineTo( .5, .5 );
 			square.lineTo( .5, - .5 );
 			square.lineTo( - .5, - .5 );
 			square.lineTo( - .5, .5 );
