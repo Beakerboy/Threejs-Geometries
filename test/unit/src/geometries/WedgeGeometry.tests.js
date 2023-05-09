@@ -25,9 +25,9 @@ export default QUnit.module( 'Geometries', () => {
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const rectangle = new Shape();
-			rectangle.moveTo( - 2, 1 );
+			rectangle.moveTo( - 2, - 1 );
 			rectangle.lineTo( 2, - 1 );
-			rectangle.lineTo( - 2, - 1 );
+			rectangle.lineTo( - 2, 1 );
 			rectangle.lineTo( - 2, 1 );
 
 			const square = new Shape();
