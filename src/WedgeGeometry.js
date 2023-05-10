@@ -16,10 +16,8 @@ class WedgeGeometry extends BufferGeometry {
 		super();
 		this.type = 'WedgeGeometry';
 		this.parameters = {
-
 			shape: shape,
 			options: options,
-
 		};
 
 		// The max depth of the geometry
