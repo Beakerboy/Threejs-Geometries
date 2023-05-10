@@ -27,7 +27,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		// a point on which the peak will pass through
 		const center = options.center !== undefined ? options.center : [ 0, 0 ];
-		this.parameters.center = center;
+		this.parameters.options.center = center;
 
 		// The direction that the downward slope faces,
 		const angle = options.angle;
@@ -357,7 +357,7 @@ class WedgeGeometry extends BufferGeometry {
 	move( point ) {
 
 		const angle = this.parameters.options.angle;
-		const center = this.center;
+		const center = this.parameters.options.center;
 		const pointX = ( point.x - center[ 0 ] ) * Math.cos( angle ) - ( point.y - center[ 1 ] ) * Math.sin( angle );
 		const pointY = ( point.x - center[ 0 ] ) * Math.sin( angle ) + ( point.y - center[ 1 ] ) * Math.cos( angle );
 		return [ pointX, pointY ];
@@ -370,7 +370,7 @@ class WedgeGeometry extends BufferGeometry {
 	unMove( point ) {
 
 		const angle = this.parameters.options.angle;
-		const center = this.center;
+		const center = this.parameters.options.center;
 		const pointX = point[ 0 ] * Math.cos( angle ) + point[ 1 ] * Math.sin( angle ) + center[ 0 ];
 		const pointY = - 1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
 		return [ pointX, pointY ];
