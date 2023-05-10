@@ -223,6 +223,7 @@
 					folder.add( data, 'centerx', -10, 10 ).step( .1 ).onChange( generateGeometry );
 					folder.add( data, 'centery', -10, 10 ).step( .1 ).onChange( generateGeometry );
 					folder.add( data, 'depth', 1, 100 ).step( 1 ).onChange( generateGeometry );
+					generateGeometry();
 				},
 				HippedGeometry: function (mesh) {
 					const data = {
