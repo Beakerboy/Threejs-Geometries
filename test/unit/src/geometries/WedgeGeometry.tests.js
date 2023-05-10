@@ -107,8 +107,8 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Standard geometry tests', ( assert ) => {
 
 			runStdGeometryTests( assert, geometries );
-			const geo = geometries[2];
-                        geo.computeBoundingSphere();
+			const geo = geometries[ 2 ];
+			geo.computeBoundingSphere();
 
 		} );
 
