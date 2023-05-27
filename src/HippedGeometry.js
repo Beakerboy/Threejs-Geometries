@@ -127,20 +127,22 @@ class HippedGeometry extends BufferGeometry {
    * Not tested on self-intersecting shapes.
    *
    * @param {[[number, number]]} points - an array of x, y pairs.
-   * @return {[Shape]} an array of shapes. Element 0 is the original shape with
-   *                   the addition of new vertices for the crossing points.
+   * @return {[Shape]} an array of shapes. Element 0 is the original shape.
    */
   splitShape(points) {
-    for (let i = 0; i < points.length; i++) {
-      //x = findIntersectingBisectors(points, i, getNextPoint(points, i));
-      // if x is inside object (and new lines do not cross an edge) save the pair
-      // check neighbors for shorter matches
-      // if two matching points only match each other add the triangle to savedShapes
-      //   flag the two points as unusable.
-      //   Insert the new Point to the shape betweeen the matching points
-      // if one point has two matches, exclude the longer match and recheck.
+    // create array of border line segments
+    // create array of border corner bisectors
+    bisector_rays = create_bisectors(points)
+    while (bisector_rays.length > 2) {
+    // foreach bisector, determine if it intersects
+    //   either the previous or next bisector inside the shape.
+    //   if it does, what is the distance.
+    // find the matching shortest interaecting bisectors.
+    // create a new closed shape from the edges and bisectors
+    // remove the two matched bisector rays and replace with one centers on the intersection point
     }
-    // if there are only two free points, connect them and return.
+    // finalize the skeleton by connecting the final two points
+    //  and add the final two closed ahapes.
   }
 
   /**
