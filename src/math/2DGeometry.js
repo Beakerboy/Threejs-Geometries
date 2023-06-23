@@ -1,9 +1,3 @@
-class Point {
-}
-
-class Vector {
-}
-
 class Line2 {
   constructor( start = new Vector2(), end = new Vector2() ) {
 
