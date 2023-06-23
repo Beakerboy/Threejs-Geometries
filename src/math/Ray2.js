@@ -3,21 +3,25 @@ import {
 } from 'three';
 
 class Ray2 {
-  // point: x-y point in space
-  // vector: 
-  constructor( origin = new Vector2(), direction = new Vector2( 0, 0, - 1 ) ) {
+	// point: x-y point in space
+	// vector: 
+	constructor( origin = new Vector2(), direction = new Vector2( 0, 0, - 1 ) ) {
 
 		this.origin = origin;
 		this.direction = direction;
 
 	}
 
-  set( origin, direction ) {
+	set( origin, direction ) {
 
 		this.origin.copy( origin );
 		this.direction.copy( direction );
 
 		return this;
+
+	}
+
+	intersection( line ) {
 
 	}
 
@@ -30,7 +34,7 @@ class Ray2 {
 
 	}
 
-  equals( ray ) {
+	equals( ray ) {
 
 		return ray.origin.equals( this.origin ) && ray.direction.equals( this.direction );
 
