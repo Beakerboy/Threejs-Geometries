@@ -132,7 +132,7 @@ class HippedGeometry extends BufferGeometry {
   splitShape(points) {
     // create array of border line segments
     // create array of border corner bisectors
-    bisectorRays = create_bisectors(points)
+    var bisectorRays = create_bisectors(points)
     while (bisectorRays.length > 2) {
     // foreach bisector, determine if it intersects
     //   either the previous or next bisector inside the shape.
