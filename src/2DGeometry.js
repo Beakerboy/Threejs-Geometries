@@ -1,3 +1,9 @@
+class Point {
+}
+
+class Vector {
+}
+
 class Line {
   // We have to allow vertical line
   constructor(point, vector) {
