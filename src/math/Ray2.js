@@ -1,11 +1,6 @@
-class Line2 {
-  constructor( start = new Vector2(), end = new Vector2() ) {
-
-		this.start = start;
-		this.end = end;
-
-	}
-}
+import {
+  Vector2,
+} from 'three';
 
 class Ray2 {
   // point: x-y point in space
