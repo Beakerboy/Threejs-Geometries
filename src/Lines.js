@@ -1,17 +1,17 @@
 class Line {
   // We have to allow vertical line
-  constructor(point, angle) {
+  constructor(point, vector) {
     this.point = point
-    this.angle = angle
+    this.vector = vector
   }
 }
 
 class Ray extends Line {
-// point: x-y point in space
-// angle: value between 0 and τ
-  constructor(point, angle) {
+  // point: x-y point in space
+  // vector: 
+  constructor(point, vector) {
     this.point = point
-    this.angle = angle
+    this.vector = vector
   }
 }
 
