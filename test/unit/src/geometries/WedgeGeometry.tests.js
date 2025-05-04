@@ -56,6 +56,11 @@ export default QUnit.module( 'Geometries', () => {
 					depth: 5,
 					center: [ 4, 4 ],
 				} ),
+				new WedgeGeometry( square, {
+					angle: Math.PI,
+					depth: 5,
+					center: [ 0, 0 ],
+				} ),
 			];
 
 		} );
