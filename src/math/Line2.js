@@ -1,4 +1,6 @@
 class Line2 {
+	start;
+	end;
 	constructor( start = new Vector2(), end = new Vector2() ) {
 
 		this.start = start;
