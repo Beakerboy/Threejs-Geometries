@@ -43,26 +43,8 @@ class HippedGeometry extends BufferGeometry {
         }
       }
     }
-    // The original shape's point, but roated and centered.
-    const newPoints = [];
 
-    var point;
-    var minY;
-    var maxY;
-    for (let i = 0; i < points.length; i++) {
-      point = points[i];
-      const moved = this.move(point);
-      if (i === 0) {
-        minY = moved[1];
-        maxY = moved[1];
-      } else {
-        minY = Math.min(minY, moved[1]);
-        maxY = Math.max(maxY, moved[1]);
-      }
-      newPoints.push(moved);
-    }
-
-    const newShapes = this.splitShape(newPoints);
+    const newShapes = this.splitShape(points);
 
     const positions = [];
     // If the line does not intersect, display the outline.
@@ -131,6 +113,13 @@ class HippedGeometry extends BufferGeometry {
    */
   splitShape(points) {
     // create array of border line segments
+    const edges = [];
+    for (const i in points) {
+      // does end point equal start point?
+      const nextIndex = (i + 1) % points.length
+      edge = new Line(points[i], points[nextIndex])
+      edges.push(edge)
+    }
     // create array of border corner bisectors
     var bisectorRays = create_bisectors(points)
     while (bisectorRays.length > 2) {
