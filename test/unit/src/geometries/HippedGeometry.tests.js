@@ -52,7 +52,7 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Instancing', ( assert ) => {
 
 			const object = new HippedGeometry();
-			assert.ok( object, 'Can instantiate a PyramidGeometry.' );
+			assert.ok( object, 'Can instantiate a HippedGeometry.' );
 
 		} );
 
