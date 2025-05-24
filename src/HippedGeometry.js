@@ -20,3 +20,4 @@ class HippedGeometry extends BufferGeometry {
 	}
 
 }
+export { HippedGeometry };
