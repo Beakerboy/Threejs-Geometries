@@ -6,5 +6,7 @@ import {
 	BufferAttribute,
 } from 'three';
 
+import SkeletonBuilder from 'straight-skeleton';
+
 class HippedGeometry extends BufferGeometry {
 }
