@@ -3,7 +3,7 @@ import {
 	Vector2,
 	Shape,
 } from 'three';
-import { SkeletonBuilder } from 'straight-skeleton';
+import { SkeletonBuilder } from 'straightskeleton';
 
 class HippedGeometry extends BufferGeometry {
 
