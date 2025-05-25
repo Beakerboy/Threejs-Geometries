@@ -18,5 +18,11 @@ class HippedGeometry extends BufferGeometry {
 
 	}
 
+	static fromJSON( data, shape ) {
+
+		return new HippedGeometry( shape, data.options );
+
+	}
+
 }
 export { HippedGeometry };
