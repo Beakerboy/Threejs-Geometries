@@ -38,7 +38,7 @@ class HippedGeometry extends BufferGeometry {
 
 				for (const polygon of result.polygons) {
 					const polygonVertices = [];
-					for (let i = 0; i < polygon.length; i++) {
+					for (let i = 0; i < polygon.length; i ++) {
 						const vertex = activeSkeleton.vertices[polygon[i]];
 						polygonVertices.push(
 							(vertex[0] + offset.x) * scale,
@@ -50,7 +50,7 @@ class HippedGeometry extends BufferGeometry {
 
 					for ( let i = 0; i < triangles.length / 3; i ++ ) {
 
-						for ( let j = 0; j < 3; j++ ) {
+						for ( let j = 0; j < 3; j ++ ) {
 
 							const index = triangles[ i * 3 + j ];
 							vertices.push(polygonVertices[ index * 3 ], polygonVertices[ index * 3 + 1 ], polygonVertices[ index * 3 + 2 ]);
