@@ -75,13 +75,17 @@ class HippedGeometry extends BufferGeometry {
 
 			for ( const edgeOutput of result.edges ) {
 
-				const polygon = ShapeUtils.triangulateShape( edgeOutput.polygon );
+				const newPolygon = []
+				// convert List of Vector2d to array of Vector2
+				for ( const point of edgeOutput.polygon ) {
+					newPolygon.push( Vector2( point.x, point.y ) );
+				}
+				const polygon = ShapeUtils.triangulateShape( newPolygon );
 				const polygonVertices = [];
 				for ( const point of polygon ) {
 
-					const distance = sk.distances[ point ];
-					polygonVertices.push( point.x, point.y, distance * depth
-					);
+					//const distance = sk.distances[ point ];
+					polygonVertices.push( point.x, point.y, 0);
 
 				}
 
