@@ -54,7 +54,8 @@ class HippedGeometry extends BufferGeometry {
 					}
 				}
 			}
-			geometry.setAttribute('position', new THREE.BufferAttribute(new Float32Array(vertices), 3));
+			this.setAttribute( 'position', new BufferAttribute( new Float32Array( vertices ), 3 ) );
+			this.computeVertexNormals();
 		});
 	}
 
