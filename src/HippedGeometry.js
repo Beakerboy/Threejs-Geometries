@@ -17,7 +17,6 @@ class HippedGeometry extends BufferGeometry {
 			options: options,
 		};
 
-		// Initialize the Wasm module by calling init() once.
 		const sk = SkeletonBuilder.build( polygon );
 
 		const result = SkeletonBuilder.buildFromPolygon( polygon );
