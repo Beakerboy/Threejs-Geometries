@@ -1,5 +1,6 @@
 import {
 	BufferGeometry,
+	BufferAttribute,
 	Vector2,
 	Shape,
 } from 'three';
@@ -19,15 +20,15 @@ class HippedGeometry extends BufferGeometry {
 
 		const polygon = [
 			[
-				[ -1, -1 ], [ 0, - 12 ], [ 1, - 1 ], [ 12, 0 ], [ 1, 1 ], [ 0, 12 ], [ - 1, 1 ], [ - 12, 0 ], [ - 1, - 1 ]
+				[ - 1, - 1 ], [ 0, - 12 ], [ 1, - 1 ], [ 12, 0 ], [ 1, 1 ], [ 0, 12 ], [ - 1, 1 ], [ - 12, 0 ], [ - 1, - 1 ]
 			],
 			[
-				[ - 1, 0 ],  [ 0, 1 ], [ 0, - 1 ], [ - 1, 0 ]
+				[ - 1, 0 ], [ 0, 1 ], [ 0, - 1 ], [ - 1, 0 ]
 			]
 		];
 
 		// Initialize the Wasm module by calling init() once.
-		SkeletonBuilder.init().then(() => {
+		SkeletonBuilder.init().then( () => {
 			const result = SkeletonBuilder.buildFromPolygon(polygon);
 	
 			// Check if the skeleton was successfully constructed
@@ -46,17 +47,25 @@ class HippedGeometry extends BufferGeometry {
 						);
 					}
 					const triangles = earcut(polygonVertices, null, 3);
-					for (let i = 0; i < triangles.length / 3; i++) {
-						for (let j = 0; j < 3; j++) {
-							const index = triangles[i * 3 + j];
-							vertices.push(polygonVertices[index * 3], polygonVertices[index * 3 + 1], polygonVertices[index * 3 + 2]);
+
+					for ( let i = 0; i < triangles.length / 3; i ++ ) {
+
+						for ( let j = 0; j < 3; j++ ) {
+
+							const index = triangles[ i * 3 + j ];
+							vertices.push(polygonVertices[ index * 3 ], polygonVertices[ index * 3 + 1 ], polygonVertices[ index * 3 + 2 ]);
+
 						}
+
 					}
+
 				}
+
+				this.setAttribute( 'position', new BufferAttribute( new Float32Array( vertices ), 3 ) );
+				this.computeVertexNormals();
 			}
-			this.setAttribute( 'position', new BufferAttribute( new Float32Array( vertices ), 3 ) );
-			this.computeVertexNormals();
-		});
+		} );
+
 	}
 
 	static fromJSON( data, shape ) {
