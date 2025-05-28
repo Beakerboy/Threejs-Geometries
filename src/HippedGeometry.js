@@ -43,6 +43,7 @@ class HippedGeometry extends BufferGeometry {
                  * closed shapes. The first shape is the outer perimeter. Subsequent shapes are
                  * holes.
 		 */
+
 		const multipolygon = [];
 		const polygon = [];
 		outer = [];
