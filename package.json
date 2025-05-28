@@ -10,6 +10,7 @@
     "./src/*": "./src/*"
   },
   "dependencies": {
+    "earcut": "*",
     "straight-skeleton": "*",
     "three": "^0.138.3"
   },
