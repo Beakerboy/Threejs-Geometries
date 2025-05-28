@@ -26,6 +26,7 @@ class HippedGeometry extends BufferGeometry {
 			points.reverse();
 
 		}
+
 		for ( hole of holes ) {
 
 			// straight-skeleton expects clockwise inner polygon
