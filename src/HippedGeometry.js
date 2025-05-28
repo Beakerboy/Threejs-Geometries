@@ -54,8 +54,8 @@ class HippedGeometry extends BufferGeometry {
 
 		}
 
-		// Repeat start-end point
-		border.push( [ points[ 0 ].x, points[ 0 ].y ] );
+		// Repeat start-end point the livrary does not like the repeated point.
+		// border.push( [ points[ 0 ].x, points[ 0 ].y ] );
 		polygon.push( border );
 		// for ( const hole of holes ) {
 		//   border.length = 0;
