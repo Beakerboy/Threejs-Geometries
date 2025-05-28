@@ -20,7 +20,7 @@ export default QUnit.module( 'Geometries', () => {
 			square.lineTo( 25, - 25 );
 			square.lineTo( 25, 25 );
 			square.lineTo( - 25, 25 );
-			
+
 			const options = {
 				center: [ 0, 0 ],
 				depth: 5,
