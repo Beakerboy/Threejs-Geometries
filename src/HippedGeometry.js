@@ -88,7 +88,7 @@ class HippedGeometry extends BufferGeometry {
 				for ( const point of polygon ) {
 
 					//const distance = sk.distances[ point ];
-					polygonVertices.push( point.x, point.y, 0);
+					polygonVertices.push( point.x, point.y, 0 );
 
 				}
 
