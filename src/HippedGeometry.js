@@ -16,6 +16,8 @@ class HippedGeometry extends BufferGeometry {
 			shape: shape,
 			options: options,
 		};
+		// The max depth of the geometry
+		var depth = options.depth;
 		var points = shape.extractPoints().shape;
 		var holes = shape.extractPoints().holes;
 		// straight-skeleton expects counter-clockwise outer polygon
@@ -49,21 +51,16 @@ class HippedGeometry extends BufferGeometry {
 
 			const vertices = [];
 
-			for ( const polygon of result.polygons ) {
-
+			for ( const edgeOutput of result.edges ) {
+				const polygon = ShapeUtils.triangulateShape( edgeOutput.polygon );
 				const polygonVertices = [];
-				for ( let i = 0; i < polygon.length; i ++ ) {
+				for ( const point of polygon ) {
 
-					const vertex = activeSkeleton.vertices[ polygon[ i ] ];
-					polygonVertices.push(
-						( vertex[ 0 ] + offset.x ) * scale,
-						( vertex[ 1 ] + offset.y ) * scale,
-						( vertex[ 2 ] + offset.z ) * scale
+					const distance = sk.distances[ point ];
+					polygonVertices.push( point.x, point.y, distance * depth
 					);
 
 				}
-
-				const triangles = earcut( polygonVertices, null, 3 );
 
 				for ( let i = 0; i < triangles.length / 3; i ++ ) {
 
