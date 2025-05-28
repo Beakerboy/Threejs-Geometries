@@ -83,7 +83,8 @@ class HippedGeometry extends BufferGeometry {
 
 				}
 
-				const polygon = ShapeUtils.triangulateShape( newPolygon, [[]] );
+				// [number, number, number][]
+				const triangles = ShapeUtils.triangulateShape( newPolygon, [[]] );
 				const polygonVertices = [];
 				for ( const point of polygon ) {
 
