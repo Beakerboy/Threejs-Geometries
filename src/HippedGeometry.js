@@ -50,20 +50,20 @@ class HippedGeometry extends BufferGeometry {
 		const inner = [];
 		for ( const point of points ) {
 
-			shape.push( point.x, point.y );
+			border.push( point.x, point.y );
 
 		}
 
 		// Repeat start-end point
-		outline.push( points[ 0 ].x, points[ 0 ].y );
-		polygon.push( outline );
+		border.push( points[ 0 ].x, points[ 0 ].y );
+		polygon.push( border );
 		// for ( const hole of holes ) {
-		//   outline.length = 0;
+		//   border.length = 0;
 		//   for ( const point of hole ) {
-		//     outline.push( point.x, point.y );
+		//     border.push( point.x, point.y );
 		//   }
-		//   outline.push( hole[ 0 ].x, hole[ 0 ].y );
-		//   polygon.push( outline)
+		//   border.push( hole[ 0 ].x, hole[ 0 ].y );
+		//   polygon.push( border )
 		// }
 		multipolygon.push( polygon );
 		const result = SkeletonBuilder.buildFromGeoJSON( multipolygon );
