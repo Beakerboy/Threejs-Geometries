@@ -27,6 +27,7 @@ class HippedGeometry extends BufferGeometry {
 
 		}
 		for ( hole of holes ) {
+
 			// straight-skeleton expects clockwise inner polygon
 			if ( ! ShapeUtils.isClockWise( hole ) ) {
 
@@ -35,6 +36,7 @@ class HippedGeometry extends BufferGeometry {
 			}
 
 		}
+
 		const polygon = [];
 		const inner = [];
 		for ( const point of points ) {
