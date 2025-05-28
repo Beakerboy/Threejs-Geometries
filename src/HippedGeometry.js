@@ -36,7 +36,7 @@ class HippedGeometry extends BufferGeometry {
 				const vertices = [];
 
 				for (const polygon of result.polygons) {
-					const polygonVertices: number[] = [];
+					const polygonVertices = [];
 					for (let i = 0; i < polygon.length; i++) {
 						const vertex = activeSkeleton.vertices[polygon[i]];
 						polygonVertices.push(
