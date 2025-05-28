@@ -38,8 +38,11 @@ class HippedGeometry extends BufferGeometry {
 		const polygon = [];
 		const inner = [];
 		for ( const point of points ) {
+
 			inner.push( point.x, point.y );
+
 		}
+
 		// Repeat start-end point
 		inner.push( points[ 0 ].x, points[ 0 ].y );
 		polygon.push( inner );
