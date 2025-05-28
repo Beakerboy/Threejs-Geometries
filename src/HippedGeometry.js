@@ -50,19 +50,19 @@ class HippedGeometry extends BufferGeometry {
 		const inner = [];
 		for ( const point of points ) {
 
-			border.push( point.x, point.y );
+			border.push( [ point.x, point.y ] );
 
 		}
 
 		// Repeat start-end point
-		border.push( points[ 0 ].x, points[ 0 ].y );
+		border.push( [ points[ 0 ].x, points[ 0 ].y ] );
 		polygon.push( border );
 		// for ( const hole of holes ) {
 		//   border.length = 0;
 		//   for ( const point of hole ) {
-		//     border.push( point.x, point.y );
+		//     border.push( [ point.x, point.y ] );
 		//   }
-		//   border.push( hole[ 0 ].x, hole[ 0 ].y );
+		//   border.push( [ hole[ 0 ].x, hole[ 0 ].y ] );
 		//   polygon.push( border )
 		// }
 		multipolygon.push( polygon );
