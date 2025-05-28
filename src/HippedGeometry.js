@@ -35,14 +35,14 @@ class HippedGeometry extends BufferGeometry {
 			}
 
 		}
-		const polygon = []
-		const inner = []
+		const polygon = [];
+		const inner = [];
 		for ( const point of points ) {
-			inner.push( point.x, point.y )
+			inner.push( point.x, point.y );
 		}
 		// Repeat start-end point
-		inner.push( points[ 0 ].x, points[ 0 ].y )
-		polygon.push(inner)
+		inner.push( points[ 0 ].x, points[ 0 ].y );
+		polygon.push( inner );
 
 		const result = SkeletonBuilder.buildFromGeoJSON( polygon );
 
@@ -52,6 +52,7 @@ class HippedGeometry extends BufferGeometry {
 			const vertices = [];
 
 			for ( const edgeOutput of result.edges ) {
+
 				const polygon = ShapeUtils.triangulateShape( edgeOutput.polygon );
 				const polygonVertices = [];
 				for ( const point of polygon ) {
