@@ -79,7 +79,7 @@ class HippedGeometry extends BufferGeometry {
 				// convert List of Vector2d to array of Vector2
 				for ( const point of edgeOutput.polygon ) {
 
-					newPolygon.push( Vector2( point.x, point.y ) );
+					newPolygon.push( new Vector2( point.x, point.y ) );
 
 				}
 
