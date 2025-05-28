@@ -16,10 +16,33 @@ class HippedGeometry extends BufferGeometry {
 			shape: shape,
 			options: options,
 		};
+		var points = shape.extractPoints().shape;
+		var holes = shape.extractPoints().holes;
+		// straight-skeleton expects counter-clockwise outer polygon
+		if ( ShapeUtils.isClockWise( points ) ) {
 
-		const sk = SkeletonBuilder.build( polygon );
+			points.reverse();
 
-		const result = SkeletonBuilder.buildFromPolygon( polygon );
+		}
+		for ( hole of holes ) {
+			// straight-skeleton expects clockwise inner polygon
+			if ( ! ShapeUtils.isClockWise( hole ) ) {
+
+				hole.reverse();
+
+			}
+
+		}
+		const polygon = []
+		const inner = []
+		for ( const point of points ) {
+			inner.push( point.x, point.y )
+		}
+		// Repeat start-end point
+		inner.push( points[ 0 ].x, points[ 0 ].y )
+		polygon.push(inner)
+
+		const result = SkeletonBuilder.buildFromGeoJSON( polygon );
 
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
