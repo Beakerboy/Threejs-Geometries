@@ -3,6 +3,7 @@ import {
 	BufferAttribute,
 	Vector2,
 	Shape,
+	ShapeUtils,
 } from 'three';
 import { SkeletonBuilder } from 'straight-skeleton';
 
