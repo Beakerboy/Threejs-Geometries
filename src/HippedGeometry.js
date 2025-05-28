@@ -33,7 +33,7 @@ class HippedGeometry extends BufferGeometry {
 			// Check if the skeleton was successfully constructed
 			if (result !== null) {
 				const geometry = new THREE.BufferGeometry();
-				const vertices: number[] = [];
+				const vertices = [];
 
 				for (const polygon of result.polygons) {
 					const polygonVertices: number[] = [];
