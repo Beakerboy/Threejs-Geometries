@@ -16,7 +16,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			const square = new Shape();
 
-			square.moveRo( - 25, - 25 );
+			square.moveTo( - 25, - 25 );
 			square.lineTo( 25, - 25 );
 			square.lineTo( 25, 25 );
 			square.lineTo( - 25, 25 );
