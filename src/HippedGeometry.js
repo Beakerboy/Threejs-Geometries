@@ -30,9 +30,10 @@ class HippedGeometry extends BufferGeometry {
 		// Initialize the Wasm module by calling init() once.
 		SkeletonBuilder.init().then( () => {
 			const result = SkeletonBuilder.buildFromPolygon(polygon);
-	
+
 			// Check if the skeleton was successfully constructed
 			if (result !== null) {
+
 				const geometry = new THREE.BufferGeometry();
 				const vertices = [];
 
@@ -43,9 +44,9 @@ class HippedGeometry extends BufferGeometry {
 
 						const vertex = activeSkeleton.vertices[ polygon[ i ] ];
 						polygonVertices.push(
-							(vertex[ 0 ] + offset.x) * scale,
-							(vertex[ 1 ] + offset.y) * scale,
-							(vertex[ 2 ] + offset.z) * scale
+							( vertex[ 0 ] + offset.x ) * scale,
+							( vertex[ 1 ] + offset.y ) * scale,
+							( vertex[ 2 ] + offset.z ) * scale
 						);
 
 					}
