@@ -77,37 +77,28 @@ class HippedGeometry extends BufferGeometry {
 			for ( const edgeOutput of result.Edges ) {
 
 				const newPolygon = [];
+				const heights = [];
 				// convert List of Vector2d to array of Vector2
 				for ( const point of edgeOutput.Polygon ) {
 
 					newPolygon.push( new Vector2( point.X, point.Y ) );
-
+					heights.push( result.Distances.get(point) );
 				}
 
-				// [number, number, number][]
 				if ( newPolygon.length !== 3 ) {
 
 					throw new Error( "length is " + newPolygon.length );
 
 				}
 
+				// [number, number, number][]
 				const triangles = ShapeUtils.triangulateShape( newPolygon, [[]] );
 				const polygonVertices = [];
-				for ( const point of polygon ) {
+				for ( const triangle of triangles ) {
 
-					//const distance = sk.distances[ point ];
-					polygonVertices.push( point.x, point.y, 0 );
-
-				}
-
-				for ( let i = 0; i < triangles.length / 3; i ++ ) {
-
-					for ( let j = 0; j < 3; j ++ ) {
-
-						const index = triangles[ i * 3 + j ];
-						vertices.push( polygonVertices[ index * 3 ], polygonVertices[ index * 3 + 1 ], polygonVertices[ index * 3 + 2 ] );
-
-					}
+					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, heights[ triangle[ 0 ] ] );
+					polygonVertices.push( newPolygon[ triangle[ 1 ] ].x, newPolygon[ triangle[ 1 ] ].y, heights[ triangle[ 1 ] ] );
+					polygonVertices.push( newPolygon[ triangle[ 2 ] ].x, newPolygon[ triangle[ 2 ] ].y, heights[ triangle[ 2 ] ] );
 
 				}
 
