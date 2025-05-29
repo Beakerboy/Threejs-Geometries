@@ -17,8 +17,8 @@ export default QUnit.module( 'Geometries', () => {
 			const square = new Shape();
 
 			square.moveTo( - 25, - 25 );
-			square.lineTo( 25, - 25 );
-			square.lineTo( 25, 25 );
+			square.lineTo( 75, - 25 );
+			square.lineTo( 75, 25 );
 			square.lineTo( - 25, 25 );
 
 			const options = {
@@ -39,6 +39,8 @@ export default QUnit.module( 'Geometries', () => {
 
 			const facePoints = geometries[ 1 ].getAttribute( "position" );
 			assert.equal( facePoints.count, 12, "HippedGeometry Face Count:" );
+			assert.equal( facePoints.array.length, 36, "HippedGeometry Face Count:" );
+			// peek at contents
 			assert.equal( facePoints, [], "Contents of position array" );
 
 		} );
