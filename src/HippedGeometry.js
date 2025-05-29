@@ -72,7 +72,11 @@ class HippedGeometry extends BufferGeometry {
 		if ( result !== null ) {
 
 			const vertices = [];
+			if ( result.Edges.length !== 4 ) {
 
+				throw new Error( "length is not 4" );
+
+			}
 			// Create an array of Vector2 for each face
 			for ( const edgeOutput of result.Edges ) {
 
