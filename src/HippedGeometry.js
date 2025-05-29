@@ -74,13 +74,13 @@ class HippedGeometry extends BufferGeometry {
 			const vertices = [];
 
 			// Create an array of Vector2 for each face
-			for ( const edgeOutput of result.edges ) {
+			for ( const edgeOutput of result.Edges ) {
 
 				const newPolygon = [];
 				// convert List of Vector2d to array of Vector2
-				for ( const point of edgeOutput.polygon ) {
+				for ( const point of edgeOutput.Polygon ) {
 
-					newPolygon.push( new Vector2( point.x, point.y ) );
+					newPolygon.push( new Vector2( point.X, point.Y ) );
 
 				}
 
