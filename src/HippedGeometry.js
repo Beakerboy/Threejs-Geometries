@@ -21,6 +21,8 @@ class HippedGeometry extends BufferGeometry {
 		var depth = options.depth;
 		var points = shape.extractPoints().shape;
 		var holes = shape.extractPoints().holes;
+		// {number[]} Flat array of x, y, z tuples
+		const polygonVertices = [];
 		// straight-skeleton expects counter-clockwise outer polygon
 		if ( ShapeUtils.isClockWise( points ) ) {
 
@@ -99,7 +101,7 @@ class HippedGeometry extends BufferGeometry {
 
 				// [number, number, number][]
 				const triangles = ShapeUtils.triangulateShape( newPolygon, [[]] );
-				const polygonVertices = [];
+
 				for ( const triangle of triangles ) {
 
 					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, heights[ triangle[ 0 ] ] );
