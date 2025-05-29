@@ -81,7 +81,6 @@ class HippedGeometry extends BufferGeometry {
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
 
-			const vertices = [];
 			if ( result.Edges.length !== 4 ) {
 
 				throw new Error( "length is not 4" );
@@ -120,7 +119,7 @@ class HippedGeometry extends BufferGeometry {
 
 			}
 
-			this.setAttribute( 'position', new BufferAttribute( new Float32Array( vertices ), 3 ) );
+			this.setAttribute( 'position', new BufferAttribute( new Float32Array( polygonVertices ), 3 ) );
 			this.computeVertexNormals();
 
 		}
