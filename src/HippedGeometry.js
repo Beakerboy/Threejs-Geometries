@@ -40,6 +40,7 @@ class HippedGeometry extends BufferGeometry {
 			}
 
 		}
+
 		/**
                  * A multipolygon is an array of polygons. Each polygon is an array of one or more
                  * closed shapes. The first shape is the outer perimeter. Subsequent shapes are
