@@ -10,7 +10,7 @@
     "./src/*": "./src/*"
   },
   "dependencies": {
-    "straight-skeleton": "Beakerboy/straight-skeleton#More-tests",
+    "straight-skeleton": "1.1.0",
     "three": "^0.138.3"
   },
   "devDependencies" : {
