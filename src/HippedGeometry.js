@@ -51,8 +51,7 @@ class HippedGeometry extends BufferGeometry {
 		const polygon = [];
 		// {polygon[]} all polygons in the multipolygon.
 		const multipolygon = [];
-		
-		const inner = [];
+
 		for ( const point of points ) {
 
 			border.push( [ point.x, point.y ] );
