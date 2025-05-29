@@ -66,7 +66,7 @@ class HippedGeometry extends BufferGeometry {
 		//   polygon.push( border )
 		// }
 		multipolygon.push( polygon );
-		const result = SkeletonBuilder.buildFromGeoJSON( multipolygon );
+		const result = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
 
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
