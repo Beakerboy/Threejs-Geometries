@@ -45,10 +45,13 @@ class HippedGeometry extends BufferGeometry {
                  * closed shapes. The first shape is the outer perimeter. Subsequent shapes are
                  * holes.
 		 */
-
-		const multipolygon = [];
-		const polygon = [];
+		// {[number, number][]} An array of x, y points
 		const border = [];
+		// {border[]} An array of borders. Element 0 is an outer, and additional borders are inner.
+		const polygon = [];
+		// {polygon[]} all polygons in the multipolygon.
+		const multipolygon = [];
+		
 		const inner = [];
 		for ( const point of points ) {
 
