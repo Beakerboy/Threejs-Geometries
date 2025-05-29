@@ -31,8 +31,8 @@ export default QUnit.module( 'Geometries', () => {
 				new HippedGeometry( square ),
 				new HippedGeometry( square, options ),
 			];
-			const facePoints = geometries[1].getAttribute("position").length
-			assert.equal(facePoints, 12, "HippedGeometry Face Count");
+			const facePoints = geometries[ 1 ].getAttribute( "position" ).length
+			assert.equal( facePoints, 12, "HippedGeometry Face Count:" );
 
 		} );
 
