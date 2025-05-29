@@ -82,7 +82,8 @@ class HippedGeometry extends BufferGeometry {
 				for ( const point of edgeOutput.Polygon ) {
 
 					newPolygon.push( new Vector2( point.X, point.Y ) );
-					heights.push( result.Distances.get(point) );
+					heights.push( result.Distances.get( point ) );
+
 				}
 
 				if ( newPolygon.length !== 3 ) {
