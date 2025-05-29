@@ -100,12 +100,6 @@ class HippedGeometry extends BufferGeometry {
 
 				}
 
-				if ( newPolygon.length !== 3 ) {
-
-					throw new Error( "length is " + newPolygon.length );
-
-				}
-
 				// [number, number, number][]
 				const triangles = ShapeUtils.triangulateShape( newPolygon, [] );
 
