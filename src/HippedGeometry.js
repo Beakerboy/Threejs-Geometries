@@ -59,17 +59,22 @@ class HippedGeometry extends BufferGeometry {
 
 		}
 
-		// Repeat start-end point the livrary does not like the repeated point.
-		// border.push( [ points[ 0 ].x, points[ 0 ].y ] );
+		// despite GeoJSON requiring repeated start and end points,
+		// the library does not like the repeated point.
 		polygon.push( border );
-		// for ( const hole of holes ) {
-		//   border.length = 0;
-		//   for ( const point of hole ) {
-		//     border.push( [ point.x, point.y ] );
-		//   }
-		//   border.push( [ hole[ 0 ].x, hole[ 0 ].y ] );
-		//   polygon.push( border )
-		// }
+		for ( const hole of holes ) {
+
+			border.length = 0;
+			for ( const point of hole ) {
+
+				border.push( [ point.x, point.y ] );
+
+			}
+
+			polygon.push( border );
+
+		}
+
 		multipolygon.push( polygon );
 		const result = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
 
