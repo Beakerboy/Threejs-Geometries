@@ -77,6 +77,7 @@ class HippedGeometry extends BufferGeometry {
 				throw new Error( "length is not 4" );
 
 			}
+
 			// Create an array of Vector2 for each face
 			for ( const edgeOutput of result.Edges ) {
 
