@@ -118,9 +118,9 @@ class HippedGeometry extends BufferGeometry {
 				// Triangulate the bottome
 				const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
 
-				if ( bottomTriangles.length !== 2) {
+				if ( bottomTriangles.length !== 2 ) {
 
-					throw new Error("what? " + bottomTriangles.length);
+					throw new Error( "what? " + bottomTriangles.length );
 
 				}
 
