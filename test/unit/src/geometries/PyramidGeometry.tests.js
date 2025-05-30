@@ -15,11 +15,11 @@ export default QUnit.module( 'Geometries', () => {
 			const square = new Shape();
 
 			square.moveTo( - 5, - 5 );
-			square.lineTo( 5, -5 );
+			square.lineTo( 5, - 5 );
 			square.lineTo( 5, 5 );
 			square.lineTo( - 5, 5 );
 			square.lineTo( - 5, - 5 );
-	
+
 			const options = {
 				center: [ 0, 0 ],
 				depth: 5,
