@@ -27,10 +27,10 @@ export default QUnit.module( 'Geometries', () => {
 			doughnut.lineTo( - 25, 25 );
 
 			const innerShape = new Shape();
-			doughnut.moveTo( - 5, - 5 );
-			doughnut.lineTo( 5, - 5 );
-			doughnut.lineTo( 5, 5 );
-			doughnut.lineTo( - 5, 5 );
+			innerShape.moveTo( - 5, - 5 );
+			innerShape.lineTo( 5, - 5 );
+			innerShape.lineTo( 5, 5 );
+			innerShape.lineTo( - 5, 5 );
 
 			doughnut.holes.push( innerShape.reverse() );
 			const options = {
