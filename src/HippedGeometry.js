@@ -118,6 +118,12 @@ class HippedGeometry extends BufferGeometry {
 				// Triangulate the bottome
 				const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
 
+				if ( bottomTriangles.length !== 2) {
+
+					throw new Error("what? " + bottomTriangles.length);
+
+				}
+
 				for ( const triangle of bottomTriangles ) {
 
 					polygonVertices.push( points[ triangle[ 0 ] ].x, points[ triangle[ 0 ] ].y, 0 );
