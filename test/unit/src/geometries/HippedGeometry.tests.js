@@ -15,7 +15,6 @@ export default QUnit.module( 'Geometries', () => {
 			const x = 0, y = 0;
 
 			const square = new Shape();
-
 			square.moveTo( - 25, - 25 );
 			square.lineTo( 75, - 25 );
 			square.lineTo( 75, 25 );
@@ -41,11 +40,12 @@ export default QUnit.module( 'Geometries', () => {
 			const options2 = {
 				pitch: 26.57 / 180 * Math.PI,
 			};
+
 			geometries = [
 				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
 				new HippedGeometry( square, options ),
-				new HippedGeometry( doughnut ),
+				new HippedGeometry( doughnut )
 			];
 
 		} );
