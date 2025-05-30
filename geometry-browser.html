@@ -142,6 +142,15 @@
 			rectShape.lineTo( -5, 5 );
 			rectShape.lineTo( -5, 5 );
 
+			const houseShape = new Shape();
+			houseShape.moveTo( -5, -5 );
+			houseShape.lineTo( 5, -5 );
+			houseShape.lineTo( 5, -7.5 );
+			houseShape.lineTo( 7.5, -7.5 );
+			houseShape.lineTo( 7.5, 5 );
+			houseShape.lineTo( -5, 5 );
+			houseShape.lineTo( -5, 5 );
+
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
 					const data = {
@@ -230,14 +239,14 @@
 				},
 				HippedGeometry: function (mesh) {
 					const data = {
-						pitch: .75
+						pitch: .4636476
 					};
 					function generateGeometry() {
-						const geometry = new HippedGeometry(rectShape, data);
+						const geometry = new HippedGeometry(houseShape, data);
 						updateGroupGeometry(mesh, geometry);
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
-					folder.add( data, 'pitch', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
+					folder.add( data, 'pitch', 0, Math.PI / 2 ).step( twoPi / 180 ).onChange( generateGeometry );
 					generateGeometry();
 				},
 				TorusGeometry: function ( mesh ) {
