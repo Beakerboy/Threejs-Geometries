@@ -41,9 +41,9 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( facePoints.array.length, 54, "HippedGeometry Coordinate Count:" );
 			// peek at contents
 			// assert.equal( facePoints, [], "Contents of position array" );
-			assert.equal( Math.max( facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 25, "Height should be 25" );
+			assert.equal( Math.max( ...facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 25, "Height should be 25" );
 
-			assert.equal( Math.max( geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 6, "Height should be 6" );
+			assert.equal( Math.max( ...geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 6, "Height should be 6" );
 
 		} );
 
