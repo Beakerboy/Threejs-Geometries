@@ -86,7 +86,7 @@ class HippedGeometry extends BufferGeometry {
 		if ( result !== null ) {
 
 			const maxDepth = Math.max( ...result.Distances.values() );
-			const scalingFactor = pitch === null ? ( depth === null ? 1 : depth / maxDepth ) : Math.tan( pitch );
+			const scalingFactor = pitch === undefined ? ( depth === undefined ? 1 : depth / maxDepth ) : Math.tan( pitch );
 
 			// Create an array of Vector2 for each face
 			for ( const edgeOutput of result.Edges ) {
