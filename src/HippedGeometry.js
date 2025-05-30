@@ -19,6 +19,10 @@ class HippedGeometry extends BufferGeometry {
 		};
 		// The max depth of the geometry
 		var depth = options.depth;
+
+		// If depth is not specified, the angle of the ramp.
+		const pitch = options.pitch;
+
 		var points = shape.extractPoints().shape;
 		var holes = shape.extractPoints().holes;
 		// {number[]} Flat array of x, y, z tuples
@@ -81,6 +85,8 @@ class HippedGeometry extends BufferGeometry {
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
 
+			const scalingFactor = depth / Math.max(...result.Distances.values());
+
 			if ( result.Edges.length !== 4 ) {
 
 				throw new Error( "length is not 4" );
@@ -96,7 +102,7 @@ class HippedGeometry extends BufferGeometry {
 				for ( const point of edgeOutput.Polygon ) {
 
 					newPolygon.push( new Vector2( point.X, point.Y ) );
-					heights.push( result.Distances.get( point ) );
+					heights.push( result.Distances.get( point ) * scalingFactor);
 
 				}
 
