@@ -85,7 +85,8 @@ class HippedGeometry extends BufferGeometry {
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
 
-			const scalingFactor = depth / Math.max(...result.Distances.values());
+			const maxDepth = Math.max(...result.Distances.values())
+			const scalingFactor = depth / maxDepth ?? maxDepth * Math.tan(angle) ?? 1;
 
 			if ( result.Edges.length !== 4 ) {
 
