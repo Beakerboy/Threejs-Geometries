@@ -36,6 +36,7 @@ class PyramidGeometry extends BufferGeometry {
 			points.pop();
 
 		}
+
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			point = points[ i ];
