@@ -28,9 +28,10 @@
 
 		<script type="importmap">
 			{
-				"imports": {
-					"three": "https://unpkg.com/three/build/three.module.js"
-				}
+			    "imports": {
+			        "three": "https://unpkg.com/three/build/three.module.js",
+			        "straight-skeleton": "https://cdn.skypack.dev/straight-skeleton@1.1.0"
+			    }
 			}
 		</script>
 
@@ -133,11 +134,11 @@
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const rectShape = new Shape();
-			rectShape.moveTo( 1, 2 );
-			rectShape.lineTo( -1, 2 );
-			rectShape.lineTo( -1, -2 );
-			rectShape.lineTo( 1, -2 );
-			rectShape.lineTo( 1, 2 );
+			rectShape.moveTo( -5, -5 );
+			rectShape.lineTo( 5, -5 );
+			rectShape.lineTo( 5, 5 );
+			rectShape.lineTo( -5, 5 );
+			rectShape.lineTo( -5, -5 );
 
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
@@ -215,7 +216,7 @@
 					};
 					function generateGeometry() {
 						data.center = [data.centerx, data.centery];
-						const geometry = new WedgeGeometry(heartShape, data);
+						const geometry = new WedgeGeometry(rectShape, data);
 						updateGroupGeometry(mesh, geometry);
 					}
 					const folder = gui.addFolder( 'THREE.WedgeGeometry' );
@@ -235,6 +236,7 @@
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
 					folder.add( data, 'pitch', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
+					generateGeometry();
 				},
 				TorusGeometry: function ( mesh ) {
 
