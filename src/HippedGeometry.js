@@ -118,9 +118,9 @@ class HippedGeometry extends BufferGeometry {
 
 				for ( const triangle of bottomTriangles ) {
 
-					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, 0 );
-					polygonVertices.push( newPolygon[ triangle[ 1 ] ].x, newPolygon[ triangle[ 1 ] ].y, 0 );
-					polygonVertices.push( newPolygon[ triangle[ 2 ] ].x, newPolygon[ triangle[ 2 ] ].y, 0 );
+					polygonVertices.push( points[ triangle[ 0 ] ].x, points[ triangle[ 0 ] ].y, 0 );
+					polygonVertices.push( points[ triangle[ 1 ] ].x, points[ triangle[ 1 ] ].y, 0 );
+					polygonVertices.push( points[ triangle[ 2 ] ].x, points[ triangle[ 2 ] ].y, 0 );
 
 				}
 
