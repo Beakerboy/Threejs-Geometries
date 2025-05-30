@@ -12,18 +12,14 @@ export default QUnit.module( 'Geometries', () => {
 		let geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const x = 0, y = 0;
+			const square = new Shape();
 
-			const heartShape = new Shape();
-
-			heartShape.moveTo( x + 5, y + 5 );
-			heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
-			heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7, x - 6, y + 7 );
-			heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
-			heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
-			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
-			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
-
+			square.moveTo( - 5, - 5 );
+			square.lineTo( 5, -5 );
+			square.lineTo( 5, 5 );
+			square.lineTo( - 5, 5 );
+			square.lineTo( - 5, - 5 );
+	
 			const options = {
 				center: [ 0, 0 ],
 				depth: 5,
@@ -31,9 +27,20 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				new PyramidGeometry(),
-				new PyramidGeometry( heartShape ),
-				new PyramidGeometry( heartShape, options ),
+				new PyramidGeometry( square ),
+				new PyramidGeometry( square, options ),
 			];
+
+		} );
+		// Data
+		QUnit.test( 'Data', ( assert ) => {
+
+			const facePoints = geometries[ 2 ].getAttribute( "position" );
+			assert.equal( facePoints.count, 18, "PyramidGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 54, "PyramidGeometry Coordinate Count:" );
+			// uncomment below to peek at contents
+			// assert.equal( facePoints, [], "Contents of position array" );
+			assert.equal( Math.max( ...facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
 
 		} );
 
