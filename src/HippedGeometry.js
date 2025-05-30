@@ -36,7 +36,7 @@ class HippedGeometry extends BufferGeometry {
 
 		}
 
-		for ( hole of holes ) {
+		for ( const hole of holes ) {
 
 			// straight-skeleton expects clockwise inner polygon
 			if ( ! ShapeUtils.isClockWise( hole ) ) {
@@ -118,7 +118,7 @@ class HippedGeometry extends BufferGeometry {
 			}
 
 			// Triangulate the bottome
-			const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
+			const bottomTriangles = ShapeUtils.triangulateShape( points, holes );
 
 			for ( const triangle of bottomTriangles ) {
 
