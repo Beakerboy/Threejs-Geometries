@@ -123,6 +123,7 @@ class HippedGeometry extends BufferGeometry {
 					polygonVertices.push( newPolygon[ triangle[ 2 ] ].x, newPolygon[ triangle[ 2 ] ].y, 0 );
 
 				}
+
 			}
 
 			this.setAttribute( 'position', new BufferAttribute( new Float32Array( polygonVertices ), 3 ) );
