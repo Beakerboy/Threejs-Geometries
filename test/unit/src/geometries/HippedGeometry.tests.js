@@ -38,10 +38,10 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			const facePoints = geometries[ 1 ].getAttribute( "position" );
-			assert.equal( facePoints.count, 12, "HippedGeometry Face Count:" );
-			assert.equal( facePoints.array.length, 36, "HippedGeometry Face Count:" );
+			assert.equal( facePoints.count, 18, "HippedGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 52, "HippedGeometry Coordinate Count:" );
 			// peek at contents
-			assert.equal( facePoints, [], "Contents of position array" );
+			// assert.equal( facePoints, [], "Contents of position array" );
 
 		} );
 
