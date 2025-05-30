@@ -125,7 +125,7 @@ class HippedGeometry extends BufferGeometry {
 			allPoints.push( ...points );
 
 			for ( const hole of holes ) {
-	
+
 				allPoints.push( ...hole );
 
 			}
