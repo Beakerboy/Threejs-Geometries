@@ -32,7 +32,7 @@ export default QUnit.module( 'Geometries', () => {
 			doughnut.lineTo( 5, 5 );
 			doughnut.lineTo( - 5, 5 );
 
-			doughnut.holes.push( innerShape );
+			doughnut.holes.push( innerShape.reverse() );
 			const options = {
 				depth: 6,
 			};
