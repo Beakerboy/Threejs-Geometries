@@ -235,6 +235,7 @@
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
 					folder.add( data, 'pitch', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
+					generateGeometry();
 				},
 				TorusGeometry: function ( mesh ) {
 
