@@ -7,7 +7,7 @@ A collection of custom Threejs Geometries. These geometries are used as part of 
 
 Click each link for a demonstration.
 
-* [PyramidGeometry](https://Mosaic-nft.github.io/Threejs-Geometries/geometry-browser.html#PyramidGeometry) Extrude an arbitrary shape to a point. Combining aspects of ExtrudeGeometry and ConeGeometry.
+* [HippedGeometry](https://beakerboy.github.io/Threejs-Geometries/geometry-browser.html#HippedGeometry) Apply the straight skeleton algorithm to a shape and raise the faces into a hipped roof.
  * [PyramidGeometry](https://beakerboy.github.io/Threejs-Geometries/geometry-browser.html#PyramidGeometry) Extrude an arbitrary shape to a point. Combining aspects of ExtrudeGeometry and ConeGeometry.
  * [RampGeometry with depth](https://beakerboy.github.io/Threejs-Geometries/geometry-browser.html#RampGeometry_depth) Extrude an arbitrary shape to a slope given a depth and direction.
  * [RampGeometry with pitch](https://beakerboy.github.io/Threejs-Geometries/geometry-browser.html#RampGeometry_pitch) Extrude an arbitrary shape to a slope given a direction and pitch.

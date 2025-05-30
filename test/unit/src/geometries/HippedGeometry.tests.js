@@ -15,14 +15,30 @@ export default QUnit.module( 'Geometries', () => {
 			const x = 0, y = 0;
 
 			const square = new Shape();
-
 			square.moveTo( - 25, - 25 );
 			square.lineTo( 75, - 25 );
 			square.lineTo( 75, 25 );
 			square.lineTo( - 25, 25 );
 
+			const doughnut = new Shape();
+			doughnut.moveTo( - 25, - 25 );
+			doughnut.lineTo( 25, - 25 );
+			doughnut.lineTo( 25, 25 );
+			doughnut.lineTo( - 25, 25 );
+
+			const innerShape = new Shape();
+			innerShape.moveTo( - 5, - 5 );
+			innerShape.lineTo( 5, - 5 );
+			innerShape.lineTo( 5, 5 );
+			innerShape.lineTo( - 5, 5 );
+
+			doughnut.holes.push( innerShape );
 			const options = {
 				depth: 6,
+			};
+
+			const options2 = {
+				pitch: 26.57 / 180 * Math.PI,
 			};
 
 			const options2 = {
@@ -32,6 +48,7 @@ export default QUnit.module( 'Geometries', () => {
 				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
 				new HippedGeometry( square, options ),
+				new HippedGeometry( doughnut )
 			];
 
 		} );
@@ -48,6 +65,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			assert.equal( Math.max( ...geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 6, "Height should be 6" );
 			assert.equal( Math.max( ...geometries[ 0 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 12.50269889831543, "Height should be about 12.5" );
+			assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 72, "HippedGeometry Point Count with hole" );
 
 		} );
 

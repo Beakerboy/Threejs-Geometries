@@ -36,7 +36,7 @@ class HippedGeometry extends BufferGeometry {
 
 		}
 
-		for ( hole of holes ) {
+		for ( const hole of holes ) {
 
 			// straight-skeleton expects clockwise inner polygon
 			if ( ! ShapeUtils.isClockWise( hole ) ) {
@@ -70,14 +70,14 @@ class HippedGeometry extends BufferGeometry {
 		polygon.push( border );
 		for ( const hole of holes ) {
 
-			border.length = 0;
+			const holeBorder = [];
 			for ( const point of hole ) {
 
-				border.push( [ point.x, point.y ] );
+				holeBorder.push( [ point.x, point.y ] );
 
 			}
 
-			polygon.push( border );
+			polygon.push( holeBorder );
 
 		}
 
@@ -117,14 +117,24 @@ class HippedGeometry extends BufferGeometry {
 
 			}
 
-			// Triangulate the bottome
-			const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
+			// Triangulate the bottom
+			/** @type {[number, number, number][]} */
+			const bottomTriangles = ShapeUtils.triangulateShape( points, holes );
+			/** @type {Vector2[]} */
+			const allPoints = [];
+			allPoints.push( ...points );
+
+			for ( const hole of holes ) {
+
+				allPoints.push( ...hole );
+
+			}
 
 			for ( const triangle of bottomTriangles ) {
 
-				polygonVertices.push( points[ triangle[ 0 ] ].x, points[ triangle[ 0 ] ].y, 0 );
-				polygonVertices.push( points[ triangle[ 1 ] ].x, points[ triangle[ 1 ] ].y, 0 );
-				polygonVertices.push( points[ triangle[ 2 ] ].x, points[ triangle[ 2 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 0 ] ].x, allPoints[ triangle[ 0 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 1 ] ].x, allPoints[ triangle[ 1 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 2 ] ].x, allPoints[ triangle[ 2 ] ].y, 0 );
 
 			}
 
