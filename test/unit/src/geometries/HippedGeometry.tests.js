@@ -25,8 +25,11 @@ export default QUnit.module( 'Geometries', () => {
 				depth: 6,
 			};
 
+			const options2 = {
+				pitch: 26.57 / 180 * Math.PI,
+			};
 			geometries = [
-				new HippedGeometry(),
+				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
 				new HippedGeometry( square, options ),
 			];
@@ -39,11 +42,12 @@ export default QUnit.module( 'Geometries', () => {
 			const facePoints = geometries[ 1 ].getAttribute( "position" );
 			assert.equal( facePoints.count, 18, "HippedGeometry Point Count:" );
 			assert.equal( facePoints.array.length, 54, "HippedGeometry Coordinate Count:" );
-			// peek at contents
-			assert.equal( facePoints, [], "Contents of position array" );
+			// uncomment below to peek at contents
+			// assert.equal( facePoints, [], "Contents of position array" );
 			assert.equal( Math.max( ...facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 25, "Height should be 25" );
 
 			assert.equal( Math.max( ...geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 6, "Height should be 6" );
+			assert.equal( Math.max( ...geometries[ 0 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 12.5, "Height should be about 12.5" );
 
 		} );
 
