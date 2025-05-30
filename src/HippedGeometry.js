@@ -70,14 +70,14 @@ class HippedGeometry extends BufferGeometry {
 		polygon.push( border );
 		for ( const hole of holes ) {
 
-			border.length = 0;
+			const holeBorder = [];
 			for ( const point of hole ) {
 
-				border.push( [ point.x, point.y ] );
+				holeBorder.push( [ point.x, point.y ] );
 
 			}
 
-			polygon.push( border );
+			polygon.push( holeBorder );
 
 		}
 
