@@ -86,7 +86,7 @@ class HippedGeometry extends BufferGeometry {
 		if ( result !== null ) {
 
 			const maxDepth = Math.max( ...result.Distances.values() );
-			const scalingFactor = ( depth / maxDepth ) ?? ( Math.tan( pitch ?? Math.PI / 4 ) );
+			const scalingFactor = pitch === null ? ( depth === null ? 1 : depth / maxDepth) : Math.tan( pitch );
 
 			if ( result.Edges.length !== 4 ) {
 
