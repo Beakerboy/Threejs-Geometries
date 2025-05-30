@@ -17,16 +17,18 @@ class HippedGeometry extends BufferGeometry {
 			shape: shape,
 			options: options,
 		};
-		// The max depth of the geometry
+		/** {number} The max depth of the geometry */
 		var depth = options.depth;
 
-		// If depth is not specified, the angle of the ramp.
+		/** {number} The roof angle in radians */
 		const pitch = options.pitch;
 
 		var points = shape.extractPoints().shape;
 		var holes = shape.extractPoints().holes;
+
 		// {number[]} Flat array of x, y, z tuples
 		const polygonVertices = [];
+
 		// straight-skeleton expects counter-clockwise outer polygon
 		if ( ShapeUtils.isClockWise( points ) ) {
 
