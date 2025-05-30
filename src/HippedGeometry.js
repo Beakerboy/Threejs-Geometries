@@ -85,8 +85,8 @@ class HippedGeometry extends BufferGeometry {
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
 
-			const maxDepth = Math.max(...result.Distances.values())
-			const scalingFactor = depth / maxDepth ?? maxDepth * Math.tan(angle) ?? 1;
+			const maxDepth = Math.max( ...result.Distances.values() );
+			const scalingFactor = depth / maxDepth ?? maxDepth * Math.tan( pitch ) ?? 1;
 
 			if ( result.Edges.length !== 4 ) {
 
@@ -103,7 +103,7 @@ class HippedGeometry extends BufferGeometry {
 				for ( const point of edgeOutput.Polygon ) {
 
 					newPolygon.push( new Vector2( point.X, point.Y ) );
-					heights.push( result.Distances.get( point ) * scalingFactor);
+					heights.push( result.Distances.get( point ) * scalingFactor );
 
 				}
 
