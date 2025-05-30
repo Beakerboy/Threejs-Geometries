@@ -41,9 +41,6 @@ export default QUnit.module( 'Geometries', () => {
 				pitch: 26.57 / 180 * Math.PI,
 			};
 
-			const options2 = {
-				pitch: 26.57 / 180 * Math.PI,
-			};
 			geometries = [
 				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
