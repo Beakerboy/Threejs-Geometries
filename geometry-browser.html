@@ -28,9 +28,10 @@
 
 		<script type="importmap">
 			{
-				"imports": {
-					"three": "https://unpkg.com/three/build/three.module.js"
-				}
+			    "imports": {
+			        "three": "https://unpkg.com/three/build/three.module.js",
+			        "straight-skeleton": "https://cdn.skypack.dev/straight-skeleton@1.1.0"
+			    }
 			}
 		</script>
 
@@ -78,6 +79,7 @@
 			import {RampGeometry} from './src/RampGeometry.js';
 			import {PyramidGeometry} from './src/PyramidGeometry.js';
                         import {WedgeGeometry} from './src/WedgeGeometry.js';
+			import {HippedGeometry} from './src/HippedGeometry.js';
 
 			import { GUI } from 'https://unpkg.com/three/examples/jsm/libs/lil-gui.module.min.js';
 			import { OrbitControls } from 'https://unpkg.com/three/examples/jsm/controls/OrbitControls.js';
@@ -133,11 +135,35 @@
 			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
 
 			const rectShape = new Shape();
-			rectShape.moveTo( 1, 2 );
-			rectShape.lineTo( -1, 2 );
-			rectShape.lineTo( -1, -2 );
-			rectShape.lineTo( 1, -2 );
-			rectShape.lineTo( 1, 2 );
+			rectShape.moveTo( -5, -5 );
+
+			rectShape.lineTo( 5, -5 );
+			rectShape.lineTo( 5, 5 );
+			rectShape.lineTo( -5, 5 );
+			rectShape.lineTo( -5, 5 );
+
+			const houseShape = new Shape();
+			houseShape.moveTo( -5, -5 );
+			houseShape.lineTo( 5, -5 );
+			houseShape.lineTo( 5, -7.5 );
+			houseShape.lineTo( 7.5, -7.5 );
+			houseShape.lineTo( 7.5, 5 );
+			houseShape.lineTo( -5, 5 );
+			houseShape.lineTo( -5, 5 );
+
+			const holeHouseShape = new Shape();
+			holeHouseShape.moveTo( -5, -5 );
+			holeHouseShape.lineTo( 5, -5 );
+			holeHouseShape.lineTo( 5, 5 );
+			holeHouseShape.lineTo( -5, 5 );
+
+			const holeHouseHoleShape = new Shape();
+			holeHouseHoleShape.moveTo( -1, - 1 );
+			holeHouseHoleShape.lineTo( 1, - 1 );
+			holeHouseHoleShape.lineTo( 1, 1 );
+			holeHouseHoleShape.lineTo( - 1, 1 );
+
+			holeHouseShape.holes.push( holeHouseHoleShape );
 
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
@@ -215,7 +241,7 @@
 					};
 					function generateGeometry() {
 						data.center = [data.centerx, data.centery];
-						const geometry = new WedgeGeometry(heartShape, data);
+						const geometry = new WedgeGeometry(rectShape, data);
 						updateGroupGeometry(mesh, geometry);
 					}
 					const folder = gui.addFolder( 'THREE.WedgeGeometry' );
@@ -227,14 +253,27 @@
 				},
 				HippedGeometry: function (mesh) {
 					const data = {
-						pitch: .75
+						pitch: .4636476
 					};
 					function generateGeometry() {
-						const geometry = new HippedGeometry(rectShape, data);
+						const geometry = new HippedGeometry(houseShape, data);
 						updateGroupGeometry(mesh, geometry);
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
-					folder.add( data, 'pitch', 0, Math.PI ).step( twoPi / 180 ).onChange( generateGeometry );
+					folder.add( data, 'pitch', 0, Math.PI / 2 ).step( twoPi / 180 ).onChange( generateGeometry );
+					generateGeometry();
+				},
+				HippedGeometry_depth: function (mesh) {
+					const data = {
+						depth: 2,
+					};
+					function generateGeometry() {
+						const geometry = new HippedGeometry( holeHouseShape, data );
+						updateGroupGeometry( mesh, geometry );
+					}
+					const folder = gui.addFolder( 'THREE.HippedGeometry' );
+					folder.add( data, 'depth', 0, 100 ).step( 1 ).onChange( generateGeometry );
+					generateGeometry();
 				},
 				TorusGeometry: function ( mesh ) {
 
