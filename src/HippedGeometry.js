@@ -101,10 +101,11 @@ class HippedGeometry extends BufferGeometry {
 
 				}
 
-				// [number, number, number][]
-				const triangles = ShapeUtils.triangulateShape( newPolygon, [] );
+				// Triangulate the upper surface
+				// {[number, number, number][]}
+				const upperTriangles = ShapeUtils.triangulateShape( newPolygon, [] );
 
-				for ( const triangle of triangles ) {
+				for ( const triangle of upperTriangles ) {
 
 					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, heights[ triangle[ 0 ] ] );
 					polygonVertices.push( newPolygon[ triangle[ 1 ] ].x, newPolygon[ triangle[ 1 ] ].y, heights[ triangle[ 1 ] ] );
@@ -112,6 +113,16 @@ class HippedGeometry extends BufferGeometry {
 
 				}
 
+				// Triangulate the bottome
+				const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
+
+				for ( const triangle of bottomTriangles ) {
+
+					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, 0 );
+					polygonVertices.push( newPolygon[ triangle[ 1 ] ].x, newPolygon[ triangle[ 1 ] ].y, 0 );
+					polygonVertices.push( newPolygon[ triangle[ 2 ] ].x, newPolygon[ triangle[ 2 ] ].y, 0 );
+
+				}
 			}
 
 			this.setAttribute( 'position', new BufferAttribute( new Float32Array( polygonVertices ), 3 ) );
