@@ -151,6 +151,22 @@
 			houseShape.lineTo( -5, 5 );
 			houseShape.lineTo( -5, 5 );
 
+			const holeHouseShape = new Shape();
+			holeHouseShape.moveTo( -5, -5 );
+			holeHouseShape.lineTo( 5, -5 );
+			holeHouseShape.lineTo( 5, 5 );
+			holeHouseShape.lineTo( -5, 5 );
+			holeHouseShape.lineTo( -5, 5 );
+
+			const holeHouseHoleShape = new Shape();
+			holeHouseShape.moveTo( -1, - 1 );
+			holeHouseShape.lineTo( 1, - 1 );
+			holeHouseShape.lineTo( 1, 1 );
+			holeHouseShape.lineTo( - 1, 1 );
+			holeHouseShape.lineTo( - 1, - 1 );
+
+			holeHouseShape.holes.push( holeHouseHoleShape );
+
 			const guis = {
 				PyramidGeometry: function ( mesh ) {
 					const data = {
@@ -244,6 +260,18 @@
 					function generateGeometry() {
 						const geometry = new HippedGeometry(houseShape, data);
 						updateGroupGeometry(mesh, geometry);
+					}
+					const folder = gui.addFolder( 'THREE.HippedGeometry' );
+					folder.add( data, 'pitch', 0, Math.PI / 2 ).step( twoPi / 180 ).onChange( generateGeometry );
+					generateGeometry();
+				},
+				HippedGeometry_depth: function (mesh) {
+					const data = {
+						depth: 2,
+					};
+					function generateGeometry() {
+						const geometry = new HippedGeometry( holeHouseShape, data );
+						updateGroupGeometry( mesh, geometry );
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
 					folder.add( data, 'pitch', 0, Math.PI / 2 ).step( twoPi / 180 ).onChange( generateGeometry );
