@@ -40,8 +40,8 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			const facePoints = geometries[ 1 ].getAttribute( "position" );
-			assert.equal( facePoints.count, 18, "HippedGeometry Point Count:" );
-			assert.equal( facePoints.array.length, 54, "HippedGeometry Coordinate Count:" );
+			assert.equal( facePoints.count, 24, "HippedGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 72, "HippedGeometry Coordinate Count:" );
 			// uncomment below to peek at contents
 			// assert.equal( facePoints, [], "Contents of position array" );
 			assert.equal( Math.max( ...facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 25, "Height should be 25" );
