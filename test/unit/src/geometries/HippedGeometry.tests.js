@@ -22,12 +22,14 @@ export default QUnit.module( 'Geometries', () => {
 			square.lineTo( - 25, 25 );
 
 			const options = {
-				center: [ 0, 0 ],
-				depth: 5,
+				depth: 6,
 			};
 
+			const options2 = {
+				pitch: 26.57 / 180 * Math.PI,
+			};
 			geometries = [
-				new HippedGeometry(),
+				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
 				new HippedGeometry( square, options ),
 			];
@@ -38,10 +40,14 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			const facePoints = geometries[ 1 ].getAttribute( "position" );
-			assert.equal( facePoints.count, 12, "HippedGeometry Face Count:" );
-			assert.equal( facePoints.array.length, 36, "HippedGeometry Face Count:" );
-			// peek at contents
-			assert.equal( facePoints, [], "Contents of position array" );
+			assert.equal( facePoints.count, 24, "HippedGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 72, "HippedGeometry Coordinate Count:" );
+			// uncomment below to peek at contents
+			// assert.equal( facePoints, [], "Contents of position array" );
+			assert.equal( Math.max( ...facePoints.array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 25, "Height should be 25" );
+
+			assert.equal( Math.max( ...geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 6, "Height should be 6" );
+			assert.equal( Math.max( ...geometries[ 0 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 12.50269889831543, "Height should be about 12.5" );
 
 		} );
 

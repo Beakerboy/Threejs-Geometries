@@ -17,12 +17,18 @@ class HippedGeometry extends BufferGeometry {
 			shape: shape,
 			options: options,
 		};
-		// The max depth of the geometry
+		/** {number} The max depth of the geometry */
 		var depth = options.depth;
+
+		/** {number} The roof angle in radians */
+		const pitch = options.pitch;
+
 		var points = shape.extractPoints().shape;
 		var holes = shape.extractPoints().holes;
+
 		// {number[]} Flat array of x, y, z tuples
 		const polygonVertices = [];
+
 		// straight-skeleton expects counter-clockwise outer polygon
 		if ( ShapeUtils.isClockWise( points ) ) {
 
@@ -81,11 +87,8 @@ class HippedGeometry extends BufferGeometry {
 		// Check if the skeleton was successfully constructed
 		if ( result !== null ) {
 
-			if ( result.Edges.length !== 4 ) {
-
-				throw new Error( "length is not 4" );
-
-			}
+			const maxDepth = Math.max( ...result.Distances.values() );
+			const scalingFactor = pitch === undefined ? ( depth === undefined ? 1 : depth / maxDepth ) : Math.tan( pitch );
 
 			// Create an array of Vector2 for each face
 			for ( const edgeOutput of result.Edges ) {
@@ -96,20 +99,32 @@ class HippedGeometry extends BufferGeometry {
 				for ( const point of edgeOutput.Polygon ) {
 
 					newPolygon.push( new Vector2( point.X, point.Y ) );
-					heights.push( result.Distances.get( point ) );
+					heights.push( result.Distances.get( point ) * scalingFactor );
 
 				}
 
-				// [number, number, number][]
-				const triangles = ShapeUtils.triangulateShape( newPolygon, [] );
+				// Triangulate the upper surface
+				// {[number, number, number][]}
+				const upperTriangles = ShapeUtils.triangulateShape( newPolygon, [] );
 
-				for ( const triangle of triangles ) {
+				for ( const triangle of upperTriangles ) {
 
 					polygonVertices.push( newPolygon[ triangle[ 0 ] ].x, newPolygon[ triangle[ 0 ] ].y, heights[ triangle[ 0 ] ] );
 					polygonVertices.push( newPolygon[ triangle[ 1 ] ].x, newPolygon[ triangle[ 1 ] ].y, heights[ triangle[ 1 ] ] );
 					polygonVertices.push( newPolygon[ triangle[ 2 ] ].x, newPolygon[ triangle[ 2 ] ].y, heights[ triangle[ 2 ] ] );
 
 				}
+
+			}
+
+			// Triangulate the bottome
+			const bottomTriangles = ShapeUtils.triangulateShape( points, [] );
+
+			for ( const triangle of bottomTriangles ) {
+
+				polygonVertices.push( points[ triangle[ 0 ] ].x, points[ triangle[ 0 ] ].y, 0 );
+				polygonVertices.push( points[ triangle[ 1 ] ].x, points[ triangle[ 1 ] ].y, 0 );
+				polygonVertices.push( points[ triangle[ 2 ] ].x, points[ triangle[ 2 ] ].y, 0 );
 
 			}
 

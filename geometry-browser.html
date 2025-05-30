@@ -28,10 +28,10 @@
 
 		<script type="importmap">
 			{
-				"imports": {
-					"three": "https://unpkg.com/three/build/three.module.js",
-			"straight-skeleton": "https://cdn.skypack.dev/straight-skeleton@1.1.0"
-				}
+			    "imports": {
+			        "three": "https://unpkg.com/three/build/three.module.js",
+			        "straight-skeleton": "https://cdn.skypack.dev/straight-skeleton@1.1.0"
+			    }
 			}
 		</script>
 
@@ -136,8 +136,9 @@
 
 			const rectShape = new Shape();
 			rectShape.moveTo( -5, -5 );
-			rectShape.lineTo( 15, -5 );
-			rectShape.lineTo( 15, 5 );
+
+			rectShape.lineTo( 5, -5 );
+			rectShape.lineTo( 5, 5 );
 			rectShape.lineTo( -5, 5 );
 			rectShape.lineTo( -5, 5 );
 
