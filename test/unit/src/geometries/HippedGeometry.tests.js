@@ -22,9 +22,9 @@ export default QUnit.module( 'Geometries', () => {
 
 			const doughnut = new Shape();
 			doughnut.moveTo( - 25, - 25 );
-			doughnut.lineTo( 25, - 25 );
-			doughnut.lineTo( 25, 25 );
 			doughnut.lineTo( - 25, 25 );
+			doughnut.lineTo( 25, 25 );
+			doughnut.lineTo( 25, - 25 );
 
 			const innerShape = new Shape();
 			innerShape.moveTo( - 5, - 5 );
