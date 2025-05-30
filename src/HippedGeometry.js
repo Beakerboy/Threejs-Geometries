@@ -117,14 +117,24 @@ class HippedGeometry extends BufferGeometry {
 
 			}
 
-			// Triangulate the bottome
+			// Triangulate the bottom
+			/** @type {[number, number, number][]} */
 			const bottomTriangles = ShapeUtils.triangulateShape( points, holes );
+			/** @type {Vector2[]} */
+			const allPoints = [];
+			allPoints.push( ...points );
+
+			for ( const hole of holes ) {
+	
+				allPoints.push( ...hole );
+
+			}
 
 			for ( const triangle of bottomTriangles ) {
 
-				polygonVertices.push( points[ triangle[ 0 ] ].x, points[ triangle[ 0 ] ].y, 0 );
-				polygonVertices.push( points[ triangle[ 1 ] ].x, points[ triangle[ 1 ] ].y, 0 );
-				polygonVertices.push( points[ triangle[ 2 ] ].x, points[ triangle[ 2 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 0 ] ].x, allPoints[ triangle[ 0 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 1 ] ].x, allPoints[ triangle[ 1 ] ].y, 0 );
+				polygonVertices.push( allPoints[ triangle[ 2 ] ].x, allPoints[ triangle[ 2 ] ].y, 0 );
 
 			}
 
