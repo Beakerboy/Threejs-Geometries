@@ -274,8 +274,7 @@
 						updateGroupGeometry( mesh, geometry );
 					}
 					const folder = gui.addFolder( 'THREE.HippedGeometry' );
-					folder.add( data, 'pitch', 0, Math.PI / 2 ).step( twoPi / 180 ).onChange( generateGeometry );
-
+					folder.add( data, 'depth', 0, 100 ).step( 1 ).onChange( generateGeometry );
 					generateGeometry();
 				},
 				TorusGeometry: function ( mesh ) {

@@ -22,9 +22,9 @@ export default QUnit.module( 'Geometries', () => {
 
 			const doughnut = new Shape();
 			doughnut.moveTo( - 25, - 25 );
-			doughnut.lineTo( 25, - 25 );
-			doughnut.lineTo( 25, 25 );
 			doughnut.lineTo( - 25, 25 );
+			doughnut.lineTo( 25, 25 );
+			doughnut.lineTo( 25, - 25 );
 
 			const innerShape = new Shape();
 			innerShape.moveTo( - 5, - 5 );
@@ -41,9 +41,6 @@ export default QUnit.module( 'Geometries', () => {
 				pitch: 26.57 / 180 * Math.PI,
 			};
 
-			const options2 = {
-				pitch: 26.57 / 180 * Math.PI,
-			};
 			geometries = [
 				new HippedGeometry( square, options2 ),
 				new HippedGeometry( square ),
