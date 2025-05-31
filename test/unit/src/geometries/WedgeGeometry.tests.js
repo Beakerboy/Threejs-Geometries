@@ -45,7 +45,7 @@ export default QUnit.module( 'Geometries', () => {
 			goodRectangle.lineTo( - 2, 1 );
 			goodRectangle.lineTo( 2, 1 );
 			goodRectangle.lineTo( 2, - 1 );
-	
+
 			const options = {
 				angle: 0,
 				depth: 5,
