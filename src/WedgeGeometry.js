@@ -32,6 +32,11 @@ class WedgeGeometry extends BufferGeometry {
 
 		// Get the outer shape and holes.
 		var points = shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+			points.pop();
+		}
+
 		var holes = shape.extractPoints().holes;
 
 		// The outer shape is the original shape plus any crossing points.
@@ -46,12 +51,17 @@ class WedgeGeometry extends BufferGeometry {
 
 			points = points.reverse();
 			// Check that any holes are correct direction.
-			for ( let h = 0; h < holes.length; h ++ ) {
+			for ( const hole of holes ) {
 
-				const hole = holes[ h ];
+				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+	
+					hole.pop();
+	
+				}
+	
 				if ( ShapeUtils.isClockWise( hole ) ) {
 
-					holes[ h ] = hole.reverse();
+					hole.reverse();
 
 				}
 
@@ -213,7 +223,7 @@ class WedgeGeometry extends BufferGeometry {
 		var point = [];
 		var nextPoint = [];
 		var prevPoint = points[ points.length - 1 ];
-		for ( let i = 0; i < points.length - 1; i ++ ) {
+		for ( let i = 0; i < points.length; i ++ ) {
 
 			point = points[ i ];
 			if ( i === 0 ) {
@@ -226,7 +236,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			}
 
-			nextPoint = points[ i + 1 ];
+			nextPoint = points[ ( i + 1 ) % points.length ];
 			const pointOnLine = ( point[ 1 ] === 0 );
 			const sameSides = ( ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
 			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
