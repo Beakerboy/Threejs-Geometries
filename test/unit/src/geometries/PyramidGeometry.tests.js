@@ -12,17 +12,18 @@ export default QUnit.module( 'Geometries', () => {
 		let geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const x = 0, y = 0;
+			const badSquare = new Shape();
+			badSquare.moveTo( - 5, - 5 );
+			badSquare.lineTo( 5, - 5 );
+			badSquare.lineTo( 5, 5 );
+			badSquare.lineTo( - 5, 5 );
+			badSquare.lineTo( - 5, - 5 );
 
-			const heartShape = new Shape();
-
-			heartShape.moveTo( x + 5, y + 5 );
-			heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
-			heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7, x - 6, y + 7 );
-			heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
-			heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
-			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
-			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
+			const square = new Shape();
+			square.moveTo( - 5, - 5 );
+			square.lineTo( 5, - 5 );
+			square.lineTo( 5, 5 );
+			square.lineTo( - 5, 5 );
 
 			const options = {
 				center: [ 0, 0 ],
@@ -31,9 +32,22 @@ export default QUnit.module( 'Geometries', () => {
 
 			geometries = [
 				new PyramidGeometry(),
-				new PyramidGeometry( heartShape ),
-				new PyramidGeometry( heartShape, options ),
+				new PyramidGeometry( square, options ),
+				new PyramidGeometry( badSquare, options ),
 			];
+
+		} );
+		// Data
+		QUnit.test( 'Data', ( assert ) => {
+
+			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 18, "PyramidGeometry Point Count:" );
+			assert.equal( geometries[ 2 ].getAttribute( "position" ).array.length, 54, "PyramidGeometry Coordinate Count:" );
+			// uncomment below to peek at contents
+			// assert.equal( facePoints, [], "Contents of position array" );
+			assert.equal( Math.max( ...geometries[ 2 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
+
+			assert.equal( geometries[ 1 ].getAttribute( "position" ).count, 18, "PyramidGeometry Correct Point Count:" );
+			assert.equal( geometries[ 1 ].getAttribute( "position" ).array.length, 54, "PyramidGeometry Correct Coordinate Count:" );
 
 		} );
 
