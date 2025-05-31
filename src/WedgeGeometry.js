@@ -60,7 +60,7 @@ class WedgeGeometry extends BufferGeometry {
 					hole.pop();
 
 				}
-	
+
 				if ( ShapeUtils.isClockWise( hole ) ) {
 
 					hole.reverse();
