@@ -30,49 +30,10 @@ class WedgeGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
-
-		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
-
-			points.pop();
-
-		}
-
-		var holes = shape.extractPoints().holes;
-
-		// The outer shape is the original shape plus any crossing points.
-		const outerShape = new Shape();
-
-		// A straight array of vertices for the outer shape
-		const outerVertices = [];
-
-		// Ensuse all paths are in the correct direction for the normals
-		const reverse = ! ShapeUtils.isClockWise( points );
-		if ( reverse ) {
-
-			points = points.reverse();
-			// Check that any holes are correct direction.
-			for ( const hole of holes ) {
-
-				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
-
-					hole.pop();
-
-				}
-
-				if ( ShapeUtils.isClockWise( hole ) ) {
-
-					hole.reverse();
-
-				}
-
-			}
-
-		}
-
 		// The original shape's point, but rotated and centered.
 		const newPoints = [];
+
+		this.cleanInputs();
 
 		var point;
 		var minY;
@@ -387,6 +348,54 @@ class WedgeGeometry extends BufferGeometry {
 
 	}
 
+	/**
+         * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
+	 * modifies this.parameters.shape
+         */
+	cleanInputs() {
+
+		// Get the outer shape and holes.
+		var points = this.parameters.shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
+		var holes = shape.extractPoints().holes;
+
+		// The outer shape is the original shape plus any crossing points.
+		const outerShape = new Shape();
+
+		// A straight array of vertices for the outer shape
+		const outerVertices = [];
+
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points = points.reverse();
+			// Check that any holes are correct direction.
+			for ( const hole of holes ) {
+
+				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+
+					hole.pop();
+
+				}
+
+				if ( ShapeUtils.isClockWise( hole ) ) {
+
+					hole.reverse();
+
+				}
+
+			}
+
+		}
+	
+	}
 	static fromJSON( data, shape ) {
 
 		return new WedgeGeometry( shape, data.options );
