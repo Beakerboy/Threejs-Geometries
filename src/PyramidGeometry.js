@@ -31,7 +31,7 @@ class PyramidGeometry extends BufferGeometry {
 
 		}
 
-		if ( points.length > 1 && points[ 0 ].equals( point[ points.length - 1 ] ) ) {
+		if ( points.length > 1 && points[ 0 ].equals( points[ points.length - 1 ] ) ) {
 
 			points.pop();
 
