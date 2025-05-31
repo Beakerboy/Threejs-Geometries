@@ -15,8 +15,11 @@ class WedgeGeometry extends BufferGeometry {
 
 		super();
 		this.type = 'WedgeGeometry';
+		const heightFunc = ( x ) => 2 * ( x < .5 ? x : ( 1 - x ) );
 		this.parameters = {
 			shape: shape,
+			heights: heightFunc,
+			splits: [ .5 ],
 			options: options,
 		};
 
