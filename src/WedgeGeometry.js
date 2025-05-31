@@ -35,28 +35,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		this.cleanInputs();
 
-		var point;
-		var minY;
-		var maxY;
-		for ( let i = 0; i < points.length; i ++ ) {
-
-			point = points[ i ];
-			const moved = this.move( point );
-			if ( i === 0 ) {
-
-				minY = moved[ 1 ];
-				maxY = moved[ 1 ];
-
-			} else {
-
-				minY = Math.min( minY, moved[ 1 ] );
-				maxY = Math.max( maxY, moved[ 1 ] );
-
-			}
-
-			newPoints.push( moved );
-
-		}
+		newPoints = this.rotateShapes();
 
 		const newShapes = this.splitShape( newPoints );
 
@@ -163,6 +142,39 @@ class WedgeGeometry extends BufferGeometry {
 
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
 		this.computeVertexNormals();
+
+	}
+
+	/**
+         * Move and rotate shapes tonrecenter and reorient.
+	 */
+	rotateShapes() {
+
+		const points = this.parameters.shape.extractPoints().shape;
+		var point;
+		var minY;
+		var maxY;
+		for ( let i = 0; i < points.length; i ++ ) {
+
+			point = points[ i ];
+			const moved = this.move( point );
+			if ( i === 0 ) {
+
+				minY = moved[ 1 ];
+				maxY = moved[ 1 ];
+
+			} else {
+
+				minY = Math.min( minY, moved[ 1 ] );
+				maxY = Math.max( maxY, moved[ 1 ] );
+
+			}
+
+			newPoints.push( moved );
+
+		}
+
+		return newPoints;
 
 	}
 
