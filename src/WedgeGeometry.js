@@ -18,20 +18,18 @@ class WedgeGeometry extends BufferGeometry {
 		const heightFunc = ( x ) => 2 * ( x < .5 ? x : ( 1 - x ) );
 		this.parameters = {
 			shape: shape,
-			heights: heightFunc,
+			heights: [{
+				function: heightFunc,
+				depth: options.depth,
+				angle: options.angle
+			}],
 			splits: [ .5 ],
 			options: options,
 		};
 
-		// The max depth of the geometry
-		var depth = options.depth;
-
 		// a point on which the peak will pass through
 		const center = options.center !== undefined ? options.center : [ 0, 0 ];
 		this.parameters.options.center = center;
-
-		// The direction that the downward slope faces,
-		const angle = options.angle;
 
 		// The original shape's point, but rotated and centered.
 		const newPoints = [];
