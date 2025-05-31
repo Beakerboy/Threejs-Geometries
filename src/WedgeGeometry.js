@@ -34,7 +34,9 @@ class WedgeGeometry extends BufferGeometry {
 		var points = shape.extractPoints().shape;
 
 		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
 			points.pop();
+
 		}
 
 		var holes = shape.extractPoints().holes;
@@ -54,9 +56,9 @@ class WedgeGeometry extends BufferGeometry {
 			for ( const hole of holes ) {
 
 				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
-	
+
 					hole.pop();
-	
+
 				}
 	
 				if ( ShapeUtils.isClockWise( hole ) ) {
