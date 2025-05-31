@@ -48,7 +48,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			assert.equal( geometries[ 1 ].getAttribute( "position" ).count, 18, "PyramidGeometry Correct Point Count:" );
 			assert.equal( geometries[ 1 ].getAttribute( "position" ).array.length, 54, "PyramidGeometry Correct Coordinate Count:" );
-			
+
 		} );
 
 		// INHERITANCE
