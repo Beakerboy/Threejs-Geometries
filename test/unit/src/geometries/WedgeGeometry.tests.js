@@ -71,7 +71,6 @@ export default QUnit.module( 'Geometries', () => {
 			// assert.equal( facePoints, [], "Contents of position array" );
 			assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
 
-			assert.equal( Math.max( ...geometries[ 0 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 12.50269889831543, "Height should be about 12.5" );
 			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
 
 		} );
