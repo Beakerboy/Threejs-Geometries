@@ -409,6 +409,22 @@ class WedgeGeometry extends BufferGeometry {
 		}
 	
 	}
+
+	calculateWidths() {
+
+		for ( height of this.parameters.heights ) {
+
+			const dots = []
+			const normal = new Vector2( Math.cos(angle), Math.sin(angle) );
+			for (point of this.parameters.shape.extractPoints().shape ) {
+
+				dots.push(normal.dot( point );
+
+			}
+
+		}
+
+	}
 	static fromJSON( data, shape ) {
 
 		return new WedgeGeometry( shape, data.options );
