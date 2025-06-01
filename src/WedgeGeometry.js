@@ -40,24 +40,7 @@ class WedgeGeometry extends BufferGeometry {
 		// A straight array of vertices for the outer shape
 		const outerVertices = [];
 
-		// Ensuse all paths are in the correct direction for the normals
-		const reverse = ! ShapeUtils.isClockWise( points );
-		if ( reverse ) {
-
-			points = points.reverse();
-			// Check that any holes are correct direction.
-			for ( let h = 0; h < holes.length; h ++ ) {
-
-				const hole = holes[ h ];
-				if ( ShapeUtils.isClockWise( hole ) ) {
-
-					holes[ h ] = hole.reverse();
-
-				}
-
-			}
-
-		}
+		this.cleanInputs();
 
 		// The original shape's point, but rotated and centered.
 		const newPoints = [];
@@ -372,6 +355,55 @@ class WedgeGeometry extends BufferGeometry {
 		const pointX = point[ 0 ] * Math.cos( angle ) + point[ 1 ] * Math.sin( angle ) + center[ 0 ];
 		const pointY = - 1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
 		return [ pointX, pointY ];
+
+	}
+
+	/**
+         * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
+	 * modifies this.parameters.shape
+         */
+	cleanInputs() {
+
+		// Get the outer shape and holes.
+		var points = this.parameters.shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
+		var holes = this.parameters.shape.extractPoints().holes;
+
+		// The outer shape is the original shape plus any crossing points.
+		const outerShape = new Shape();
+
+		// A straight array of vertices for the outer shape
+		const outerVertices = [];
+
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points = points.reverse();
+			// Check that any holes are correct direction.
+			for ( const hole of holes ) {
+
+				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+
+					hole.pop();
+
+				}
+
+				if ( ShapeUtils.isClockWise( hole ) ) {
+
+					hole.reverse();
+
+				}
+
+			}
+
+		}
 
 	}
 
