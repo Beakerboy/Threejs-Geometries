@@ -85,15 +85,15 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
-		const newShapes = this.splitShape( newPoints );
+		this.newShapes = this.splitShape( newPoints );
 
 		const positions = [];
 		// If the line does not intersect, display the outline.
 		// otherwise just the parts.
-		const startK = newShapes.length > 1 ? 1 : 0;
-		for ( let k = startK; k < newShapes.length; k ++ ) {
+		const startK = this.newShapes.length > 1 ? 1 : 0;
+		for ( let k = startK; k < this.newShapes.length; k ++ ) {
 
-			points = newShapes[ k ].extractPoints().shape;
+			points = this.newShapes[ k ].extractPoints().shape;
 			// Add top of roof
 			const faces = ShapeUtils.triangulateShape( points, holes );
 			for ( let i = 0; i < faces.length; i ++ ) {
@@ -125,7 +125,7 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Build the floor
-		points = newShapes[ 0 ].extractPoints().shape;
+		points = this.newShapes[ 0 ].extractPoints().shape;
 		const faces = ShapeUtils.triangulateShape( points, holes );
 		for ( let i = 0; i < faces.length; i ++ ) {
 
@@ -142,7 +142,7 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Make walls by iterating the outline.
-		points = newShapes[ 0 ].extractPoints().shape;
+		points = this.newShapes[ 0 ].extractPoints().shape;
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			var point = points[ i ];
