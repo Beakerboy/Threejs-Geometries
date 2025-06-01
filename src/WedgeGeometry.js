@@ -312,11 +312,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		for ( const shape of shapes ) {
 
-			if ( shape.parameters.shape !== undefined ) {
-
-				WedgeGeometry.cleanInputs( shape );
-
-			}
+			WedgeGeometry.cleanInputs( shape );
 
 		}
 
@@ -357,7 +353,7 @@ class WedgeGeometry extends BufferGeometry {
 	static cleanInputs( shape ) {
 
 		// Get the outer shape and holes.
-		var points = shape.parameters.shape.extractPoints().shape;
+		var points = shape.extractPoints().shape;
 
 		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
 
