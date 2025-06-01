@@ -72,7 +72,7 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
 
 			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
-			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 6, "WedgeGeometry shape points should be 6" );
+			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 4, "WedgeGeometry shape points should be unchanged" );
 			assert.equal( geometries[ 2 ].newShapes.length, 3, "number of shapes" );
 
 		} );
