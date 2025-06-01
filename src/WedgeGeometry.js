@@ -312,7 +312,11 @@ class WedgeGeometry extends BufferGeometry {
 
 		for ( const shape of shapes ) {
 
-			WedgeGeometry.cleanInputs( shape );
+			if ( shape.parameters.shape !== undefined ) {
+
+				WedgeGeometry.cleanInputs( shape );
+
+			}
 
 		}
 
