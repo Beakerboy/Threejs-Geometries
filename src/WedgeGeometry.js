@@ -130,27 +130,9 @@ class WedgeGeometry extends BufferGeometry {
 
 			var point = points[ i ];
 			var pointZ;
-			if ( point.y >= 0 ) {
+			pointZ = depth - depth / ( point.y >= 0 ? maxY : minY )* point.y;
 
-				pointZ = depth - depth / maxY * point.y;
-
-			} else {
-
-				pointZ = depth - depth / minY * point.y;
-
-			}
-
-			var nextPoint;
-			if ( i === points.length - 1 ) {
-
-				nextPoint = points[ 0 ];
-
-			} else {
-
-				nextPoint = points[ i + 1 ];
-
-			}
-
+			var nextPoint = points[ ( i + 1 ) % points.length ];
 			var nextPointZ;
 			if ( nextPoint.y >= 0 ) {
 
