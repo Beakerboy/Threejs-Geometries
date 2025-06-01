@@ -36,7 +36,7 @@ class WedgeGeometry extends BufferGeometry {
 		// A straight array of vertices for the outer shape
 		const outerVertices = [];
 
-		WedgeGeometry.cleanInputs( this );
+		WedgeGeometry.cleanInputs( shape );
 
 		// Get the cleaned outer shape and holes.
 		var points = shape.extractPoints().shape;
