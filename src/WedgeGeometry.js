@@ -176,7 +176,7 @@ class WedgeGeometry extends BufferGeometry {
 		// Walk the shape and find all crossings.
 		var point = [];
 		var nextPoint = [];
-		var prevPoint = points[ points.length - 1 ];
+		var prevPoint = points[ 0 ];
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			point = points[ i ];
