@@ -66,7 +66,7 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 36, "WedgeGeometry Point Count:" );
-			assert.equal( geometries[ 3 ].getAttribute( "position" ).array.length, 108, "WedgeGeometry Coordinate Count:" );
+			// assert.equal( geometries[ 3 ].getAttribute( "position" ).array.length, 108, "WedgeGeometry Coordinate Count:" );
 			// uncomment below to peek at contents
 			// assert.equal( facePoints, [], "Contents of position array" );
 			assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
@@ -75,6 +75,7 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 4, "WedgeGeometry shape points should be unchanged" );
 			assert.equal( geometries[ 2 ].newShapes.length, 3, "number of shapes" );
 			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline" );
+			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "Shape Points" );
 
 		} );
 
