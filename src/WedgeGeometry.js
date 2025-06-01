@@ -162,7 +162,7 @@ class WedgeGeometry extends BufferGeometry {
 	* Not tested on self-intersecting shapes.
 	*
 	* @param {[[number, number]]} points - an array of x, y pairs.
-	* @return {[Shape]} an array of shapes. Element 0 is the original shape with
+	* @return {Three.Shape[]} an array of shapes. Element 0 is the original shape with
 	*                   the addition of new vertices for the crossing points.
 	*/
 	splitShape( points ) {
