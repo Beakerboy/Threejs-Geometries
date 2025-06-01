@@ -310,9 +310,9 @@ class WedgeGeometry extends BufferGeometry {
 		shapes.push( currentShape );
 		shapes.unshift( newOutline );
 
-		for ( const shape of shapes ) {
+		for ( const i in shapes ) {
 
-			WedgeGeometry.cleanInputs( shape );
+			WedgeGeometry.cleanInputs( shapes[ i ] );
 
 		}
 
