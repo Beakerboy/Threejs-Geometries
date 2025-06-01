@@ -361,7 +361,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
-		var holes = shape.parameters.shape.extractPoints().holes;
+		var holes = shape.extractPoints().holes;
 
 		// The outer shape is the original shape plus any crossing points.
 		const outerShape = new Shape();
