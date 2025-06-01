@@ -73,6 +73,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
 			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 6, "WedgeGeometry shape points should be 6" );
+			assert.equal( geometries[ 2 ].newShapes.length, 3, "number of shapes" );
 
 		} );
 
