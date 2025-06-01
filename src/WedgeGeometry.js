@@ -141,12 +141,13 @@ class WedgeGeometry extends BufferGeometry {
 				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 			}
+
 			if ( nextPointZ !== 0 ) {
-	
+
 				positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
 				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
 				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
-	
+
 			}
 
 		}
