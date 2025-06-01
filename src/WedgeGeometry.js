@@ -196,7 +196,7 @@ class WedgeGeometry extends BufferGeometry {
 		var point = [];
 		var nextPoint = [];
 		var prevPoint = points[ points.length - 1 ];
-		for ( let i = 0; i < points.length - 1; i ++ ) {
+		for ( let i = 0; i < points.length; i ++ ) {
 
 			point = points[ i ];
 			if ( i === 0 ) {
@@ -209,7 +209,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			}
 
-			nextPoint = points[ i + 1 ];
+			nextPoint = points[ ( i + 1 ) % points.length ];
 			const pointOnLine = ( point[ 1 ] === 0 );
 			const sameSides = ( ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
 			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
