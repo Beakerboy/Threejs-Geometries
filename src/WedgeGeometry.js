@@ -350,7 +350,7 @@ class WedgeGeometry extends BufferGeometry {
          * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
 	 * modifies this.parameters.shape
          */
-	cleanInputs(shape) {
+	cleanInputs( shape ) {
 
 		// Get the outer shape and holes.
 		var points = shape.parameters.shape.extractPoints().shape;
