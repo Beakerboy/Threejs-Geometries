@@ -96,19 +96,6 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
-		QUnit.todo( 'parameters', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
-		// STATIC
-		QUnit.todo( 'fromJSON', ( assert ) => {
-
-			assert.ok( false, 'everything\'s gonna be alright' );
-
-		} );
-
 		// OTHERS
 		QUnit.test( 'Standard geometry tests', ( assert ) => {
 
