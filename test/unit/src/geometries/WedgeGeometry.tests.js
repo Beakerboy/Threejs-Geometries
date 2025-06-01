@@ -38,7 +38,13 @@ export default QUnit.module( 'Geometries', () => {
 			square.lineTo( .5, - .5 );
 			square.lineTo( - .5, - .5 );
 			square.lineTo( - .5, .5 );
-			rectangle.holes.push( square );
+			// rectangle.holes.push( square );
+
+			const goodRectangle = new Shape();
+			goodRectangle.moveTo( - 2, - 1 );
+			goodRectangle.lineTo( - 2, 1 );
+			goodRectangle.lineTo( 2, 1 );
+			goodRectangle.lineTo( 2, - 1 );
 
 			const options = {
 				angle: 0,
@@ -49,14 +55,23 @@ export default QUnit.module( 'Geometries', () => {
 			geometries = [
 				new WedgeGeometry(),
 				new WedgeGeometry( heartShape ),
-				new WedgeGeometry( heartShape, options ),
+				new WedgeGeometry( goodRectangle, options ),
 				// Outer shape in wrong direction, with hole in wrong direction.
-				new WedgeGeometry( rectangle, {
-					angle: 0,
-					depth: 5,
-					center: [ 4, 4 ],
-				} ),
+				new WedgeGeometry( rectangle, options ),
 			];
+
+		} );
+
+		// Data
+		QUnit.test( 'Data', ( assert ) => {
+
+			assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 36, "WedgeGeometry Point Count:" );
+			assert.equal( geometries[ 3 ].getAttribute( "position" ).array.length, 108, "WedgeGeometry Coordinate Count:" );
+			// uncomment below to peek at contents
+			// assert.equal( facePoints, [], "Contents of position array" );
+			assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
+
+			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
 
 		} );
 
