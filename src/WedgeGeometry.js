@@ -191,9 +191,9 @@ class WedgeGeometry extends BufferGeometry {
 			}
 
 			nextPoint = points[ ( i + 1 ) % points.length ];
-			const pointOnLine = ( point[ 1 ] === 0 );
-			const sameSides = ( ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
-			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
+			const pointOnLine = point[ 1 ] === 0;
+			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
+			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
 			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
 
 				var crossing;
