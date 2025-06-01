@@ -30,10 +30,6 @@ class WedgeGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
-		var holes = shape.extractPoints().holes;
-
 		// The outer shape is the original shape plus any crossing points.
 		const outerShape = new Shape();
 
@@ -41,6 +37,10 @@ class WedgeGeometry extends BufferGeometry {
 		const outerVertices = [];
 
 		this.cleanInputs();
+
+		// Get the cleaned outer shape and holes.
+		var points = shape.extractPoints().shape;
+		var holes = shape.extractPoints().holes;
 
 		// The original shape's point, but rotated and centered.
 		const newPoints = [];
