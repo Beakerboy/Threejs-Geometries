@@ -129,27 +129,25 @@ class WedgeGeometry extends BufferGeometry {
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			var point = points[ i ];
-			var pointZ;
-			pointZ = depth - depth / ( point.y >= 0 ? maxY : minY )* point.y;
+			var pointZ = depth * ( 1 - point.y / ( point.y >= 0 ? maxY : minY ) );
 
 			var nextPoint = points[ ( i + 1 ) % points.length ];
-			var nextPointZ;
-			if ( nextPoint.y >= 0 ) {
+			var nextPointZ = depth * ( 1 - nextPoint.y / ( nextPoint.y >= 0 ? maxY : minY ) );
 
-				nextPointZ = depth - depth / maxY * nextPoint.y;
+			if ( pointZ !== 0 ) {
 
-			} else {
-
-				nextPointZ = depth - depth / minY * nextPoint.y;
+				positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
+				positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 			}
-
-			positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
-			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
-			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+			if ( nextPointZ !== 0 ) {
+	
+				positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
+	
+			}
 
 		}
 
