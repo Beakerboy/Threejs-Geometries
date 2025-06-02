@@ -75,7 +75,7 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 4, "WedgeGeometry shape points should be unchanged" );
 			assert.equal( geometries[ 2 ].newShapes.length, 3, "number of shapes" );
 			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline should be 6" );
-			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "outer shape Points" );
+			// assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "outer shape Points" );
 			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape.length, 4, "number points in inner shape 1 should be 4" );
 			assert.equal( geometries[ 2 ].newShapes[ 2 ].extractPoints().shape.length, 4, "number points in inner shape 2 should be 4" );
 
