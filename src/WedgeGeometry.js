@@ -361,6 +361,7 @@ class WedgeGeometry extends BufferGeometry {
 			points.reverse();
 
 		}
+
 		// Check that any holes are correct direction.
 		for ( const hole of holes ) {
 
