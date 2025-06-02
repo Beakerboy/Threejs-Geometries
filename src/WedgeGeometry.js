@@ -174,7 +174,7 @@ class WedgeGeometry extends BufferGeometry {
 					topShapePoints.push( point );
 
 				}
-	
+
 				if ( point[ 1 ] <= 0 ) {
 
 					bottomShapePoints.push( point );
