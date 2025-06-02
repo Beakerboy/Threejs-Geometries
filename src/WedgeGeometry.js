@@ -301,8 +301,8 @@ class WedgeGeometry extends BufferGeometry {
 
 				} else {
 
-					var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
-					var crossing = point[ 0 ] - point[ 1 ] / m;
+					const m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
+					crossing = point[ 0 ] - point[ 1 ] / m;
 
 				}
 
