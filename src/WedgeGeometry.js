@@ -197,7 +197,7 @@ class WedgeGeometry extends BufferGeometry {
 		var currentShape = new Shape();
 		for ( let i = 0; i < points.length; i ++ ) {
 
-			point = points[ i ];
+			const point = points[ i ];
 			if ( i === 0 ) {
 
 				currentShape.moveTo( point[ 0 ], point[ 1 ] );
