@@ -210,7 +210,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			if ( i in crossings ) {
 
-				crossing = crossings[ i ];
+				const crossing = crossings[ i ];
 				if ( crossing.value !== point[ 0 ] ) {
 
 					currentShape.lineTo( crossing.value, 0 );
