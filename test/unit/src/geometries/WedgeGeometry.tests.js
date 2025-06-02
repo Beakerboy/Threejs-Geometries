@@ -66,6 +66,14 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
+		QUnit.test( 'splitShape', ( assert ) => {
+
+			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
+			const result = WedgeGeometry.splitShape( cleanPoints );
+			assert.equal( result.length, 3, "Should have 3 shapes" );
+
+		} );
+
 	} );
 
 } );
