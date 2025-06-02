@@ -153,63 +153,10 @@ class WedgeGeometry extends BufferGeometry {
 	*/
 	splitShape( points ) {
 
-		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
-		const crossings = [];
+		const crossingResults = WedgeGeometry.getCrossings( points );
+		const crossings = crossingResults.crossings;
+		const newOutline = crossingResults.newOutline;
 
-		// The new outline with the addition of any crossing points.
-		const newOutline = new Shape();
-
-		// Walk the shape and find all crossings.
-		var point = [];
-		var nextPoint = [];
-		var prevPoint = points[ points.length - 1 ];
-		for ( let i = 0; i < points.length; i ++ ) {
-
-			point = points[ i ];
-			if ( i === 0 ) {
-
-				newOutline.moveTo( point[ 0 ], point[ 1 ] );
-
-			} else {
-
-				newOutline.lineTo( point[ 0 ], point[ 1 ] );
-
-			}
-
-			nextPoint = points[ ( i + 1 ) % points.length ];
-			const pointOnLine = point[ 1 ] === 0;
-			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
-			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
-			// if this point is the crossing point between the previous and next points
-			// or the line is crossed between this point and the next
-			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
-
-				var crossing;
-				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ] ) {
-
-					crossing = point[ 0 ];
-
-				} else {
-
-					var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
-					var crossing = point[ 0 ] - point[ 1 ] / m;
-
-				}
-
-				crossings[ i ] = crossing;
-				if ( ! pointOnLine ) {
-
-					newOutline.lineTo( crossing, 0 );
-
-				}
-
-			}
-
-			prevPoint = point;
-
-		}
-
-		// newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
 		if ( Object.keys( crossings ).length === 0 ) {
 
 			return [ newOutline ];
@@ -305,6 +252,73 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		return shapes;
+
+	}
+
+	/**
+         * Given a set of points, add points for each time it crosses the x axis
+	 * and return the new shape along with a list of crossing indicies
+         * @param {} points - The points
+	 * @returns {}
+         */
+	static getCrossings( points ) {
+		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
+		const crossings = [];
+
+		// The new outline with the addition of any crossing points.
+		const newOutline = new Shape();
+
+		// Walk the shape and find all crossings.
+		var point = [];
+		var nextPoint = [];
+		var prevPoint = points[ points.length - 1 ];
+		for ( let i = 0; i < points.length; i ++ ) {
+
+			point = points[ i ];
+			if ( i === 0 ) {
+
+				newOutline.moveTo( point[ 0 ], point[ 1 ] );
+
+			} else {
+
+				newOutline.lineTo( point[ 0 ], point[ 1 ] );
+
+			}
+
+			nextPoint = points[ ( i + 1 ) % points.length ];
+			const pointOnLine = point[ 1 ] === 0;
+			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
+			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
+			// if this point is the crossing point between the previous and next points
+			// or the line is crossed between this point and the next
+			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
+
+				var crossing;
+				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ] ) {
+
+					crossing = point[ 0 ];
+
+				} else {
+
+					var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
+					var crossing = point[ 0 ] - point[ 1 ] / m;
+
+				}
+
+				crossings[ i ] = crossing;
+				if ( ! pointOnLine ) {
+
+					newOutline.lineTo( crossing, 0 );
+
+				}
+
+			}
+
+			prevPoint = point;
+
+		}
+
+		return { crossings: crossings, newOutline: newOutline };
 
 	}
 
