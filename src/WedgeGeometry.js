@@ -171,21 +171,21 @@ class WedgeGeometry extends BufferGeometry {
 
 				if ( point[ 1 ] >= 0 ) {
 
-					topShapePoints.push( point );
+					topShapePoints.push( new Vector2( ...point ) );
 
 				}
 
 				if ( point[ 1 ] <= 0 ) {
 
-					bottomShapePoints.push( point );
+					bottomShapePoints.push( new Vector2( ...point ) );
 
 				}
 
 			}
 
 			const vectorMap = point => new Vector2( ...point );
-			const topShape = new Shape( topShapePoints.map( vectorMap ) );
-			const bottomShape = new Shape( bottomShapePoints.map( vectorMap ) );
+			const topShape = new Shape( topShapePoints );
+			const bottomShape = new Shape( bottomShapePoints );
 			return [ newOutline, topShape, bottomShape ];
 
 		}
