@@ -59,8 +59,8 @@ export default QUnit.module( 'Geometries', () => {
 
 			const extraPoint = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ], [ - 2, - 1 ]];
 			const extraShape = new Shape( extraPoint );
-			const result = WedgeGeometry.cleanInputs( extraShape );
-			assert.equal( result.shape.length, 4, "extraShape has 4 points when cleaned" );
+			const extraresult = WedgeGeometry.cleanInputs( extraShape );
+			assert.equal( extraresult.shape.length, 4, "extraShape has 4 points when cleaned" );
 
 		} );
 
