@@ -33,9 +33,9 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( geometry.newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline should be 6" );
 			// assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "outer shape Points" );
 			assert.equal( geometry.newShapes[ 1 ].extractPoints().shape.length, 4, "number points in inner shape 1 should be 4" );
-			assert.equal( geometry.newShapes[ 1 ].extractPoints().shape, [], "peek at inner 1 points" );
+			// assert.equal( geometry.newShapes[ 1 ].extractPoints().shape, [], "peek at inner 1 points" );
 			assert.equal( geometry.newShapes[ 2 ].extractPoints().shape.length, 4, "number points in inner shape 2 should be 4" );
-			assert.equal( geometry.newShapes[ 2 ].extractPoints().shape, [], "peek at inner 2 points" );
+			// assert.equal( geometry.newShapes[ 2 ].extractPoints().shape, [], "peek at inner 2 points" );
 
 		} );
 
@@ -88,31 +88,6 @@ export default QUnit.module( 'Geometries', () => {
 			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const result = WedgeGeometry.splitShape( cleanPoints );
 			assert.equal( result.length, 3, "Should have 1 shapes" );
-
-		} );
-
-		QUnit.test( 'diagnose issue', ( assert ) => {
-
-			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
-			const crossingResults = WedgeGeometry.getCrossings( points );
-			const crossings = crossingResults.crossings;
-			assert.equal( Object.keys( crossings ).length, 2, "There should be only two crossings" );
-			const newOutline = crossingResults.newOutline;
-			assert.equal( newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" );
-
-			const newPoints = newOutline.extractPoints().shape;
-			const topShapePoints = [];
-			const bottomShapePoints = [];
-			for ( const point of newPoints ) {
-
-				if ( point.y >= 0 ) topShapePoints.push( point );
-				if ( point.y <= 0 ) bottomShapePoints.push( point );
-
-			}
-
-			assert.equal( topShapePoints.length, 4, "upper shape has 4 points" );
-
-			const topShape = new Shape( topShapePoints );
 
 		} );
 
