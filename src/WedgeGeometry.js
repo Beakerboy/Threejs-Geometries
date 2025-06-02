@@ -373,7 +373,7 @@ class WedgeGeometry extends BufferGeometry {
 		const reverse = ! ShapeUtils.isClockWise( points );
 		if ( reverse ) {
 
-			points = points.reverse();
+			points.reverse();
 			// Check that any holes are correct direction.
 			for ( const hole of holes ) {
 
