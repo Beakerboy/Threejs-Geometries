@@ -153,7 +153,7 @@ class WedgeGeometry extends BufferGeometry {
 	*/
 	splitShape( points ) {
 
-		// An associative array of all the values where the shape crosses the x axis, keys by segment number.
+		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
 		const crossings = [];
 
 		// The new outline with the addition of any crossing points.
@@ -180,10 +180,12 @@ class WedgeGeometry extends BufferGeometry {
 			const pointOnLine = point[ 1 ] === 0;
 			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
 			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
+			// if this point is the crossing point between the previous and next points
+			// or the line is crossed between this point and the next
 			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
 
 				var crossing;
-				if ( pointOnLine ) {
+				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ]) {
 
 					crossing = point[ 0 ];
 
