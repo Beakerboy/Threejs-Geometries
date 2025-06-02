@@ -44,30 +44,12 @@ class WedgeGeometry extends BufferGeometry {
 		this.parameters.shape.holes.push( ...shapeHoles );
 
 		// The original shape's point, but rotated and centered.
-		const newPoints = [];
+		/** @type {[number, number][]} */
+		const newPoints = points.map( ( point ) => this.move( point ) );
 
-		var point;
-		var minY;
-		var maxY;
-		for ( let i = 0; i < shapePoints.length; i ++ ) {
+		var minY = Math.min( ...newPoints.map( point ) => point[ 1 ] );
+		var maxY = Math.max( ...newPoints.map( point ) => point[ 1 ] );
 
-			point = shapePoints[ i ];
-			const moved = this.move( point );
-			if ( i === 0 ) {
-
-				minY = moved[ 1 ];
-				maxY = moved[ 1 ];
-
-			} else {
-
-				minY = Math.min( minY, moved[ 1 ] );
-				maxY = Math.max( maxY, moved[ 1 ] );
-
-			}
-
-			newPoints.push( moved );
-
-		}
 
 		this.newShapes = this.splitShape( newPoints );
 
