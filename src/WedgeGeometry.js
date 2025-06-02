@@ -169,8 +169,8 @@ class WedgeGeometry extends BufferGeometry {
 			const bottomShapePoints = [];
 			for ( const point of points ) {
 
-				if ( point[ 'y' ] >= 0 ) topShapePoints.push( new Vector2( ...point ) );
-				if ( point[ 'y' ] <= 0 ) bottomShapePoints.push( new Vector2( ...point ) );
+				if ( point.y >= 0 ) topShapePoints.push( point );
+				if ( point.y <= 0 ) bottomShapePoints.push( point );
 
 			}
 
