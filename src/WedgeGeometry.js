@@ -54,6 +54,9 @@ class WedgeGeometry extends BufferGeometry {
 		this.newShapes = this.splitShape( newPoints );
 
 		const positions = [];
+		// positions.push( ...this.buildRoof() );
+		// positions.push( ...this.buildWalls() );
+		// positions.push( ...this.buildFloor() );
 		// If the line does not intersect, display the outline.
 		// otherwise just the parts.
 		const startK = this.newShapes.length > 1 ? 1 : 0;
