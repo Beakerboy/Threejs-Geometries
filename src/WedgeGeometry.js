@@ -354,12 +354,6 @@ class WedgeGeometry extends BufferGeometry {
 
 		var holes = shape.extractPoints().holes;
 
-		// The outer shape is the original shape plus any crossing points.
-		const outerShape = new Shape();
-
-		// A straight array of vertices for the outer shape
-		const outerVertices = [];
-
 		// Ensuse all paths are in the correct direction for the normals
 		const reverse = ! ShapeUtils.isClockWise( points );
 		if ( reverse ) {
