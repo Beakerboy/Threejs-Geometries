@@ -162,6 +162,31 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
+		if ( Object.keys( crossings ).length === 2 ) {
+
+			const points = newOutline.extractPoints().shape;
+			const topShapePoints = [];
+			const bottomShapePoints = [];
+			for ( const point of points ) {
+
+				if ( point[ 1 ] >= 0 ) {
+
+					topShapePoints.push( point );
+
+				}
+				if ( point[ 1 ] <= 0 ) {
+
+					bottomShapePoints.push( point );
+
+				}
+			}
+			const vectorMap = point => new Vector2( ...point );
+			const topShape = new Shape( topShapePoints.map( vectorMap ) );
+			const bottomShape = new Shape( bottomShapePoints.map( vectorMap ) );
+			return [ newOutline, topShape, bottomShape ];
+
+		}
+
 		// Sort crossings and save the crossing number.
 		var sortedCrossings = [];
 		for ( const key in crossings ) {
