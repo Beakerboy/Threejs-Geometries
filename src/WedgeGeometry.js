@@ -41,7 +41,7 @@ class WedgeGeometry extends BufferGeometry {
 		var shapePoints = this.points.shape;
 		var shapeHoles = this.points.holes;
 		this.parameters.shape = new Shape( shapePoints.map( point => new Vector2( ...point ) ) );
-		this.parameters.shape.holes.push( ...shapeHoles );
+		// this.parameters.shape.holes.push( ...shapeHoles );
 
 		// The original shape's point, but rotated and centered.
 		/** @type {[number, number][]} */
@@ -63,7 +63,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			const points = this.newShapes[ k ].extractPoints().shape;
 			// Add top of roof
-			const faces = ShapeUtils.triangulateShape( points, shapeHoles );
+			const faces = ShapeUtils.triangulateShape( points, [] );
 			for ( let i = 0; i < faces.length; i ++ ) {
 
 				const face = faces[ i ];
@@ -95,7 +95,7 @@ class WedgeGeometry extends BufferGeometry {
 		// Build the floor
 		const floorPoints = this.newShapes[ 0 ].extractPoints().shape;
 		const floorHoles = this.newShapes[ 0 ].extractPoints().holes;
-		const faces = ShapeUtils.triangulateShape( floorPoints, floorHoles );
+		const faces = ShapeUtils.triangulateShape( floorPoints, [] );
 		for ( let i = 0; i < faces.length; i ++ ) {
 
 			const face = faces[ i ];
