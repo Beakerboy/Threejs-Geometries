@@ -209,7 +209,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
-		newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
+		// newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
 		if ( Object.keys( crossings ).length === 0 ) {
 
 			return [ newOutline ];
