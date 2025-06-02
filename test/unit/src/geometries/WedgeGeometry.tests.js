@@ -91,6 +91,26 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
+		QUnit.test( 'diagnose issue', ( assert ) => {
+
+			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
+			const crossingResults = WedgeGeometry.getCrossings( points );
+			const crossings = crossingResults.crossings;
+			const newOutline = crossingResults.newOutline;
+
+			const newPoints = newOutline.extractPoints().shape;
+			const topShapePoints = [];
+			const bottomShapePoints = [];
+			for ( const point of newPoints ) {
+
+				if ( point[ 1 ] >= 0 ) topShapePoints.push( new Vector2( ...point ) );
+				if ( point[ 1 ] <= 0 ) bottomShapePoints.push( new Vector2( ...point ) );
+
+			}
+
+			const topShape = new Shape( topShapePoints );
+		} );
+
 	} );
 
 } );
