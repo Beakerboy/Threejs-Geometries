@@ -77,8 +77,9 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline should be 6" );
 			// assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "outer shape Points" );
 			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape.length, 4, "number points in inner shape 1 should be 4" );
-			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape, [], "peek at points" );
+			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape, [], "peek at inner 1 points" );
 			assert.equal( geometries[ 2 ].newShapes[ 2 ].extractPoints().shape.length, 4, "number points in inner shape 2 should be 4" );
+			assert.equal( geometries[ 2 ].newShapes[ 2 ].extractPoints().shape, [], "peek at inner 2 points" );
 
 		} );
 
