@@ -110,7 +110,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			}
 
-			assert.equal( topShapePoints.length, 4, "upper shape has 4 points" )
+			assert.equal( topShapePoints.length, 4, "upper shape has 4 points" );
 
 			const topShape = new Shape( topShapePoints );
 
