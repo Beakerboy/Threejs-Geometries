@@ -52,13 +52,14 @@ export default QUnit.module( 'Geometries', () => {
 
 		QUnit.test( 'cleanInputs', ( assert ) => {
 
+			const vectorMap = ( point ) => New Vector2( point[ 0 ], point[ 1 ] );
 			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
-			const cleanShape = new Shape( cleanPoints );
+			const cleanShape = new Shape( cleanPoints.map( vectorMap ) );
 			const result = WedgeGeometry.cleanInputs( cleanShape );
 			assert.equal( result.shape.length, 4, "cleaned has 4 points" );
 
 			const extraPoint = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ], [ - 2, - 1 ]];
-			const extraShape = new Shape( extraPoint );
+			const extraShape = new Shape( extraPoint.map( vectorMap ) );
 			const extraresult = WedgeGeometry.cleanInputs( extraShape );
 			assert.equal( extraresult.shape.length, 4, "extraShape has 4 points when cleaned" );
 
