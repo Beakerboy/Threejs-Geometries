@@ -266,22 +266,14 @@ class WedgeGeometry extends BufferGeometry {
 		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
 		const crossings = [];
 
-		// The new outline with the addition of any crossing points.
-		const newOutline = new Shape();
+		// The new outline point, original with the addition of any crossing points.
+		const newOutline = [];
 
 		// Walk the shape and find all crossings.
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			const point = points[ i ];
-			if ( i === 0 ) {
-
-				newOutline.moveTo( point[ 0 ], point[ 1 ] );
-
-			} else {
-
-				newOutline.lineTo( point[ 0 ], point[ 1 ] );
-
-			}
+			newOutline.push( point );
 
 			const prevPoint = points[ ( i - 1 + points.length ) % points.length ];
 			const nextPoint = points[ ( i + 1 ) % points.length ];
@@ -307,7 +299,7 @@ class WedgeGeometry extends BufferGeometry {
 				crossings[ i ] = crossing;
 				if ( ! pointOnLine ) {
 
-					newOutline.lineTo( crossing, 0 );
+					newOutline.push( [ crossing, 0 ] );
 
 				}
 
@@ -315,7 +307,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
-		return { crossings: crossings, newOutline: newOutline };
+		return { crossings: crossings, newOutline: new Shape( newOutline ) };
 
 	}
 
