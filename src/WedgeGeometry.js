@@ -266,13 +266,14 @@ class WedgeGeometry extends BufferGeometry {
 		const crossings = [];
 
 		// The new outline point, original with the addition of any crossing points.
+		/** @type {Vector2[]} */
 		const newOutline = [];
 
 		// Walk the shape and find all crossings.
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			const point = points[ i ];
-			newOutline.push( point );
+			newOutline.push( new Vector2( point[ 0 ], point[ 1 ] ) );
 
 			const prevPoint = points[ ( i - 1 + points.length ) % points.length ];
 			const nextPoint = points[ ( i + 1 ) % points.length ];
@@ -298,7 +299,7 @@ class WedgeGeometry extends BufferGeometry {
 				crossings[ i ] = crossing;
 				if ( ! pointOnLine ) {
 
-					newOutline.push( [ crossing, 0 ] );
+					newOutline.push( new Vector2( crossing, 0 ) );
 
 				}
 
