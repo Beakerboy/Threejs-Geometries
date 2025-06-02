@@ -301,7 +301,7 @@ class WedgeGeometry extends BufferGeometry {
 		for ( let i = 0; i < points.length; i ++ ) {
 
 			const point = points[ i ];
-			newOutline.push( new Vector2( point[ 0 ], point[ 1 ] ) );
+			newOutline.push( new Vector2( ...point ) );
 
 			const prevPoint = points[ ( i - 1 + points.length ) % points.length ];
 			const nextPoint = points[ ( i + 1 ) % points.length ];
