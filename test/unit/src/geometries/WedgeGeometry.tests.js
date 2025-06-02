@@ -86,7 +86,7 @@ export default QUnit.module( 'Geometries', () => {
 		// Static Functions
 		QUnit.test( 'getCrossings', ( assert ) => {
 
-			const points = [ [ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ] ];
+			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const result = WedgeGeometry.getCrossings( points );
 			assert.equal( result.newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" );
 			assert.equal( result.newOutline.extractPoints().shape, [], "peek at points" );
