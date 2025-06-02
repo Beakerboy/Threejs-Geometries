@@ -74,7 +74,7 @@ class WedgeGeometry extends BufferGeometry {
 					const x = unmoved[ 0 ];
 					const y = unmoved[ 1 ];
 					var z;
-					if ( pointz[ face[ j ] ].y >= 0 ) {
+					if ( points[ face[ j ] ].y >= 0 ) {
 
 						z = depth - depth / maxY * points[ face[ j ] ].y;
 
