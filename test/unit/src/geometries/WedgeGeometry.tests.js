@@ -2,7 +2,7 @@
 
 import { WedgeGeometry } from '../../../../src/WedgeGeometry.js';
 
-import { BufferGeometry, Shape } from 'three';
+import { BufferGeometry, Shape, Vector2 } from 'three';
 import { runStdGeometryTests } from '../../utils/qunit-utils.js';
 
 export default QUnit.module( 'Geometries', () => {
