@@ -40,7 +40,16 @@ export default QUnit.module( 'Geometries', () => {
 		} );
 
 		// Static Functions
-		QUnit.test( 'getCrossings', ( assert ) => {
+		QUnit.test( 'getCrossings noncrossings', ( assert ) => {
+
+			const points = [[ - 2, 1 ], [ - 2, 2 ], [ 2, 2 ], [ 2, 1 ]];
+			const result = WedgeGeometry.getCrossings( points );
+			assert.equal( result.newOutline.extractPoints().shape.length, 4, "New Outline has 4 points" );
+			assert.equal( Object.keys( result.crossings ).length, 0, "There should be only two crossings" );
+
+		} );
+
+		QUnit.test( 'getCrossings one crossing', ( assert ) => {
 
 			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const result = WedgeGeometry.getCrossings( points );
