@@ -101,7 +101,7 @@ export default QUnit.module( 'Geometries', () => {
 			assert.equal( newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" );
 
 			const newPoints = newOutline.extractPoints().shape;
-			assert.equal( newPoint, [], 'peek' );
+			assert.equal( newPoints, [], 'peek' );
 			const topShapePoints = [];
 			const bottomShapePoints = [];
 			for ( const point of newPoints ) {
