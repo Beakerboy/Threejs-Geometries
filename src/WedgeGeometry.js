@@ -185,7 +185,7 @@ class WedgeGeometry extends BufferGeometry {
 			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
 
 				var crossing;
-				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ]) {
+				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ] ) {
 
 					crossing = point[ 0 ];
 
