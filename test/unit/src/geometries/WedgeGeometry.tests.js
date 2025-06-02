@@ -18,7 +18,7 @@ export default QUnit.module( 'Geometries', () => {
 				center: [ 0, 0 ],
 			};
 			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
-			const goemetry = new WedgeGeometry( new Shape( points ), options );
+			const geometry = new WedgeGeometry( new Shape( points ), options );
 
 			// assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 36, "WedgeGeometry Point Count:" );
 			// assert.equal( geometries[ 3 ].getAttribute( "position" ).array.length, 108, "WedgeGeometry Coordinate Count:" );
