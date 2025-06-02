@@ -83,6 +83,18 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
+		// Static Functions
+		QUnit.test( 'getCrossings', ( assert ) => {
+
+			const points = geometries[ 2 ].extractPoints().shape
+			const result = WedgeGeometry( points );
+			assert.equal( result.newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" )
+			assert.equal( result.crossings[ 0 ], -2, "First Crossing" );
+			assert.equal( result.crossings[ 3 ], 2, "Second Crossing" );
+			assert.equal( Object.keys( crossings ).length, 2, "There should be only two crossings" );
+
+		} );
+
 		// INHERITANCE
 		QUnit.test( 'Extending', ( assert ) => {
 
