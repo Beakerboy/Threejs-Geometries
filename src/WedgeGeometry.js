@@ -40,7 +40,7 @@ class WedgeGeometry extends BufferGeometry {
 		// Get the cleaned outer shape and holes.
 		var shapePoints = this.points.shape;
 		var shapeHoles = this.points.holes;
-		this.parameters.shape = new Shape( shapePoints.map( ( point ) => new Vector2( point[ 0 ], point[ 1 ] ) ) ) );
+		this.parameters.shape = new Shape( shapePoints.map( ( point ) => new Vector2( point[ 0 ], point[ 1 ] ) ) );
 		this.parameters.shape.holes.push( ...shapeHoles );
 
 		// The original shape's point, but rotated and centered.
