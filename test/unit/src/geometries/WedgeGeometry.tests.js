@@ -109,6 +109,7 @@ export default QUnit.module( 'Geometries', () => {
 			}
 
 			const topShape = new Shape( topShapePoints );
+
 		} );
 
 	} );
