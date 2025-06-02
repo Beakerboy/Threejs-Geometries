@@ -79,7 +79,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			const points = this.newShapes[ k ].extractPoints().shape;
 			// Add top of roof
-			const faces = ShapeUtils.triangulateShape( shapePoints, holePoints );
+			const faces = ShapeUtils.triangulateShape( shapePoints, shapeHoles );
 			for ( let i = 0; i < faces.length; i ++ ) {
 
 				const face = faces[ i ];
