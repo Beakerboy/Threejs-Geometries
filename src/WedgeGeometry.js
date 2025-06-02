@@ -50,7 +50,7 @@ class WedgeGeometry extends BufferGeometry {
 		var minY = Math.min( ...newPoints.map( ( point ) => point[ 1 ] ) );
 		var maxY = Math.max( ...newPoints.map( ( point ) => point[ 1 ] ) );
 
-		this.newShapes = this.splitShape( newPoints );
+		this.newShapes = WedgeGeometry.splitShape( newPoints );
 
 		const positions = [];
 		// positions.push( ...this.buildRoof() );
@@ -150,7 +150,7 @@ class WedgeGeometry extends BufferGeometry {
 	* @return {Three.Shape[]} an array of shapes. Element 0 is the original shape with
 	*                   the addition of new vertices for the crossing points.
 	*/
-	splitShape( points ) {
+	static splitShape( points ) {
 
 		const crossingResults = WedgeGeometry.getCrossings( points );
 		const crossings = crossingResults.crossings;
