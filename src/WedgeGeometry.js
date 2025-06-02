@@ -344,7 +344,7 @@ class WedgeGeometry extends BufferGeometry {
 	static cleanInputs( shape ) {
 
 		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
+		const points = shape.extractPoints().shape;
 
 		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
 
@@ -359,20 +359,20 @@ class WedgeGeometry extends BufferGeometry {
 		if ( reverse ) {
 
 			points.reverse();
-			// Check that any holes are correct direction.
-			for ( const hole of holes ) {
 
-				if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+		}
+		// Check that any holes are correct direction.
+		for ( const hole of holes ) {
 
-					hole.pop();
+			if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
 
-				}
+				hole.pop();
 
-				if ( ShapeUtils.isClockWise( hole ) ) {
+			}
 
-					hole.reverse();
+			if ( ShapeUtils.isClockWise( hole ) ) {
 
-				}
+				hole.reverse();
 
 			}
 
