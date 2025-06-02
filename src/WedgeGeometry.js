@@ -395,6 +395,7 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		return { shape: points, holes: holes };
+
 	}
 
 	static fromJSON( data, shape ) {
