@@ -89,7 +89,7 @@ export default QUnit.module( 'Geometries', () => {
 			const points = geometries[ 2 ].parameters.shape.extractPoints().shape;
 			const result = WedgeGeometry.getCrossings( points );
 			assert.equal( result.newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" );
-			assert.equal( result.newOutline.extractPoints().shape, [], "peek at points" )
+			assert.equal( result.newOutline.extractPoints().shape, [], "peek at points" );
 			assert.equal( result.crossings[ 0 ], - 2, "First Crossing" );
 			assert.equal( result.crossings[ 3 ], 2, "Second Crossing" );
 			assert.equal( Object.keys( result.crossings ).length, 2, "There should be only two crossings" );
