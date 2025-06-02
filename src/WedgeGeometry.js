@@ -127,7 +127,7 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Make walls by iterating the outline.
-		for ( let i = 0; i < points.length; i ++ ) {
+		for ( let i = 0; i < floorPoints.length; i ++ ) {
 
 			var point = floorPoints[ i ];
 			var pointZ = depth * ( 1 - point.y / ( point.y >= 0 ? maxY : minY ) );
