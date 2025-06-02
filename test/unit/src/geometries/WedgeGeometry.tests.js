@@ -52,7 +52,7 @@ export default QUnit.module( 'Geometries', () => {
 
 		QUnit.test( 'cleanInputs', ( assert ) => {
 
-			const vectorMap = point => New Vector2( ...point );
+			const vectorMap = point => new Vector2( ...point );
 			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const cleanShape = new Shape( cleanPoints.map( vectorMap ) );
 			const result = WedgeGeometry.cleanInputs( cleanShape );
