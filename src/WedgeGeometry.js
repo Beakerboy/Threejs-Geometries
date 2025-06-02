@@ -36,11 +36,11 @@ class WedgeGeometry extends BufferGeometry {
 		// A straight array of vertices for the outer shape
 		const outerVertices = [];
 
-		WedgeGeometry.cleanInputs( shape );
+		this.points = WedgeGeometry.cleanInputs( shape );
 
 		// Get the cleaned outer shape and holes.
-		var points = shape.extractPoints().shape;
-		var holes = shape.extractPoints().holes;
+		var shapePoints = this.points.shape;
+		var shapeHoles = this.points.holes;
 
 		// The original shape's point, but rotated and centered.
 		const newPoints = [];
@@ -393,6 +393,7 @@ class WedgeGeometry extends BufferGeometry {
 
 		}
 
+		return { shape: points, holes: holes };
 	}
 
 	static fromJSON( data, shape ) {
