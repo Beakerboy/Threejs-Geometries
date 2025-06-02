@@ -64,7 +64,7 @@ class WedgeGeometry extends BufferGeometry {
 		const newPoints = points.map( ( point ) => this.move( point ) );
 
 		var minY = Math.min( ...newPoints.map( point ) => point[ 1 ] );
-		var maxY = Math.mac( ...newPoints.map( point ) => point[ 1 ] );
+		var maxY = Math.max( ...newPoints.map( point ) => point[ 1 ] );
 
 		const newShapes = this.splitShape( newPoints );
 
