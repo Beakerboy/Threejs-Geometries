@@ -262,6 +262,7 @@ class WedgeGeometry extends BufferGeometry {
 	 * @returns {}
          */
 	static getCrossings( points ) {
+
 		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
 		const crossings = [];
 
