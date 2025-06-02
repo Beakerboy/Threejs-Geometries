@@ -96,7 +96,9 @@ export default QUnit.module( 'Geometries', () => {
 			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const crossingResults = WedgeGeometry.getCrossings( points );
 			const crossings = crossingResults.crossings;
+			assert.equal( Object.keys( crossings ).length, 2, "There should be only two crossings" );
 			const newOutline = crossingResults.newOutline;
+			assert.equal( newOutline.extractPoints().shape.length, 6, "New Outline has 6 points" );
 
 			const newPoints = newOutline.extractPoints().shape;
 			const topShapePoints = [];
@@ -107,6 +109,8 @@ export default QUnit.module( 'Geometries', () => {
 				if ( point[ 1 ] <= 0 ) bottomShapePoints.push( new Vector2( ...point ) );
 
 			}
+
+			assert.equal( topShapePoints.length, 4, "upper shape has 4 points" )
 
 			const topShape = new Shape( topShapePoints );
 
