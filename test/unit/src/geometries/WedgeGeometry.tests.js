@@ -66,11 +66,19 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
-		QUnit.test( 'splitShape', ( assert ) => {
+		QUnit.test( 'splitShape no crossings', ( assert ) => {
+
+			const cleanPoints = [[ - 2, 1 ], [ - 2, 2 ], [ 2, 2 ], [ 2, 1 ]];
+			const result = WedgeGeometry.splitShape( cleanPoints );
+			assert.equal( result.length, 1, "Should have 1 shapes" );
+
+		} );
+
+		QUnit.test( 'splitShape one crossing', ( assert ) => {
 
 			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
 			const result = WedgeGeometry.splitShape( cleanPoints );
-			assert.equal( result.length, 3, "Should have 3 shapes" );
+			assert.equal( result.length, 3, "Should have 1 shapes" );
 
 		} );
 
