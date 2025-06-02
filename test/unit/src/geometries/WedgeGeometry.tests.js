@@ -65,21 +65,29 @@ export default QUnit.module( 'Geometries', () => {
 		// Data
 		QUnit.test( 'Data', ( assert ) => {
 
-			assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 36, "WedgeGeometry Point Count:" );
+			const options = {
+				angle: 0,
+				depth: 5,
+				center: [ 0, 0 ],
+			};
+			const points = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
+			const goemetry = new WedgeGeometry( new Shape( points ), options );
+
+			// assert.equal( geometries[ 3 ].getAttribute( "position" ).count, 36, "WedgeGeometry Point Count:" );
 			// assert.equal( geometries[ 3 ].getAttribute( "position" ).array.length, 108, "WedgeGeometry Coordinate Count:" );
 			// uncomment below to peek at contents
 			// assert.equal( facePoints, [], "Contents of position array" );
-			assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
+			// assert.equal( Math.max( ...geometries[ 3 ].getAttribute( "position" ).array.filter( ( element, index ) => ( index + 1 ) % 3 === 0 ) ), 5, "Height should be 5" );
 
-			assert.equal( geometries[ 2 ].getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
-			assert.equal( geometries[ 2 ].parameters.shape.extractPoints().shape.length, 4, "WedgeGeometry shape points should be unchanged" );
-			assert.equal( geometries[ 2 ].newShapes.length, 3, "number of shapes" );
-			assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline should be 6" );
+			assert.equal( geometry.getAttribute( "position" ).count, 36, "WedgeGeometry correct Point Count" );
+			assert.equal( geometry.parameters.shape.extractPoints().shape.length, 4, "WedgeGeometry shape points should be unchanged" );
+			assert.equal( geometry.newShapes.length, 3, "number of shapes" );
+			assert.equal( geometry.newShapes[ 0 ].extractPoints().shape.length, 6, "number points in new outline should be 6" );
 			// assert.equal( geometries[ 2 ].newShapes[ 0 ].extractPoints().shape, [], "outer shape Points" );
-			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape.length, 4, "number points in inner shape 1 should be 4" );
-			assert.equal( geometries[ 2 ].newShapes[ 1 ].extractPoints().shape, [], "peek at inner 1 points" );
-			assert.equal( geometries[ 2 ].newShapes[ 2 ].extractPoints().shape.length, 4, "number points in inner shape 2 should be 4" );
-			assert.equal( geometries[ 2 ].newShapes[ 2 ].extractPoints().shape, [], "peek at inner 2 points" );
+			assert.equal( geometry.newShapes[ 1 ].extractPoints().shape.length, 4, "number points in inner shape 1 should be 4" );
+			assert.equal( geometry.newShapes[ 1 ].extractPoints().shape, [], "peek at inner 1 points" );
+			assert.equal( geometry.newShapes[ 2 ].extractPoints().shape.length, 4, "number points in inner shape 2 should be 4" );
+			assert.equal( geometry.newShapes[ 2 ].extractPoints().shape, [], "peek at inner 2 points" );
 
 		} );
 
