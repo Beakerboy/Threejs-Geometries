@@ -49,9 +49,9 @@ class WedgeGeometry extends BufferGeometry {
 		var point;
 		var minY;
 		var maxY;
-		for ( let i = 0; i < points.length; i ++ ) {
+		for ( let i = 0; i < shapePoints.length; i ++ ) {
 
-			point = points[ i ];
+			point = shapePoints[ i ];
 			const moved = this.move( point );
 			if ( i === 0 ) {
 
