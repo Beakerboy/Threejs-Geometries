@@ -270,12 +270,10 @@ class WedgeGeometry extends BufferGeometry {
 		const newOutline = new Shape();
 
 		// Walk the shape and find all crossings.
-		var point = [];
-		var nextPoint = [];
 		var prevPoint = points[ points.length - 1 ];
 		for ( let i = 0; i < points.length; i ++ ) {
 
-			point = points[ i ];
+			const point = points[ i ];
 			if ( i === 0 ) {
 
 				newOutline.moveTo( point[ 0 ], point[ 1 ] );
@@ -286,7 +284,8 @@ class WedgeGeometry extends BufferGeometry {
 
 			}
 
-			nextPoint = points[ ( i + 1 ) % points.length ];
+			const prevPoint = points[ ( i - 1 + points.length ) % points.length ];
+			const nextPoint = points[ ( i + 1 ) % points.length ];
 			const pointOnLine = point[ 1 ] === 0;
 			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
 			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
@@ -314,8 +313,6 @@ class WedgeGeometry extends BufferGeometry {
 				}
 
 			}
-
-			prevPoint = point;
 
 		}
 
