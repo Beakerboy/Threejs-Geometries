@@ -110,7 +110,8 @@ class WedgeGeometry extends BufferGeometry {
 
 		// Build the floor
 		const floorPoints = this.newShapes[ 0 ].extractPoints().shape;
-		const faces = ShapeUtils.triangulateShape( floorPoints, holes );
+		const floorHoles = this.newShapes[ 0 ].extractPoints().holes;
+		const faces = ShapeUtils.triangulateShape( floorPoints, floorHoles );
 		for ( let i = 0; i < faces.length; i ++ ) {
 
 			const face = faces[ i ];
