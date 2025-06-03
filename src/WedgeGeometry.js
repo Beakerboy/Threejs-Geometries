@@ -30,53 +30,40 @@ class WedgeGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
-		var holes = shape.extractPoints().holes;
-
 		// The outer shape is the original shape plus any crossing points.
 		const outerShape = new Shape();
 
 		// A straight array of vertices for the outer shape
 		const outerVertices = [];
 
-		// Ensuse all paths are in the correct direction for the normals
-		const reverse = ! ShapeUtils.isClockWise( points );
-		if ( reverse ) {
-
-			points = points.reverse();
-			// Check that any holes are correct direction.
-			for ( let h = 0; h < holes.length; h ++ ) {
-
-				const hole = holes[ h ];
-				if ( ShapeUtils.isClockWise( hole ) ) {
-
-					holes[ h ] = hole.reverse();
-
-				}
-
-			}
-
-		}
+		this.points = WedgeGeometry.cleanInputs( shape );
+		// Get the cleaned outer shape and holes.
+		var shapePoints = this.points.shape;
+		var shapeHoles = this.points.holes;
+		this.parameters.shape = new Shape( shapePoints.map( point => new Vector2( ...point ) ) );
+		// this.parameters.shape.holes.push( ...shapeHoles );
 
 		// The original shape's point, but rotated and centered.
 		/** @type {[number, number][]} */
-		const newPoints = points.map( ( point ) => this.move( point ) );
+		const newPoints = shapePoints.map( ( point ) => this.move( point ) );
 
-		var minY = Math.min( ...newPoints.map( point ) => point[ 1 ] );
-		var maxY = Math.max( ...newPoints.map( point ) => point[ 1 ] );
+		var minY = Math.min( ...newPoints.map( ( point ) => point[ 1 ] ) );
+		var maxY = Math.max( ...newPoints.map( ( point ) => point[ 1 ] ) );
 
-		const newShapes = this.splitShape( newPoints );
+		this.newShapes = WedgeGeometry.splitShape( newPoints );
 
 		const positions = [];
+		// positions.push( ...this.buildRoof() );
+		// positions.push( ...this.buildWalls() );
+		// positions.push( ...this.buildFloor() );
 		// If the line does not intersect, display the outline.
 		// otherwise just the parts.
-		const startK = newShapes.length > 1 ? 1 : 0;
-		for ( let k = startK; k < newShapes.length; k ++ ) {
+		const startK = this.newShapes.length > 1 ? 1 : 0;
+		for ( let k = startK; k < this.newShapes.length; k ++ ) {
 
-			points = newShapes[ k ].extractPoints().shape;
+			const points = this.newShapes[ k ].extractPoints().shape;
 			// Add top of roof
-			const faces = ShapeUtils.triangulateShape( points, holes );
+			const faces = ShapeUtils.triangulateShape( points, [] );
 			for ( let i = 0; i < faces.length; i ++ ) {
 
 				const face = faces[ i ];
@@ -106,14 +93,15 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Build the floor
-		points = newShapes[ 0 ].extractPoints().shape;
-		const faces = ShapeUtils.triangulateShape( points, holes );
+		const floorPoints = this.newShapes[ 0 ].extractPoints().shape;
+		const floorHoles = this.newShapes[ 0 ].extractPoints().holes;
+		const faces = ShapeUtils.triangulateShape( floorPoints, [] );
 		for ( let i = 0; i < faces.length; i ++ ) {
 
 			const face = faces[ i ];
 			for ( let j = 0; j < 3; j ++ ) {
 
-				const unmoved = this.unMove( [ points[ face[ j ] ].x, points[ face[ j ] ].y ] );
+				const unmoved = this.unMove( [ floorPoints[ face[ j ] ].x, floorPoints[ face[ j ] ].y ] );
 				const x = unmoved[ 0 ];
 				const y = unmoved[ 1 ];
 				positions.push( x, y, 0 );
@@ -123,49 +111,29 @@ class WedgeGeometry extends BufferGeometry {
 		}
 
 		// Make walls by iterating the outline.
-		points = newShapes[ 0 ].extractPoints().shape;
-		for ( let i = 0; i < points.length; i ++ ) {
+		for ( let i = 0; i < floorPoints.length; i ++ ) {
 
-			var point = points[ i ];
-			var pointZ;
-			if ( point.y >= 0 ) {
+			var point = floorPoints[ i ];
+			var pointZ = depth * ( 1 - point.y / ( point.y >= 0 ? maxY : minY ) );
 
-				pointZ = depth - depth / maxY * point.y;
+			var nextPoint = floorPoints[ ( i + 1 ) % floorPoints.length ];
+			var nextPointZ = depth * ( 1 - nextPoint.y / ( nextPoint.y >= 0 ? maxY : minY ) );
 
-			} else {
+			if ( pointZ !== 0 ) {
 
-				pointZ = depth - depth / minY * point.y;
-
-			}
-
-			var nextPoint;
-			if ( i === points.length - 1 ) {
-
-				nextPoint = points[ 0 ];
-
-			} else {
-
-				nextPoint = points[ i + 1 ];
+				positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
+				positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 			}
 
-			var nextPointZ;
-			if ( nextPoint.y >= 0 ) {
+			if ( nextPointZ !== 0 ) {
 
-				nextPointZ = depth - depth / maxY * nextPoint.y;
-
-			} else {
-
-				nextPointZ = depth - depth / minY * nextPoint.y;
+				positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
+				positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 			}
-
-			positions.push( ...this.unMove( [ point.x, point.y ] ), 0 );
-			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
-			positions.push( ...this.unMove( [ point.x, point.y ] ), pointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), nextPointZ );
-			positions.push( ...this.unMove( [ nextPoint.x, nextPoint.y ] ), 0 );
 
 		}
 
@@ -179,69 +147,36 @@ class WedgeGeometry extends BufferGeometry {
 	* Not tested on self-intersecting shapes.
 	*
 	* @param {[[number, number]]} points - an array of x, y pairs.
-	* @return {[Shape]} an array of shapes. Element 0 is the original shape with
+	* @return {Three.Shape[]} an array of shapes. Element 0 is the original shape with
 	*                   the addition of new vertices for the crossing points.
 	*/
-	splitShape( points ) {
+	static splitShape( points ) {
 
-		// An associative array of all the values where the shape crosses the x axis, keys by segment number.
-		const crossings = [];
+		const crossingResults = WedgeGeometry.getCrossings( points );
+		const crossings = crossingResults.crossings;
+		const newOutline = crossingResults.newOutline;
 
-		// The new outline with the addition of any crossing points.
-		const newOutline = new Shape();
-
-		// Walk the shape and find all crossings.
-		var point = [];
-		var nextPoint = [];
-		var prevPoint = points[ points.length - 1 ];
-		for ( let i = 0; i < points.length - 1; i ++ ) {
-
-			point = points[ i ];
-			if ( i === 0 ) {
-
-				newOutline.moveTo( point[ 0 ], point[ 1 ] );
-
-			} else {
-
-				newOutline.lineTo( point[ 0 ], point[ 1 ] );
-
-			}
-
-			nextPoint = points[ i + 1 ];
-			const pointOnLine = ( point[ 1 ] === 0 );
-			const sameSides = ( ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 ) );
-			const switchesSides = ( ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 ) );
-			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
-
-				var crossing;
-				if ( pointOnLine ) {
-
-					crossing = point[ 0 ];
-
-				} else {
-
-					var m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
-					var crossing = point[ 0 ] - point[ 1 ] / m;
-
-				}
-
-				crossings[ i ] = crossing;
-				if ( ! pointOnLine ) {
-
-					newOutline.lineTo( crossing, 0 );
-
-				}
-
-			}
-
-			prevPoint = point;
-
-		}
-
-		newOutline.lineTo( nextPoint[ 0 ], nextPoint[ 1 ] );
 		if ( Object.keys( crossings ).length === 0 ) {
 
 			return [ newOutline ];
+
+		}
+
+		if ( Object.keys( crossings ).length === 2 ) {
+
+			const points = newOutline.extractPoints().shape;
+			const topShapePoints = [];
+			const bottomShapePoints = [];
+			for ( const point of points ) {
+
+				if ( point.y >= 0 ) topShapePoints.push( point );
+				if ( point.y <= 0 ) bottomShapePoints.push( point );
+
+			}
+
+			const topShape = new Shape( topShapePoints );
+			const bottomShape = new Shape( bottomShapePoints );
+			return [ newOutline, topShape, bottomShape ];
 
 		}
 
@@ -279,7 +214,7 @@ class WedgeGeometry extends BufferGeometry {
 		var currentShape = new Shape();
 		for ( let i = 0; i < points.length; i ++ ) {
 
-			point = points[ i ];
+			const point = points[ i ];
 			if ( i === 0 ) {
 
 				currentShape.moveTo( point[ 0 ], point[ 1 ] );
@@ -292,7 +227,7 @@ class WedgeGeometry extends BufferGeometry {
 
 			if ( i in crossings ) {
 
-				crossing = crossings[ i ];
+				const crossing = crossings[ i ];
 				if ( crossing.value !== point[ 0 ] ) {
 
 					currentShape.lineTo( crossing.value, 0 );
@@ -326,7 +261,71 @@ class WedgeGeometry extends BufferGeometry {
 
 		shapes.push( currentShape );
 		shapes.unshift( newOutline );
+
+		for ( const i in shapes ) {
+
+			shapes[ i ] = new Shape( WedgeGeometry.cleanInputs( shapes[ i ] ).shape );
+
+		}
+
 		return shapes;
+
+	}
+
+	/**
+         * Given a set of points, add points for each time it crosses the x axis
+	 * and return the new shape along with a list of crossing indicies
+         * @param {} points - The points
+	 * @returns {}
+         */
+	static getCrossings( points ) {
+
+		// An associative array of all the values where the shape crosses the x axis, keyed by segment number.
+		const crossings = [];
+
+		// The new outline point, original with the addition of any crossing points.
+		/** @type {Vector2[]} */
+		const newOutline = [];
+
+		// Walk the shape and find all crossings.
+		for ( let i = 0; i < points.length; i ++ ) {
+
+			const point = points[ i ];
+			newOutline.push( new Vector2( ...point ) );
+
+			const prevPoint = points[ ( i - 1 + points.length ) % points.length ];
+			const nextPoint = points[ ( i + 1 ) % points.length ];
+			const pointOnLine = point[ 1 ] === 0;
+			const sameSides = ( prevPoint[ 1 ] > 0 ) === ( nextPoint[ 1 ] > 0 );
+			const switchesSides = ( point[ 1 ] > 0 ) !== ( nextPoint[ 1 ] > 0 );
+			// if this point is the crossing point between the previous and next points
+			// or the line is crossed between this point and the next
+			if ( ( pointOnLine && ! sameSides ) || switchesSides ) {
+
+				var crossing;
+				if ( pointOnLine || nextPoint[ 0 ] === point[ 0 ] ) {
+
+					crossing = point[ 0 ];
+
+				} else {
+
+					const m = ( nextPoint[ 1 ] - point[ 1 ] ) / ( nextPoint[ 0 ] - point[ 0 ] );
+					crossing = point[ 0 ] - point[ 1 ] / m;
+
+				}
+
+				crossings[ i ] = crossing;
+				if ( ! pointOnLine ) {
+
+					newOutline.push( new Vector2( crossing, 0 ) );
+
+				}
+
+			}
+
+		}
+
+		return { crossings: crossings, newOutline: new Shape( newOutline ) };
 
 	}
 
@@ -353,6 +352,53 @@ class WedgeGeometry extends BufferGeometry {
 		const pointX = point[ 0 ] * Math.cos( angle ) + point[ 1 ] * Math.sin( angle ) + center[ 0 ];
 		const pointY = - 1 * point[ 0 ] * Math.sin( angle ) + point[ 1 ] * Math.cos( angle ) + center[ 1 ];
 		return [ pointX, pointY ];
+
+	}
+
+	/**
+         * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
+	 * modifies this.parameters.shape
+         * @returns {Vector2[], Vector2[][]}
+         */
+	static cleanInputs( shape ) {
+
+		// Get the outer shape and holes.
+		const points = shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
+		var holes = shape.extractPoints().holes;
+
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points.reverse();
+
+		}
+
+		// Check that any holes are correct direction.
+		for ( const hole of holes ) {
+
+			if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+
+				hole.pop();
+
+			}
+
+			if ( ShapeUtils.isClockWise( hole ) ) {
+
+				hole.reverse();
+
+			}
+
+		}
+
+		return { shape: points, holes: holes };
 
 	}
 
