@@ -358,6 +358,7 @@ class WedgeGeometry extends BufferGeometry {
 	/**
          * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
 	 * modifies this.parameters.shape
+         * @returns {Vector2[], Vector2[][]}
          */
 	static cleanInputs( shape ) {
 
