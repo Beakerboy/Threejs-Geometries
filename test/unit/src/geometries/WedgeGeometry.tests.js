@@ -140,7 +140,7 @@ export default QUnit.module( 'Geometries', () => {
 			const cleanShape = new Shape( cleanPoints.map( vectorMap ) );
 			const result = WedgeGeometry.cleanInputs( cleanShape );
 			assert.equal( result.shape.length, 4, "cleaned has 4 points" );
-			assert.equal( result.shape[ 0 ].equals( new Vector2( -2, 1 ) ), true, "array has been reversed" );
+			assert.equal( result.shape[ 0 ].equals( new Vector2( - 2, 1 ) ), true, "array has been reversed" );
 
 		} );
 
