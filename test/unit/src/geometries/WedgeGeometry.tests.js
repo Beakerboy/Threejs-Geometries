@@ -124,7 +124,8 @@ export default QUnit.module( 'Geometries', () => {
 		} );
 
 		QUnit.test( 'clean duplicate point', ( assert ) => {
-	
+
+			const vectorMap = point => new Vector2( ...point );
 			const extraPoint = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ], [ - 2, - 1 ]];
 			const extraShape = new Shape( extraPoint.map( vectorMap ) );
 			const extraresult = WedgeGeometry.cleanInputs( extraShape );
