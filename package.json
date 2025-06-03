@@ -10,7 +10,7 @@
     "./src/*": "./src/*"
   },
   "dependencies": {
-    "straight-skeleton": "1.1.0",
+    "straight-skeleton": "2.0.1",
     "three": "^0.138.3"
   },
   "devDependencies" : {
