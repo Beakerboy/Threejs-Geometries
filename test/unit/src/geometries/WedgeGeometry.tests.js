@@ -144,6 +144,59 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
+		// INHERITANCE
+		QUnit.test( 'Extending', ( assert ) => {
+
+			const object = new WedgeGeometry();
+			assert.strictEqual(
+				object instanceof BufferGeometry, true,
+				'WedgeGeometry extends from BufferGeometry'
+			);
+
+		} );
+
+		// INSTANCING
+		QUnit.test( 'Instancing', ( assert ) => {
+
+			const object = new WedgeGeometry();
+			assert.ok( object, 'Can instantiate a WedgeGeometry.' );
+
+		} );
+
+		// PROPERTIES
+		QUnit.test( 'type', ( assert ) => {
+
+			const object = new WedgeGeometry();
+			assert.ok(
+				object.type === 'WedgeGeometry',
+				'WedgeGeometry.type should be WedgeGeometry'
+			);
+
+		} );
+
+		QUnit.todo( 'parameters', ( assert ) => {
+
+			assert.ok( false, 'everything\'s gonna be alright' );
+
+		} );
+
+		// STATIC
+		QUnit.todo( 'fromJSON', ( assert ) => {
+
+			assert.ok( false, 'everything\'s gonna be alright' );
+
+		} );
+
+		// OTHERS
+		QUnit.test( 'Standard geometry tests', ( assert ) => {
+
+			runStdGeometryTests( assert, geometries );
+			const geo = geometries[ 2 ];
+			geo.computeBoundingSphere();
+			assert.ok( geo.boundingSphere.radius );
+
+		} );
+
 	} );
 
 } );
