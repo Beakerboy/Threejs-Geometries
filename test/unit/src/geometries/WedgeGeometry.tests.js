@@ -113,7 +113,7 @@ export default QUnit.module( 'Geometries', () => {
 
 		} );
 
-		QUnit.test( 'cleanInputs', ( assert ) => {
+		QUnit.test( 'clean input', ( assert ) => {
 
 			const vectorMap = point => new Vector2( ...point );
 			const cleanPoints = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ]];
@@ -121,10 +121,25 @@ export default QUnit.module( 'Geometries', () => {
 			const result = WedgeGeometry.cleanInputs( cleanShape );
 			assert.equal( result.shape.length, 4, "cleaned has 4 points" );
 
+		} );
+
+		QUnit.test( 'clean duplicate point', ( assert ) => {
+	
 			const extraPoint = [[ - 2, - 1 ], [ - 2, 1 ], [ 2, 1 ], [ 2, - 1 ], [ - 2, - 1 ]];
 			const extraShape = new Shape( extraPoint.map( vectorMap ) );
 			const extraresult = WedgeGeometry.cleanInputs( extraShape );
 			assert.equal( extraresult.shape.length, 4, "extraShape has 4 points when cleaned" );
+
+		} );
+
+		QUnit.test( 'clean reversed input', ( assert ) => {
+
+			const vectorMap = point => new Vector2( ...point );
+			const cleanPoints = [[ - 2, - 1 ], [ 2, - 1 ], [ 2, 1 ], [ - 2, 1 ]];
+			const cleanShape = new Shape( cleanPoints.map( vectorMap ) );
+			const result = WedgeGeometry.cleanInputs( cleanShape );
+			assert.equal( result.shape.length, 4, "cleaned has 4 points" );
+			assert.equal( result.shape[ 0 ].equals( new Vector2( -2, 1 ) ), true, "array has been reversed" );
 
 		} );
 
