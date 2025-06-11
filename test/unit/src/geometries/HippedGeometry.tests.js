@@ -72,7 +72,7 @@ export default QUnit.module( 'Geometries', () => {
 			const options = {
 				depth: 6,
 			};
-			const points = [
+			const points1 = [
 				[ - 26.544995859742947, - 13.287698137967746 ],
 				[ - 17.937000953554264, - 11.041612567218145 ],
 				[ - 7.380250518655306, - 8.295134138958412 ],
@@ -83,7 +83,7 @@ export default QUnit.module( 'Geometries', () => {
 				[ - 29.651791704140486, - 1.334219836371914 ],
 				[ - 26.951441512330682, - 11.708727230072542 ]
 			];
-			const shape = new Shape( points.map( point => new Vector2( ...point ) ) );
+			const shape = new Shape( points1.map( point => new Vector2( ...point ) ) );
 			var points = shape.extractPoints().shape;
 			// {[number, number][]} An array of x, y points
 			const border = [];
