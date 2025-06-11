@@ -82,7 +82,7 @@ export default QUnit.module( 'Geometries', () => {
 				[ - 29.651791704140486, - 1.334219836371914 ],
 				[ - 26.951441512330682, - 11.708727230072542 ]
 			];
-			const result = SkeletonBuilder.Build( points.foreach( ( points ) => new Vector2d( ...points ) ) );
+			const result = SkeletonBuilder.Build( points.forEach( ( points ) => new Vector2d( ...points ) ) );
 			const polygon = [ points ];
 
 			const multipolygon = [ polygon ];
