@@ -84,6 +84,23 @@ export default QUnit.module( 'Geometries', () => {
 				[ - 26.951441512330682, - 11.708727230072542 ]
 			];
 			const shape = new Shape( points.map( point => new Vector2( ...point ) ) );
+			var points = shape.extractPoints().shape;
+			// {[number, number][]} An array of x, y points
+			const border = [];
+			// {border[]} An array of borders. Element 0 is an outer, and additional borders are inner.
+			const polygon = [];
+			// {polygon[]} all polygons in the multipolygon.
+			const multipolygon = [];
+			for ( const point of points ) {
+
+				border.push( [ point.x, point.y ] );
+
+			}
+
+			polygon.push( border );
+
+			multipolygon.push( polygon );
+			const result = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
 			const geometry = new HippedGeometry( shape, options );
 			assert.strictEqual(
 				geometry instanceof BufferGeometry, true,
