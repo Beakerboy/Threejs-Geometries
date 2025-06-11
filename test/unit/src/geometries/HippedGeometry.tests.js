@@ -4,6 +4,7 @@ import { HippedGeometry } from '../../../../src/HippedGeometry.js';
 
 import { BufferGeometry, Shape, Vector2 } from 'three';
 import { runStdGeometryTests } from '../../utils/qunit-utils.js';
+import { SkeletonBuilder } from 'straight-skeleton';
 
 export default QUnit.module( 'Geometries', () => {
 
