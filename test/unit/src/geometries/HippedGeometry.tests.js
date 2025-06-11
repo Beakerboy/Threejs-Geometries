@@ -89,6 +89,7 @@ export default QUnit.module( 'Geometries', () => {
 
 			const multipolygon = [ polygon ];
 			const result = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
+
 		} );
 
 		// INHERITANCE
