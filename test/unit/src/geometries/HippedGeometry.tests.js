@@ -86,7 +86,7 @@ export default QUnit.module( 'Geometries', () => {
 			const polygon = [ points ];
 
 			const multipolygon = [ polygon ];
-			const result = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
+			const result1 = SkeletonBuilder.BuildFromGeoJSON( multipolygon );
 
 		} );
 
