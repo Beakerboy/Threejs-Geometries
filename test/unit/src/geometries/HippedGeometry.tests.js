@@ -80,7 +80,7 @@ export default QUnit.module( 'Geometries', () => {
 				[ - 26.951441512330682, - 11.708727230072542 ]
 			];
 			const vecList = new List();
-			points.forEach( ( point ) => vecList.Add( new Vector2d( ...point ) );
+			points.forEach( ( point ) => vecList.Add( new Vector2d( ...point ) ) );
 			const result = SkeletonBuilder.Build( vecList );
 			const polygon = [ points ];
 
