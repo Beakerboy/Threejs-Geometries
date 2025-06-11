@@ -4,7 +4,7 @@ import { HippedGeometry } from '../../../../src/HippedGeometry.js';
 
 import { BufferGeometry, Shape, Vector2 } from 'three';
 import { runStdGeometryTests } from '../../utils/qunit-utils.js';
-import { SkeletonBuilder, Vector2d } from 'straight-skeleton';
+import { List, SkeletonBuilder, Vector2d } from 'straight-skeleton';
 
 export default QUnit.module( 'Geometries', () => {
 
@@ -79,8 +79,9 @@ export default QUnit.module( 'Geometries', () => {
 				[ - 29.651791704140486, - 1.334219836371914 ],
 				[ - 26.951441512330682, - 11.708727230072542 ]
 			];
-			const vecPoints = points.map( ( point ) => new Vector2d( point[ 0 ], point[ 1 ] ) );
-			const result = SkeletonBuilder.Build( vecPoints );
+			const vecList = new List();
+			points.forEach( ( point ) => vecList.Add( new Vector2d( ...point ) );
+			const result = SkeletonBuilder.Build( vecList );
 			const polygon = [ points ];
 
 			const multipolygon = [ polygon ];
