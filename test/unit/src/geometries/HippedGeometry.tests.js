@@ -70,9 +70,6 @@ export default QUnit.module( 'Geometries', () => {
 		// Data
 		QUnit.test( 'Bug', ( assert ) => {
 
-			const options = {
-				depth: 6,
-			};
 			const points = [
 				[ - 26.544995859742947, - 13.287698137967746 ],
 				[ 9.913632585162611, - 3.7917336660976004 ],
