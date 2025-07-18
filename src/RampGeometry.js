@@ -55,6 +55,12 @@ class RampGeometry extends BufferGeometry {
 
 		}
 
+		if ( points.length > 1 && points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
 		var rampDepth;
 		var nextRampDepth;
 		var minDepth;
@@ -68,7 +74,7 @@ class RampGeometry extends BufferGeometry {
 
 			point = points[ i ];
 			vertices.push( point.x, point.y );
-			nextPoint = points[ i + 1 ];
+			var nextPoint = points[ ( i + 1 ) % points.length ];
 			positions.push( point.x, point.y, 0 );
 			rampDepth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
 			nextRampDepth = nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle );
