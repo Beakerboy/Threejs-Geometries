@@ -16,7 +16,7 @@ import {
 	LinearFilter,
 	LinearMipmapNearestFilter,
 	LinearMipmapLinearFilter,
-	{ Source }
+	Source
 } from 'three';
 import { InstancedBufferAttribute } from 'three';
 import { Color } from 'three';
