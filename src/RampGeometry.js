@@ -32,7 +32,7 @@ class RampGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		this.points = this.cleanInputs( shape );
+		this.points = RampGeometry.cleanInputs( shape );
 		// Get the cleaned outer shape and holes.
 		var shapePoints = this.points.shape;
 		var shapeHoles = this.points.holes;
