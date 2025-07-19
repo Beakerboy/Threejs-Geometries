@@ -62,12 +62,12 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			const facePoints = geometries[ 2 ].getAttribute( "position" );
-			assert.equal( facePoints.count, 30, "RampGeometry Point Count:" );
-			assert.equal( facePoints.array.length, 90, "RampGeometry Coordinate Count:" );
+			assert.equal( facePoints.count, 24, "RampGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 72, "RampGeometry Coordinate Count:" );
 
 			const facePoints1 = geometries[ 3 ].getAttribute( "position" );
-			assert.equal( facePoints1.count, 24, "RampGeometry Point Count:" );
-			assert.equal( facePoints1.array.length, 72, "RampGeometry Coordinate Count:" );
+			assert.equal( facePoints1.count, 30, "RampGeometry Point Count:" );
+			assert.equal( facePoints1.array.length, 90, "RampGeometry Coordinate Count:" );
 
 		} );
 
