@@ -43,7 +43,7 @@ class RampGeometry extends BufferGeometry {
 		// The highest and lowest points will be along the outside
 		for ( const point of shapePoints ) {
 
-			const deprh = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
+			const depth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
 			rampDepths.push( depth );
 
 		}
