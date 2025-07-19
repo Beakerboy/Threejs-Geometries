@@ -59,7 +59,7 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		const scale = depth / ( maxDepth - minDepth );
-		const vertices = [];
+
 		const positions = [];
 		for ( let i = 0; i < shapePoints.length - 1; i ++ ) {
 
@@ -105,13 +105,14 @@ class RampGeometry extends BufferGeometry {
 
 		// Add top of roof
 		const faces = ShapeUtils.triangulateShape( points, holes );
-		for ( let i = 0; i < faces.length; i ++ ) {
+		const vertices = points.concat( ...holes );
+		for ( const face of faces ) {
 
-			const face = faces[ i ];
-			for ( let j = 0; j < 3; j ++ ) {
+			for ( const pointIndex of face ) {
 
-				const x = vertices[ 2 * face[ j ] ];
-				const y = vertices[ 2 * face[ j ] + 1 ];
+				const  = vertices[ pointIndex ];
+				const x = point.x;
+				const y = point.y;
 				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
 				positions.push( x, y, z );
 
@@ -121,21 +122,19 @@ class RampGeometry extends BufferGeometry {
 
 		// Add floor.
 		// Reverse face directions to reverse normals.
-		for ( let i = 0; i < faces.length; i ++ ) {
+		for ( const face of faces ) {
 
-			const face = faces[ i ];
 			for ( let j = 2; j > - 1; j -- ) {
 
-				const x = vertices[ 2 * face[ j ] ];
-				const y = vertices[ 2 * face[ j ] + 1 ];
-				positions.push( x, y, 0 );
+				const point = vertices[ face[ j ] ];
+				positions.push( point.x, point.y, 0 );
 
 			}
 
 		}
 
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
-		this.computeVertexNormals();
+		// this.computeVertexNormals();
 
 	}
 
