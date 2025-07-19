@@ -87,17 +87,21 @@ class RampGeometry extends BufferGeometry {
 
 			for ( let i = 0; i < hole.length - 1; i ++ ) {
 
-				point = hole[ i ];
-				vertices.push( point.x, point.y );
-				nextPoint = hole[ i + 1 ];
-				positions.push( point.x, point.y, 0 );
-				rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
-				nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
-				positions.push( point.x, point.y, rampDepth );
-				positions.push( nextPoint.x, nextPoint.y, 0 );
-				positions.push( point.x, point.y, rampDepth );
-				positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
-				positions.push( nextPoint.x, nextPoint.y, 0 );
+				const point = hole[ i ];
+				const pointDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
+				if ( pointDepth > 0 ) {
+
+					const prevPoint = hole[ ( hole.length + i - 1 ) % hole.length ];
+					const nextPoint = hole[ i + 1 ];
+				
+					positions.push( prevPoint.x, prevPoint.y, prevDepth );
+					positions.push( point.x, point.y, pointDepth );
+					positions.push( point.x, point.y, 0 );
+					positions.push( nextPoint.x, nextPoint.y, 0 );
+					positions.push( point.x, point.y, 0 );
+					positions.push( point.x, point.y, pointDepth );
+	
+				}
 
 			}
 
