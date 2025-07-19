@@ -87,6 +87,19 @@ class RampGeometry extends BufferGeometry {
 		const positions = [];
 		for ( let i = 0; i < points.length - 1; i ++ ) {
 
+			const pointDepth = (rampDepths[ i ] - minDepth ) * scale;
+			if ( pointDepth > 0 ) {
+				const prevPoint = points[ (points.length + i - 1) % points.length ];
+			const prevDepth = (rampDepths[ (points.length + i - 1) % points.length ] - minDepth ) * scale;
+			const point = points[ i ];
+			
+			const nextPoint = points[];
+			positions.push(prevPoint.x, prevPoint.y, prevDepth);
+			positions.push(point.x, point.y, pointDepth);
+			positions.push();
+			positions.push();
+			positions.push();
+			positions.push();
 			positions[ 18 * i + 5 ] = ( positions[ 18 * i + 5 ] - minDepth ) * scale;
 			positions[ 18 * i + 11 ] = ( positions[ 18 * i + 11 ] - minDepth ) * scale;
 			positions[ 18 * i + 14 ] = ( positions[ 18 * i + 14 ] - minDepth ) * scale;
