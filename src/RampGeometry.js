@@ -110,7 +110,7 @@ class RampGeometry extends BufferGeometry {
 
 			for ( const pointIndex of face ) {
 
-				const  = vertices[ pointIndex ];
+				const point = vertices[ pointIndex ];
 				const x = point.x;
 				const y = point.y;
 				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
