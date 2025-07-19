@@ -83,9 +83,8 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		// Add the sides of any holes
-		for ( let h = 0; h < holes.length; h ++ ) {
+		for ( const hole of shapeHoles ) {
 
-			const hole = holes[ h ];
 			for ( let i = 0; i < hole.length - 1; i ++ ) {
 
 				point = hole[ i ];
