@@ -464,7 +464,7 @@ class CustomObjectLoader extends Loader {
 					// load single image
 
 					const deserializedImage = deserializeImage( image.url );
-					images[ image.uuid ] = new three.Source( deserializedImage );
+					images[ image.uuid ] = new Source( deserializedImage );
 
 
 				}
