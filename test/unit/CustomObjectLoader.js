@@ -15,7 +15,8 @@ import {
 	NearestMipmapLinearFilter,
 	LinearFilter,
 	LinearMipmapNearestFilter,
-	LinearMipmapLinearFilter
+	LinearMipmapLinearFilter,
+	{ Source }
 } from 'three';
 import { InstancedBufferAttribute } from 'three';
 import { Color } from 'three';
@@ -456,7 +457,7 @@ class CustomObjectLoader extends Loader {
 
 					}
 
-					images[ image.uuid ] = new three.Source( imageArray );
+					images[ image.uuid ] = new Source( imageArray );
 
 				} else {
 
