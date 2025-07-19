@@ -61,44 +61,20 @@ class RampGeometry extends BufferGeometry {
 
 		}
 
-		var rampDepth;
-		var nextRampDepth;
-		var minDepth;
-		var maxDepth;
-		var positions = [];
-		var point;
-		var nextPoint;
-		const vertices = [];
-		// Add the outer wall.
-		for ( let i = 0; i < points.length - 1; i ++ ) {
+		const rampDepths = [];
 
-			point = points[ i ];
-			vertices.push( point.x, point.y );
-			var nextPoint = points[ ( i + 1 ) % points.length ];
-			positions.push( point.x, point.y, 0 );
-			rampDepth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
-			nextRampDepth = nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle );
-			if ( i === 0 ) {
+	        // Calculate intermediate depths.
+		for ( const point of points ) {
 
-				minDepth = rampDepth;
-				maxDepth = rampDepth;
-
-			} else {
-
-				minDepth = Math.min( rampDepth, minDepth );
-				maxDepth = Math.max( rampDepth, maxDepth );
-
-			}
-
-			positions.push( point.x, point.y, rampDepth );
-			positions.push( nextPoint.x, nextPoint.y, 0 );
-			positions.push( point.x, point.y, rampDepth );
-			positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
-			positions.push( nextPoint.x, nextPoint.y, 0 );
+			const deprh = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
+			rampDepths.push( depth );
 
 		}
 
 		// The highest and lowest points will be along the outside
+		const maxDepth = Math.max( ...rampDepths );
+		const minDepth = Math.min( ...rampDepths );
+
 		// Calculate the scaling factor to get he correct height.
 		if ( ! depth ) {
 
@@ -107,6 +83,8 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		const scale = depth / ( maxDepth - minDepth );
+		const vertices = [];
+		const positions = [];
 		for ( let i = 0; i < points.length - 1; i ++ ) {
 
 			positions[ 18 * i + 5 ] = ( positions[ 18 * i + 5 ] - minDepth ) * scale;
