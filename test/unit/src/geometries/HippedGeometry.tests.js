@@ -12,8 +12,6 @@ export default QUnit.module( 'Geometries', () => {
 		let geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const x = 0, y = 0;
-
 			const square = new Shape();
 			square.moveTo( - 25, - 25 );
 			square.lineTo( 75, - 25 );
