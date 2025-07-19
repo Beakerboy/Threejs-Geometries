@@ -29,7 +29,6 @@ export default QUnit.module( 'Geometries', () => {
 			rectangle.lineTo( 2, - 1 );
 			rectangle.lineTo( 2, 1 );
 			rectangle.lineTo( - 2, 1 );
-			rectangle.lineTo( - 2, - 1 );
 
 			// Clockwise square
 			const square = new Shape();
@@ -45,12 +44,30 @@ export default QUnit.module( 'Geometries', () => {
 				depth: 5,
 			};
 
+			const options1 = {
+				angle: Math.PI / 4,
+				depth: 5,
+			};
+
 			geometries = [
 				new RampGeometry(),
 				new RampGeometry( heartShape ),
-				new RampGeometry( heartShape, options ),
 				new RampGeometry( rectangle, options ),
+				new RampGeometry( rectangle, options1 ),
 			];
+
+		} );
+
+		// Data
+		QUnit.test( 'Data', ( assert ) => {
+
+			const facePoints = geometries[ 2 ].getAttribute( "position" );
+			assert.equal( facePoints.count, 30, "RampGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 90, "RampGeometry Coordinate Count:" );
+
+			const facePoints = geometries[ 3 ].getAttribute( "position" );
+			assert.equal( facePoints.count, 24, "RampGeometry Point Count:" );
+			assert.equal( facePoints.array.length, 72, "RampGeometry Coordinate Count:" );
 
 		} );
 
