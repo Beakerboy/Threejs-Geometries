@@ -32,50 +32,26 @@ class RampGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
-		var holes = shape.extractPoints().holes;
-
-		// Ensuse all paths are in the correct direction for the normals
-		const reverse = ! ShapeUtils.isClockWise( points );
-		if ( reverse ) {
-
-			points = points.reverse();
-			// Check that any holes are correct direction.
-			for ( let h = 0; h < holes.length; h ++ ) {
-
-				const hole = holes[ h ];
-				if ( ShapeUtils.isClockWise( hole ) ) {
-
-					holes[ h ] = hole.reverse();
-
-				}
-
-			}
-
-		}
-
-		if ( points.length > 1 && points[ 0 ].equals( points[ points.length - 1 ] ) ) {
-
-			points.pop();
-
-		}
+		this.points = this.cleanInputs( shape );
+		// Get the cleaned outer shape and holes.
+		var shapePoints = this.points.shape;
+		var shapeHoles = this.points.holes;
 
 		const rampDepths = [];
 
 	        // Calculate intermediate depths.
-		for ( const point of points ) {
+		// The highest and lowest points will be along the outside
+		for ( const point of shapePoints ) {
 
 			const deprh = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
 			rampDepths.push( depth );
 
 		}
 
-		// The highest and lowest points will be along the outside
 		const maxDepth = Math.max( ...rampDepths );
 		const minDepth = Math.min( ...rampDepths );
 
-		// Calculate the scaling factor to get he correct height.
+		// Calculate the scaling factor to get the correct height.
 		if ( ! depth ) {
 
 			depth = ( maxDepth - minDepth ) * Math.tan( pitch );
@@ -85,14 +61,14 @@ class RampGeometry extends BufferGeometry {
 		const scale = depth / ( maxDepth - minDepth );
 		const vertices = [];
 		const positions = [];
-		for ( let i = 0; i < points.length - 1; i ++ ) {
+		for ( let i = 0; i < shapePoints.length - 1; i ++ ) {
 
 			const pointDepth = (rampDepths[ i ] - minDepth ) * scale;
 			if ( pointDepth > 0 ) {
-				const prevPoint = points[ ( points.length + i - 1 ) % points.length ];
-				const prevDepth = (rampDepths[ ( points.length + i - 1 ) % points.length ] - minDepth ) * scale;
-				const point = points[ i ];
-				const nextPoint = points[ ( i + 1 ) % points.length ];
+				const prevPoint = shapePoints[ ( shapePoints.length + i - 1 ) % shapePoints.length ];
+				const prevDepth = (rampDepths[ ( shapePoints.length + i - 1 ) % shapePoints.length ] - minDepth ) * scale;
+				const point = shapePoints[ i ];
+				const nextPoint = shapePoints[ ( i + 1 ) % shapePoints.length ];
 
 				positions.push(prevPoint.x, prevPoint.y, prevDepth);
 				positions.push(point.x, point.y, pointDepth);
@@ -160,6 +136,54 @@ class RampGeometry extends BufferGeometry {
 
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
 		this.computeVertexNormals();
+
+	}
+
+	/**
+         * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
+	 * modifies this.parameters.shape.
+         * Since this modifies the parameters, the return is unnecessary.
+         * @returns {Vector2[], Vector2[][]}
+         */
+	static cleanInputs( shape ) {
+
+		// Get the outer shape and holes.
+		const points = shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
+		var holes = shape.extractPoints().holes;
+
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points.reverse();
+
+		}
+
+		// Check that any holes are correct direction.
+		for ( const hole of holes ) {
+
+			if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+
+				hole.pop();
+
+			}
+
+			if ( ShapeUtils.isClockWise( hole ) ) {
+
+				hole.reverse();
+
+			}
+
+		}
+
+		return { shape: points, holes: holes };
 
 	}
 
