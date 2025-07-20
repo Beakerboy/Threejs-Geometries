@@ -28,7 +28,7 @@ export default QUnit.module( 'Geometries', () => {
 				depth: 5,
 			};
 
-			const doughnut = rectagle.clone();
+			const doughnut = rectangle.clone();
 			// Clockwise square
 			const square = new Shape();
 			square.moveTo( - .5, .5 );
