@@ -95,7 +95,7 @@ class RampGeometry extends BufferGeometry {
 				if ( pointDepth > 0 ) {
 
 					const prevPoint = hole[ ( hole.length + i - 1 ) % hole.length ];
-					const nextPoint = hole[ (i + 1) % hole.length ];
+					const nextPoint = hole[ ( i + 1 ) % hole.length ];
 					const prevDepth = ( prevPoint.x * Math.sin( angle ) - prevPoint.y * Math.cos( angle ) - minDepth ) * scale;
 
 					positions.push( prevPoint.x, prevPoint.y, prevDepth );
