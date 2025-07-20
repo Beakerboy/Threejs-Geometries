@@ -61,6 +61,7 @@ class RampGeometry extends BufferGeometry {
 		const scale = depth / ( maxDepth - minDepth );
 
 		this.wallFaces = 0;
+		this.ramps = rampDepths;
 		const positions = [];
 		for ( let i = 0; i < shapePoints.length - 1; i ++ ) {
 
