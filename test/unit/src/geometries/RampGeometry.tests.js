@@ -12,18 +12,6 @@ export default QUnit.module( 'Geometries', () => {
 		let geometries = undefined;
 		hooks.beforeEach( function () {
 
-			const x = 0, y = 0;
-
-			const heartShape = new Shape();
-
-			heartShape.moveTo( x + 5, y + 5 );
-			heartShape.bezierCurveTo( x + 5, y + 5, x + 4, y, x, y );
-			heartShape.bezierCurveTo( x - 6, y, x - 6, y + 7, x - 6, y + 7 );
-			heartShape.bezierCurveTo( x - 6, y + 11, x - 3, y + 15.4, x + 5, y + 19 );
-			heartShape.bezierCurveTo( x + 12, y + 15.4, x + 16, y + 11, x + 16, y + 7 );
-			heartShape.bezierCurveTo( x + 16, y + 7, x + 16, y, x + 10, y );
-			heartShape.bezierCurveTo( x + 7, y, x + 5, y + 5, x + 5, y + 5 );
-
 			const rectangle = new Shape();
 			rectangle.moveTo( - 2, - 1 );
 			rectangle.lineTo( 2, - 1 );
@@ -62,13 +50,14 @@ export default QUnit.module( 'Geometries', () => {
 		// Data
 		QUnit.test( 'Data', ( assert ) => {
 
+			const facePoints = geometries[ 1 ].getAttribute( "position" );
+			assert.equal( facePoints.count / 3, 20, "RampGeometry face Count:" );
+
 			const facePoints = geometries[ 2 ].getAttribute( "position" );
-			assert.equal( facePoints.count, 24, "RampGeometry Point Count:" );
-			assert.equal( facePoints.array.length, 72, "RampGeometry Coordinate Count:" );
+			assert.equal( facePoints.count / 3, 8, "RampGeometry face Count:" );
 
 			const facePoints1 = geometries[ 3 ].getAttribute( "position" );
-			assert.equal( facePoints1.count, 30, "RampGeometry Point Count:" );
-			assert.equal( facePoints1.array.length, 90, "RampGeometry Coordinate Count:" );
+			assert.equal( facePoints1.count / 3, 10, "RampGeometry face Count:" );
 
 		} );
 
