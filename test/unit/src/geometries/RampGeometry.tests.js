@@ -51,7 +51,7 @@ export default QUnit.module( 'Geometries', () => {
 		QUnit.test( 'Data', ( assert ) => {
 
 			const facePoints0 = geometries[ 1 ].getAttribute( "position" );
-			assert.equal( facePoints0.count / 3, 20, "RampGeometry face Count:" );
+			assert.equal( facePoints0.count / 3, 28, "RampGeometry face Count:" );
 
 			const facePoints = geometries[ 2 ].getAttribute( "position" );
 			assert.equal( facePoints.count / 3, 8, "RampGeometry face Count:" );
