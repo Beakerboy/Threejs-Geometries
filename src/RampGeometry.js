@@ -63,7 +63,7 @@ class RampGeometry extends BufferGeometry {
 		this.wallFaces = 0;
 		this.ramps = rampDepths;
 		const positions = [];
-		for ( let i = 0; i < shapePoints.length - 1; i ++ ) {
+		for ( let i = 0; i < shapePoints.length; i ++ ) {
 
 			const pointDepth = ( rampDepths[ i ] - minDepth ) * scale;
 			if ( pointDepth > 0 ) {
@@ -88,7 +88,7 @@ class RampGeometry extends BufferGeometry {
 		// Add the sides of any holes
 		for ( const hole of shapeHoles ) {
 
-			for ( let i = 0; i < hole.length - 1; i ++ ) {
+			for ( let i = 0; i < hole.length; i ++ ) {
 
 				const point = hole[ i ];
 				const pointDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
