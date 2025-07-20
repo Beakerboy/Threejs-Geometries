@@ -142,7 +142,7 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
-		// this.computeVertexNormals();
+		this.computeVertexNormals();
 
 	}
 
