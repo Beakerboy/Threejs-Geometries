@@ -36,7 +36,7 @@ export default QUnit.module( 'Geometries', () => {
 			square.lineTo( .5, - .5 );
 			square.lineTo( - .5, - .5 );
 
-			doughnut.holes.push(square);
+			doughnut.holes.push( square );
 
 			geometries = [
 				new RampGeometry(),
