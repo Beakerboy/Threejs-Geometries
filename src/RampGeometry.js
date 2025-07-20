@@ -32,68 +32,26 @@ class RampGeometry extends BufferGeometry {
 		// The direction that the downward slope faces,
 		const angle = options.angle;
 
-		// Get the outer shape and holes.
-		var points = shape.extractPoints().shape;
-		var holes = shape.extractPoints().holes;
+		this.points = RampGeometry.cleanInputs( shape );
+		// Get the cleaned outer shape and holes.
+		var shapePoints = this.points.shape;
+		var shapeHoles = this.points.holes;
 
-		// Ensuse all paths are in the correct direction for the normals
-		const reverse = ! ShapeUtils.isClockWise( points );
-		if ( reverse ) {
+		const rampDepths = [];
 
-			points = points.reverse();
-			// Check that any holes are correct direction.
-			for ( let h = 0; h < holes.length; h ++ ) {
-
-				const hole = holes[ h ];
-				if ( ShapeUtils.isClockWise( hole ) ) {
-
-					holes[ h ] = hole.reverse();
-
-				}
-
-			}
-
-		}
-
-		var rampDepth;
-		var nextRampDepth;
-		var minDepth;
-		var maxDepth;
-		var positions = [];
-		var point;
-		var nextPoint;
-		const vertices = [];
-		// Add the outer wall.
-		for ( let i = 0; i < points.length - 1; i ++ ) {
-
-			point = points[ i ];
-			vertices.push( point.x, point.y );
-			nextPoint = points[ i + 1 ];
-			positions.push( point.x, point.y, 0 );
-			rampDepth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
-			nextRampDepth = nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle );
-			if ( i === 0 ) {
-
-				minDepth = rampDepth;
-				maxDepth = rampDepth;
-
-			} else {
-
-				minDepth = Math.min( rampDepth, minDepth );
-				maxDepth = Math.max( rampDepth, maxDepth );
-
-			}
-
-			positions.push( point.x, point.y, rampDepth );
-			positions.push( nextPoint.x, nextPoint.y, 0 );
-			positions.push( point.x, point.y, rampDepth );
-			positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
-			positions.push( nextPoint.x, nextPoint.y, 0 );
-
-		}
-
+	        // Calculate intermediate depths.
 		// The highest and lowest points will be along the outside
-		// Calculate the scaling factor to get he correct height.
+		for ( const point of shapePoints ) {
+
+			const depth = point.x * Math.sin( angle ) - point.y * Math.cos( angle );
+			rampDepths.push( depth );
+
+		}
+
+		const maxDepth = Math.max( ...rampDepths );
+		const minDepth = Math.min( ...rampDepths );
+
+		// Calculate the scaling factor to get the correct height.
 		if ( ! depth ) {
 
 			depth = ( maxDepth - minDepth ) * Math.tan( pitch );
@@ -101,45 +59,68 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		const scale = depth / ( maxDepth - minDepth );
-		for ( let i = 0; i < points.length - 1; i ++ ) {
 
-			positions[ 18 * i + 5 ] = ( positions[ 18 * i + 5 ] - minDepth ) * scale;
-			positions[ 18 * i + 11 ] = ( positions[ 18 * i + 11 ] - minDepth ) * scale;
-			positions[ 18 * i + 14 ] = ( positions[ 18 * i + 14 ] - minDepth ) * scale;
+		this.wallFaces = 0;
+		this.ramps = rampDepths;
+		const positions = [];
+		for ( let i = 0; i < shapePoints.length; i ++ ) {
+
+			const pointDepth = ( rampDepths[ i ] - minDepth ) * scale;
+			if ( pointDepth > 0 ) {
+
+				const prevPoint = shapePoints[ ( shapePoints.length + i - 1 ) % shapePoints.length ];
+				const prevDepth = ( rampDepths[ ( shapePoints.length + i - 1 ) % shapePoints.length ] - minDepth ) * scale;
+				const point = shapePoints[ i ];
+				const nextPoint = shapePoints[ ( i + 1 ) % shapePoints.length ];
+
+				positions.push( prevPoint.x, prevPoint.y, prevDepth );
+				positions.push( point.x, point.y, pointDepth );
+				positions.push( point.x, point.y, 0 );
+				positions.push( nextPoint.x, nextPoint.y, 0 );
+				positions.push( point.x, point.y, 0 );
+				positions.push( point.x, point.y, pointDepth );
+				this.wallFaces += 2;
+
+			}
 
 		}
 
 		// Add the sides of any holes
-		for ( let h = 0; h < holes.length; h ++ ) {
+		for ( const hole of shapeHoles ) {
 
-			const hole = holes[ h ];
-			for ( let i = 0; i < hole.length - 1; i ++ ) {
+			for ( let i = 0; i < hole.length; i ++ ) {
 
-				point = hole[ i ];
-				vertices.push( point.x, point.y );
-				nextPoint = hole[ i + 1 ];
-				positions.push( point.x, point.y, 0 );
-				rampDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
-				nextRampDepth = ( nextPoint.x * Math.sin( angle ) - nextPoint.y * Math.cos( angle ) - minDepth ) * scale;
-				positions.push( point.x, point.y, rampDepth );
-				positions.push( nextPoint.x, nextPoint.y, 0 );
-				positions.push( point.x, point.y, rampDepth );
-				positions.push( nextPoint.x, nextPoint.y, nextRampDepth );
-				positions.push( nextPoint.x, nextPoint.y, 0 );
+				const point = hole[ i ];
+				const pointDepth = ( point.x * Math.sin( angle ) - point.y * Math.cos( angle ) - minDepth ) * scale;
+				if ( pointDepth > 0 ) {
+
+					const prevPoint = hole[ ( hole.length + i - 1 ) % hole.length ];
+					const nextPoint = hole[ ( i + 1 ) % hole.length ];
+					const prevDepth = ( prevPoint.x * Math.sin( angle ) - prevPoint.y * Math.cos( angle ) - minDepth ) * scale;
+
+					positions.push( prevPoint.x, prevPoint.y, prevDepth );
+					positions.push( point.x, point.y, pointDepth );
+					positions.push( point.x, point.y, 0 );
+					positions.push( nextPoint.x, nextPoint.y, 0 );
+					positions.push( point.x, point.y, 0 );
+					positions.push( point.x, point.y, pointDepth );
+
+				}
 
 			}
 
 		}
 
 		// Add top of roof
-		const faces = ShapeUtils.triangulateShape( points, holes );
-		for ( let i = 0; i < faces.length; i ++ ) {
+		const faces = ShapeUtils.triangulateShape( shapePoints, shapeHoles );
+		const vertices = shapePoints.concat( ...shapeHoles );
+		for ( const face of faces ) {
 
-			const face = faces[ i ];
-			for ( let j = 0; j < 3; j ++ ) {
+			for ( const pointIndex of face ) {
 
-				const x = vertices[ 2 * face[ j ] ];
-				const y = vertices[ 2 * face[ j ] + 1 ];
+				const point = vertices[ pointIndex ];
+				const x = point.x;
+				const y = point.y;
 				const z = ( x * Math.sin( angle ) - y * Math.cos( angle ) - minDepth ) * scale;
 				positions.push( x, y, z );
 
@@ -149,21 +130,67 @@ class RampGeometry extends BufferGeometry {
 
 		// Add floor.
 		// Reverse face directions to reverse normals.
-		for ( let i = 0; i < faces.length; i ++ ) {
+		for ( const face of faces ) {
 
-			const face = faces[ i ];
 			for ( let j = 2; j > - 1; j -- ) {
 
-				const x = vertices[ 2 * face[ j ] ];
-				const y = vertices[ 2 * face[ j ] + 1 ];
-				positions.push( x, y, 0 );
+				const point = vertices[ face[ j ] ];
+				positions.push( point.x, point.y, 0 );
 
 			}
 
 		}
 
 		this.setAttribute( 'position', new BufferAttribute( new Float32Array( positions ), 3 ) );
-		this.computeVertexNormals();
+		// this.computeVertexNormals();
+
+	}
+
+	/**
+         * Ensure start end duplicates are removed fron shape and holes, and that the shares are oriented correctly.
+	 * modifies this.parameters.shape.
+         * Since this modifies the parameters, the return is unnecessary.
+         * @returns {Vector2[], Vector2[][]}
+         */
+	static cleanInputs( shape ) {
+
+		// Get the outer shape and holes.
+		const points = shape.extractPoints().shape;
+
+		if ( points[ 0 ].equals( points[ points.length - 1 ] ) ) {
+
+			points.pop();
+
+		}
+
+		var holes = shape.extractPoints().holes;
+
+		// Ensuse all paths are in the correct direction for the normals
+		const reverse = ! ShapeUtils.isClockWise( points );
+		if ( reverse ) {
+
+			points.reverse();
+
+		}
+
+		// Check that any holes are correct direction.
+		for ( const hole of holes ) {
+
+			if ( hole[ 0 ].equals( hole[ hole.length - 1 ] ) ) {
+
+				hole.pop();
+
+			}
+
+			if ( ShapeUtils.isClockWise( hole ) ) {
+
+				hole.reverse();
+
+			}
+
+		}
+
+		return { shape: points, holes: holes };
 
 	}
 
