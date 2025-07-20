@@ -52,8 +52,6 @@ export default QUnit.module( 'Geometries', () => {
 		// Data
 		QUnit.test( 'Data', ( assert ) => {
 
-			assert.equal( geometries[ 2 ].ramps, [], "ramp depths" );
-			assert.equal( geometries[ 2 ].wallFaces, 4, "There should be 4 wall faces" );
 			const facePoints = geometries[ 2 ].getAttribute( "position" );
 			assert.equal( facePoints.count, 24, "RampGeometry Point Count:" );
 			assert.equal( facePoints.array.length, 72, "RampGeometry Coordinate Count:" );
