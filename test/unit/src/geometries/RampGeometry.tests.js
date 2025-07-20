@@ -52,7 +52,7 @@ export default QUnit.module( 'Geometries', () => {
 		// Data
 		QUnit.test( 'Data', ( assert ) => {
 
-			assert.equal( geometries[ 2 ].points.shape.extractPoints().shape.length, 4, "Shape has 4 points" );
+			assert.equal( geometries[ 2 ].points.shape.length, 4, "Shape has 4 points" );
 			assert.equal( geometries[ 2 ].wallFaces, 4, "There should be 4 wall faces" );
 			const facePoints = geometries[ 2 ].getAttribute( "position" );
 			assert.equal( facePoints.count, 24, "RampGeometry Point Count:" );
