@@ -109,8 +109,8 @@ class RampGeometry extends BufferGeometry {
 		}
 
 		// Add top of roof
-		const faces = ShapeUtils.triangulateShape( points, holes );
-		const vertices = points.concat( ...holes );
+		const faces = ShapeUtils.triangulateShape( shapePoints, shapeHoles );
+		const vertices = shapePoints.concat( ...shapeHoles );
 		for ( const face of faces ) {
 
 			for ( const pointIndex of face ) {
