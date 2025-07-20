@@ -93,14 +93,14 @@ class RampGeometry extends BufferGeometry {
 
 					const prevPoint = hole[ ( hole.length + i - 1 ) % hole.length ];
 					const nextPoint = hole[ i + 1 ];
-				
+
 					positions.push( prevPoint.x, prevPoint.y, prevDepth );
 					positions.push( point.x, point.y, pointDepth );
 					positions.push( point.x, point.y, 0 );
 					positions.push( nextPoint.x, nextPoint.y, 0 );
 					positions.push( point.x, point.y, 0 );
 					positions.push( point.x, point.y, pointDepth );
-	
+
 				}
 
 			}
