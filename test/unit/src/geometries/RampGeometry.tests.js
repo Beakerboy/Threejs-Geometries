@@ -40,9 +40,19 @@ export default QUnit.module( 'Geometries', () => {
 				depth: 5,
 			};
 
+			const doughnut = rectagle.clone();
+			// Clockwise square
+			const square = new Shape();
+			square.moveTo( - .5, .5 );
+			square.lineTo( .5, .5 );
+			square.lineTo( .5, - .5 );
+			square.lineTo( - .5, - .5 );
+
+			doughnut.holes.push(square);
+
 			geometries = [
 				new RampGeometry(),
-				new RampGeometry( heartShape ),
+				new RampGeometry( doughnut, options ),
 				new RampGeometry( rectangle, options ),
 				new RampGeometry( rectangle, options1 ),
 			];
