@@ -12,4 +12,4 @@ jobs:
     - name: Test
       run: npm test
     - name: Coveralls
-      uses: coverallsapp/github-action@v2
+      uses: coverallsapp/github-action@v1
